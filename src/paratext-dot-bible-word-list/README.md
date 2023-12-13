@@ -1,6 +1,6 @@
-# paranext-extension-word-list
+# platform-dot-bible-word-list
 
-Basic extension template for Paranext
+Paratext.Bible Word List extension for Platform.Bible
 
 ## Summary
 
@@ -10,7 +10,7 @@ The general file structure is as follows:
 - `manifest.json` is the manifest file that defines the extension and important properties for Platform.Bible. It is copied into the build folder
 - `src/` contains the source code for the extension
   - `src/main.ts` is the main entry file for the extension
-  - `src/types/paranext-extension-word-list.d.ts` is this extension's types file that defines how other extensions can use this extension through the `papi`. It is copied into the build folder
+  - `src/types/platform-dot-bible-word-list.d.ts` is this extension's types file that defines how other extensions can use this extension through the `papi`. It is copied into the build folder
   - `*.web-view.tsx` files will be treated as React WebViews
   - `*.web-view.html` files are a conventional way to provide HTML WebViews (no special functionality)
 - `assets/` contains asset files the extension and its WebViews can retrieve using the `papi-extension:` protocol. It is copied into the build folder

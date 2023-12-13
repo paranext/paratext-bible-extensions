@@ -1,4 +1,4 @@
-declare module 'paranext-extension-word-list' {
+declare module 'platform-dot-bible-word-list' {
   import { ScriptureReference } from 'papi-components';
   import { DataProviderDataType, IDataProvider } from '@papi/core';
 
@@ -28,7 +28,7 @@ declare module 'paranext-extension-word-list' {
 }
 
 declare module 'papi-shared-types' {
-  import type { WordListDataProvider } from 'paranext-extension-word-list';
+  import type { WordListDataProvider } from 'platform-dot-bible-word-list';
 
   export interface CommandHandlers {
     /**

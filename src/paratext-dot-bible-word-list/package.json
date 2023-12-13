@@ -1,9 +1,9 @@
 {
-  "name": "paranext-extension-word-list",
+  "name": "platform-dot-bible-word-list",
   "private": true,
   "version": "0.0.1",
-  "main": "paranext-extension-word-list.js",
-  "types": "paranext-extension-word-list.d.ts",
+  "main": "src/main.js",
+  "types": "src/types/platform-dot-bible-word-list.d.ts",
   "author": "Paranext",
   "license": "MIT",
   "scripts": {

@@ -15,7 +15,7 @@ import type {
   WordListDataTypes,
   WordListEntry,
   WordListSelector,
-} from 'paranext-extension-word-list';
+} from 'platform-dot-bible-word-list';
 import { ScriptureReference } from 'papi-components';
 import { VerseRef } from '@sillsdev/scripture';
 import wordListReact from './word-list.web-view?inline';
@@ -215,6 +215,7 @@ const wordListWebViewProvider: IWebViewProvider = {
 
     // Type assert the WebView state since TypeScript doesn't know what type it is
     // TODO: Fix after https://github.com/paranext/paranext-core/issues/585 is done
+    // eslint-disable-next-line no-type-assertion/no-type-assertion
     const projectId = options.projectId || (savedWebView.state?.projectId as string) || '';
 
     let projectMetadata: ProjectMetadata | undefined;
