@@ -4,9 +4,9 @@ import path from 'path';
 import replaceInFile from 'replace-in-file';
 
 /** The branch to use in pulling changes from `paranext-multi-extension-template` */
-export const MULTI_TEMPLATE_BRANCH = 'main';
+export const MULTI_TEMPLATE_BRANCH = '486-multi-extension-template';
 /** The branch to use in pulling changes from `paranext-extension-template` */
-export const SINGLE_TEMPLATE_BRANCH = 'main';
+export const SINGLE_TEMPLATE_BRANCH = '486-multi-extension-template';
 
 const execAsync = promisify(exec);
 
