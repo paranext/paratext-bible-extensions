@@ -1,38 +1,6 @@
-# paranext-multi-extension-template
+# paratext-dot-bible-extensions
 
-Template for creating multiple Platform.Bible extensions in one repo
-
-## Template Info
-
-This is a webpack project template pre-configured to build an arbitrary number of Platform.Bible extensions. It contains the bare minimum of what a multi-extension repo needs. Note that many of the files mentioned in [Summary](#summary) are not present in this template because they describe extension code which must be added to this template. For inspiration on what extensions in a multi-extension repo could look like, refer to any repo forked from this template. An example would be the [paranext-sample-extensions]() [MISSING! PLEASE ADD WHEN AVAILABLE].
-
-### Customize repo details
-
-Follow these instructions to customize the template to be your own Platform.Bible extension repo.
-
-#### Install and hook up to the template
-
-To make the process of customizing from the template as smooth as possible, we recommend you do the following before anything else:
-
-- [Install and set up this repo](#to-install)
-- [Update this repo from the template](#to-update-this-repo-and-extensions-from-the-templates) to hook everything up for smooth updates in the future
-
-#### Replace placeholders
-
-- At the top of this `README.md`:
-
-  - Replace the first line `# paranext-multi-extension-template` with `# your-extension-repo-name`
-  - Below the first line, replace the repo description with your own description
-
-- In `package.json`, replace `"paranext-multi-extension-template"` with `"your-extension-repo-name"`
-
-#### Create your first extension in this repo
-
-Follow the steps in [To create a new extension in this repo](#to-create-a-new-extension-in-this-repo) to create your first extension in this repo! You can follow the same steps to create new extensions as desired.
-
-#### Remove Template Info
-
-Once finished customizing this template to be your own, you can remove the [Template Info](#template-info) section and sub-sections of this readme.
+Official Paratext.Bible extensions for Platform.Bible
 
 ## Summary
 
