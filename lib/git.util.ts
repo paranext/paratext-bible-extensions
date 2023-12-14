@@ -118,7 +118,7 @@ export async function formatExtensionFolder(extensionFolderPath: string) {
   );
   if (replaceStats.totalReplacements > 0)
     console.log(
-      `Formatting ${extensionFolderPath}: Updated relative path to paranext-core ${
+      `Formatting ${extensionFolderPath}: Successfully updated relative path to paranext-core ${
         replaceStats.totalReplacements
       } times in ${replaceStats.filesChanged.length} files:\n\t${replaceStats.filesChanged.join(
         '\n\t',

@@ -134,8 +134,6 @@ git subtree add --prefix src/<extension_name> paranext-extension-template main -
 
 </details>
 
-[click me](#manually-create-a-new-extension)
-
 ## To update this repo and extensions from the templates
 
 This project is forked from [`paranext-multi-extension-template`](https://github.com/paranext/paranext-multi-extension-template), and its extensions are derived from [`paranext-extension-template`](https://github.com/paranext/paranext-extension-template). Both are updated periodically and will sometimes receive updates that help with breaking changes on [`paranext-core`](https://github.com/paranext/paranext-core). We recommend you periodically update your repo and extensions by merging the latest template updates into them.
