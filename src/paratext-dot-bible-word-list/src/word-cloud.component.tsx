@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { WordListEntry } from 'platform-dot-bible-word-list';
+import type { WordListEntry } from 'paratext-dot-bible-word-list';
 import { Wordcloud } from '@visx/wordcloud';
 import { Text } from '@visx/text';
 import { scaleLog } from '@visx/scale';

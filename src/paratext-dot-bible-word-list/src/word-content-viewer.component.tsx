@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Canon } from '@sillsdev/scripture';
 import { Table } from 'papi-components';
-import type { WordListEntry } from 'platform-dot-bible-word-list';
+import type { WordListEntry } from 'paratext-dot-bible-word-list';
 
 type Row = {
   reference: string;

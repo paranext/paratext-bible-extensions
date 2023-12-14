@@ -41,7 +41,7 @@
        * the local development type declarations will always be up-to-date instead of only when
        * Platform.Bible is running in development.
        *
-       * @example Adding `"../platform-dot-bible-word-list/src/types",` includes the local version
+       * @example Adding `"../paranext-extension-word-list/src/types",` includes the local version
        * of the Word List extension's type declarations. Then, your extension can use types from the
        * local build of the Word List extension.
        */

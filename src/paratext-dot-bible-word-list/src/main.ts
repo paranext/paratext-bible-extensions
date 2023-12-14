@@ -15,7 +15,7 @@ import type {
   WordListDataTypes,
   WordListEntry,
   WordListSelector,
-} from 'platform-dot-bible-word-list';
+} from 'paratext-dot-bible-word-list';
 import { ScriptureReference } from 'papi-components';
 import { VerseRef } from '@sillsdev/scripture';
 import wordListReact from './word-list.web-view?inline';
@@ -274,9 +274,10 @@ export async function activate(context: ExecutionActivationContext) {
       return papi.webViews.getWebView(
         WORD_LIST_WEB_VIEW_TYPE,
         { type: 'float', floatSize: { width: 775, height: 815 } },
+        // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
+        // eslint-disable-next-line no-type-assertion/no-type-assertion
         {
           projectId: projectIdForWebView,
-          // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
         } as GetWebViewOptions,
       );
     }),

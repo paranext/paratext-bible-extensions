@@ -2,7 +2,7 @@ import { useSetting, useData } from '@papi/frontend/react';
 import { WebViewProps } from '@papi/core';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { ComboBox, RefSelector, ScriptureReference, Switch, TextField } from 'papi-components';
-import type { WordListEntry } from 'platform-dot-bible-word-list';
+import type { WordListEntry } from 'paratext-dot-bible-word-list';
 import WordContentViewer from './word-content-viewer.component';
 import WordTable from './word-table.component';
 import WordCloud from './word-cloud.component';

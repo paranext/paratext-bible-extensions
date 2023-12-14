@@ -1,4 +1,4 @@
-declare module 'platform-dot-bible-word-list' {
+declare module 'paratext-dot-bible-word-list' {
   import { ScriptureReference } from 'papi-components';
   import { DataProviderDataType, IDataProvider } from '@papi/core';
 
@@ -28,13 +28,14 @@ declare module 'platform-dot-bible-word-list' {
 }
 
 declare module 'papi-shared-types' {
-  import type { WordListDataProvider } from 'platform-dot-bible-word-list';
+  import type { WordListDataProvider } from 'paratext-dot-bible-word-list';
 
   export interface CommandHandlers {
     /**
      * Opens a new word list WebView and returns the WebView id
-     * @param projectId Project ID to open with the word list. Prompts the user to
-     * select project if not provided
+     *
+     * @param projectId Project ID to open with the word list. Prompts the user to select project if
+     *   not provided
      * @returns WebView id for new word list WebView or `undefined` if the user canceled the dialog
      */
     'paratextWordList.open': (projectId?: string) => Promise<string | undefined>;

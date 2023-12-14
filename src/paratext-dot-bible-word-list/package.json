@@ -1,9 +1,9 @@
 {
-  "name": "platform-dot-bible-word-list",
+  "name": "paratext-dot-bible-word-list",
   "private": true,
   "version": "0.0.1",
   "main": "src/main.js",
-  "types": "src/types/platform-dot-bible-word-list.d.ts",
+  "types": "src/types/paratext-dot-bible-word-list.d.ts",
   "author": "Paranext",
   "license": "MIT",
   "scripts": {
