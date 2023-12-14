@@ -1,10 +1,10 @@
 {
-  "name": "paranext-extension-template",
+  "name": "paratext-text-collection",
   "private": true,
   "version": "0.0.1",
   "main": "src/main.js",
-  "types": "src/types/paranext-extension-template.d.ts",
-  "author": "Paranext",
+  "types": "src/types/paratext-text-collection.d.ts",
+  "author": "Platform.Bible Bundled Extensions Team - Rolf Heij",
   "license": "MIT",
   "scripts": {
     "build:web-view": "webpack --config ./webpack/webpack.config.web-view.ts",
@@ -32,12 +32,17 @@
     "react-dom": ">=18.2.0"
   },
   "devDependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/material": "^5.14.18",
     "@types/node": "^18.17.12",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@types/webpack": "^5.28.2",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
+    "allotment": "^1.19.3",
     "concurrently": "^8.2.1",
     "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
