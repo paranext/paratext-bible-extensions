@@ -21,7 +21,6 @@ async function zipExtensions() {
 
   const zipPromises = extensions.map(async (extension) => {
     try {
-      // TODO: MAKE SURE THIS WORKS
       /** Directory to zip. The output extension folder */
       const dirToZip = path.join(rootDir, outputFolder, extension.dirName);
       /**

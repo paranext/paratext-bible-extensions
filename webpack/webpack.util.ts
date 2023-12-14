@@ -114,7 +114,7 @@ const staticFiles: {
   { from: 'assets', noErrorOnMissing: true },
   // Distribute the extension manifest
   { from: 'manifest.json' },
-  // We need to distribute the package.json for Paranext to read the extension properly
+  // We need to distribute the package.json for Platform.Bible to read the extension properly
   { from: 'package.json', noErrorOnMissing: true },
   // If the extension declares its types as an index.d.ts, copy that into the output
   { from: 'index.d.ts', noErrorOnMissing: true },
@@ -129,7 +129,7 @@ const staticFiles: {
 function getStaticFileName(staticFile: string, extensionInfo: ExtensionInfo) {
   return staticFile
     .replace(/<name>/g, extensionInfo.name)
-    .replace(/<types>/g, extensionInfo.types || '');
+    .replace(/<types>/g, extensionInfo.types ?? '');
 }
 
 /** Get CopyFile plugin patterns for copying static files for an extension */
@@ -298,7 +298,6 @@ export type ExtensionInfo = ExtensionManifest & {
  *
  * Note that this does not transform the main file .ts into .js unlike extension.service
  */
-// TODO: figure out if we can share this code with extension.service.ts.
 export async function getExtensions(): Promise<ExtensionInfo[]> {
   // Get names of each folder in the source folder
   const extensionFolderNames = (

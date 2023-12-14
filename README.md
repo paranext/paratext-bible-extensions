@@ -87,6 +87,8 @@ npm run create-extension -- <extension_name>
 
 Then follow [the instructions for customizing the new extension](https://github.com/paranext/paranext-extension-template#customize-extension-details).
 
+**Note:** The merge/squash commits created when creating a new extension are important; Git uses them to compare the files for future updates. If you edit this repo's Git history, please preserve these commits (do not squash them, for example) to avoid duplicated merge conflicts in the future.
+
 <details>
     <summary>[Optional] Creating a new extension manually</summary>
 
@@ -102,8 +104,6 @@ git subtree add --prefix src/<extension_name> paranext-extension-template main -
 
 </details>
 
-[click me](#manually-create-a-new-extension)
-
 ## To update this repo and extensions from the templates
 
 This project is forked from [`paranext-multi-extension-template`](https://github.com/paranext/paranext-multi-extension-template), and its extensions are derived from [`paranext-extension-template`](https://github.com/paranext/paranext-extension-template). Both are updated periodically and will sometimes receive updates that help with breaking changes on [`paranext-core`](https://github.com/paranext/paranext-core). We recommend you periodically update your repo and extensions by merging the latest template updates into them.
@@ -115,6 +115,8 @@ npm run update-from-templates
 ```
 
 If you encounter errors from merge conflicts, please resolve the merge conflicts, finish the commit, and run the script above again.
+
+**Note:** The merge/squash commits created when updating this repo and its extensions from the templates are important; Git uses them to compare the files for future updates. If you edit this repo's Git history, please preserve these commits (do not squash them, for example) to avoid duplicated merge conflicts in the future.
 
 <details>
     <summary>[Optional] Update from the templates manually</summary>

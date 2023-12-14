@@ -10,8 +10,7 @@ module.exports = {
 
   rules: {
     // #region From paranext-core root .eslintrc.js
-    // Some rules are commented out since they have overrides in the
-    // 'Overrides from paranext-core extension .eslintrc.cjs' section
+    // Some rules are commented out since they have overrides in following regions
 
     // #region ERB rules
 
@@ -25,7 +24,7 @@ module.exports = {
 
     // #endregion
 
-    // #region Paranext rules
+    // #region Platform.Bible rules
 
     // Rules in each section are generally in alphabetical order. However, several
     // `@typescript-eslint` rules require disabling the equivalent ESLint rule. So in these cases
@@ -94,7 +93,7 @@ module.exports = {
 
     // #endregion
 
-    // #region Overrides shared with paranext-multi-extension-template .eslintrc.cjs
+    // #region Overrides shared with paranext-extension-template .eslintrc.cjs
 
     'import/no-unresolved': ['error', { ignore: ['@papi'] }],
 
