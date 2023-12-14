@@ -98,6 +98,8 @@ export async function formatExtensionFolder(extensionFolderPath: string) {
       '**/logs/**/*',
       '**/*.log',
       '**/.eslintcache',
+      '**/dist/**/*',
+      '**/release/**/*',
     ],
     from: /([^/])\.\.\/paranext-core/g,
     to: '$1../../../paranext-core',
