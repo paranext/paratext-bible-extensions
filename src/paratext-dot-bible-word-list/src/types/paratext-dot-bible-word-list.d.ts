@@ -38,7 +38,7 @@ declare module 'papi-shared-types' {
      *   not provided
      * @returns WebView id for new word list WebView or `undefined` if the user canceled the dialog
      */
-    'paratextWordList.open': (projectId?: string) => Promise<string | undefined>;
+    'paratextDotBibleWordList.open': (projectId?: string) => Promise<string | undefined>;
   }
 
   export interface DataProviders {

@@ -14,7 +14,7 @@ import { getTextCollectionTitle } from './util';
 
 logger.info('Text collection extension is importing!');
 
-const TEXT_COLLECTION_WEB_VIEW_TYPE = 'paratextTextCollection.react';
+const TEXT_COLLECTION_WEB_VIEW_TYPE = 'paratextDotBibleTextCollection.react';
 
 /** Text collection web view provider - provides Text collection web view when papi asks for it */
 const textCollectionWebViewProvider: IWebViewProvider = {
@@ -46,7 +46,7 @@ const textCollectionWebViewProvider: IWebViewProvider = {
         ? getTextCollectionTitle(projectsMetadata, new VerseRef(1, 1, 1))
         : 'Text Collection',
       ...savedWebView,
-      iconUrl: 'papi-extension://paratext-text-collection/assets/Group24.svg',
+      iconUrl: 'papi-extension://paratext-dot-bible-text-collection/assets/Group24.svg',
       content: textCollectionReact,
       styles: textCollectionReactStyles,
       state: {
@@ -66,27 +66,30 @@ export async function activate(context: ExecutionActivationContext) {
   );
 
   context.registrations.add(
-    await papi.commands.registerCommand('paratextTextCollection.open', async (projectIds) => {
-      let projectIdsForWebView = projectIds;
+    await papi.commands.registerCommand(
+      'paratextDotBibleTextCollection.open',
+      async (projectIds) => {
+        let projectIdsForWebView = projectIds;
 
-      // If projectIds weren't passed in, get from dialog
-      if (!projectIdsForWebView) {
-        const userProjectIds = await papi.dialogs.showDialog('platform.selectMultipleProjects', {
-          title: 'Open Text Collection',
-          prompt: 'Please select projects to open in the text collection:',
-        });
-        if (userProjectIds) projectIdsForWebView = userProjectIds;
-      }
+        // If projectIds weren't passed in, get from dialog
+        if (!projectIdsForWebView) {
+          const userProjectIds = await papi.dialogs.showDialog('platform.selectMultipleProjects', {
+            title: 'Open Text Collection',
+            prompt: 'Please select projects to open in the text collection:',
+          });
+          if (userProjectIds) projectIdsForWebView = userProjectIds;
+        }
 
-      // If the user didn't select a project, return undefined and don't show the text collection
-      if (!projectIdsForWebView) return undefined;
+        // If the user didn't select a project, return undefined and don't show the text collection
+        if (!projectIdsForWebView) return undefined;
 
-      // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
-      // eslint-disable-next-line no-type-assertion/no-type-assertion
-      return papi.webViews.getWebView(TEXT_COLLECTION_WEB_VIEW_TYPE, undefined, {
-        projectIds: projectIdsForWebView,
-      } as GetWebViewOptions);
-    }),
+        // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
+        // eslint-disable-next-line no-type-assertion/no-type-assertion
+        return papi.webViews.getWebView(TEXT_COLLECTION_WEB_VIEW_TYPE, undefined, {
+          projectIds: projectIdsForWebView,
+        } as GetWebViewOptions);
+      },
+    ),
   );
 
   // Await the web view provider promise at the end so we don't hold everything else up

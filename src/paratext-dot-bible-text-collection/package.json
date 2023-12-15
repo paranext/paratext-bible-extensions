@@ -1,9 +1,9 @@
 {
-  "name": "paratext-text-collection",
+  "name": "paratext-dot-bible-text-collection",
   "private": true,
   "version": "0.0.1",
   "main": "src/main.js",
-  "types": "src/types/paratext-text-collection.d.ts",
+  "types": "src/types/paratext-dot-bible-text-collection.d.ts",
   "author": "Platform.Bible Bundled Extensions Team - Rolf Heij",
   "license": "MIT",
   "scripts": {

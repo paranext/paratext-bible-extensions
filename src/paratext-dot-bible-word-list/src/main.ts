@@ -201,7 +201,7 @@ const wordListDataProviderEngine: IDataProviderEngine<WordListDataTypes> &
   },
 };
 
-const WORD_LIST_WEB_VIEW_TYPE = 'paratextWordList.react';
+const WORD_LIST_WEB_VIEW_TYPE = 'paratextDotBibleWordList.react';
 
 const wordListWebViewProvider: IWebViewProvider = {
   async getWebView(
@@ -256,7 +256,7 @@ export async function activate(context: ExecutionActivationContext) {
   );
 
   context.registrations.add(
-    await papi.commands.registerCommand('paratextWordList.open', async (projectId) => {
+    await papi.commands.registerCommand('paratextDotBibleWordList.open', async (projectId) => {
       let projectIdForWebView = projectId;
 
       // If projectIds weren't passed in, get from dialog
