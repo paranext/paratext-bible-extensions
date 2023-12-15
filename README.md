@@ -24,7 +24,15 @@ To make the process of customizing from the template as smooth as possible, we r
   - Replace the first line `# paranext-multi-extension-template` with `# your-extension-repo-name`
   - Below the first line, replace the repo description with your own description
 
-- In `package.json`, replace `"paranext-multi-extension-template"` with `"your-extension-repo-name"`
+- In `package.json`:
+
+  - Replace `"paranext-multi-extension-template"` with `"your-extension-repo-name"`
+  - Update ownership information and other relevant fields as desired
+
+- In `LICENSE`:
+
+  - Adjust as desired (feel free to choose a different license)
+  - If you choose to stay with the current license, update the copyright statement
 
 #### Create your first extension in this repo
 

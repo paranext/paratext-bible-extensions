@@ -1,35 +1,34 @@
-import { execGitCommand } from './git.util';
+import {
+  ERROR_STRINGS,
+  MULTI_TEMPLATE_NAME,
+  MULTI_TEMPLATE_URL,
+  SINGLE_TEMPLATE_NAME,
+  SINGLE_TEMPLATE_URL,
+  execGitCommand,
+} from './git.util';
 
 (async () => {
   let exitCode = 0;
-  // Try adding paranext-multi-extension-template
+  // Try adding MULTI_TEMPLATE_REMOTE_NAME
   try {
-    await execGitCommand(
-      'git remote add paranext-multi-extension-template https://github.com/paranext/paranext-multi-extension-template',
-    );
+    await execGitCommand(`git remote add ${MULTI_TEMPLATE_NAME} ${MULTI_TEMPLATE_URL}`);
   } catch (e) {
-    if (e.toString().includes('remote paranext-multi-extension-template already exists'))
-      console.log(
-        'Remote paranext-multi-extension-template already exists. This is likely not a problem.',
-      );
+    if (e.toString().includes(ERROR_STRINGS.multiRemoteExists))
+      console.log(`Remote ${MULTI_TEMPLATE_NAME} already exists. This is likely not a problem.`);
     else {
-      console.error(`Error on adding remote paranext-multi-extension-template: ${e}`);
+      console.error(`Error on adding remote ${MULTI_TEMPLATE_NAME}: ${e}`);
       exitCode = 1;
     }
   }
 
-  // Try adding paranext-extension-template
+  // Try adding SINGLE_TEMPLATE_REMOTE_NAME
   try {
-    await execGitCommand(
-      'git remote add paranext-extension-template https://github.com/paranext/paranext-extension-template',
-    );
+    await execGitCommand(`git remote add ${SINGLE_TEMPLATE_NAME} ${SINGLE_TEMPLATE_URL}`);
   } catch (e) {
-    if (e.toString().includes('remote paranext-extension-template already exists'))
-      console.log(
-        'Remote paranext-extension-template already exists. This is likely not a problem.',
-      );
+    if (e.toString().includes(ERROR_STRINGS.singleRemoteExists))
+      console.log(`Remote ${SINGLE_TEMPLATE_NAME} already exists. This is likely not a problem.`);
     else {
-      console.error(`Error on adding remote paranext-extension-template: ${e}`);
+      console.error(`Error on adding remote ${SINGLE_TEMPLATE_NAME}: ${e}`);
       exitCode = 1;
     }
   }

@@ -3,12 +3,70 @@ import { promisify } from 'util';
 import path from 'path';
 import replaceInFile from 'replace-in-file';
 
-/** The branch to use in pulling changes from `paranext-multi-extension-template` */
+const execAsync = promisify(exec);
+
+/** The name for the multi-extension template remote as used in the git scripts */
+export const MULTI_TEMPLATE_NAME = 'paranext-multi-extension-template';
+/** The url for the multi-extension template remote as used in the git scripts */
+export const MULTI_TEMPLATE_URL = 'https://github.com/paranext/paranext-multi-extension-template';
+/** The branch to use in pulling changes from `MULTI_TEMPLATE_REMOTE_NAME` in the git scripts */
 export const MULTI_TEMPLATE_BRANCH = 'main';
-/** The branch to use in pulling changes from `paranext-extension-template` */
+/** The name for the single extension template remote as used in the git scripts */
+export const SINGLE_TEMPLATE_NAME = 'paranext-extension-template';
+/** The url for the single extension template remote as used in the git scripts */
+export const SINGLE_TEMPLATE_URL = 'https://github.com/paranext/paranext-extension-template';
+/** The branch to use in pulling changes from `SINGLE_TEMPLATE_REMOTE_NAME` in the git scripts */
 export const SINGLE_TEMPLATE_BRANCH = 'main';
 
-const execAsync = promisify(exec);
+// #region localization
+
+/**
+ * Error strings to be checked for in git output for various reasons
+ *
+ * `{key}` is replaced where applicable with the equivalent value from `GIT_CONSTANTS[key]`
+ */
+const errorStringTemplates = {
+  multiRemoteExists: 'remote {MULTI_TEMPLATE_NAME} already exists',
+  singleRemoteExists: 'remote {SINGLE_TEMPLATE_NAME} already exists',
+  /** `{0} is the subtree name aka the OS-independent extension directory path */
+  subtreeNeverAdded: "fatal: can't squash-merge: '{0}' was never added.\n",
+};
+
+/** Object mapping const names for template replacing */
+const GIT_CONSTANTS = Object.freeze({
+  MULTI_TEMPLATE_NAME,
+  MULTI_TEMPLATE_URL,
+  MULTI_TEMPLATE_BRANCH,
+  SINGLE_TEMPLATE_NAME,
+  SINGLE_TEMPLATE_URL,
+  SINGLE_TEMPLATE_BRANCH,
+});
+
+/**
+ * Formats a string, replacing `GIT_CONSTANTS` values in brackets like `{MULTI_TEMPLATE_NAME}` and
+ * such with their equivalent actual values
+ *
+ * @param str String to format
+ * @param args Rest args of strings to replace `{x}` with, where x is the arg index - 1
+ * @returns Formatted string
+ */
+function formatGitErrorTemplate(str: string): string {
+  return str.replace(/{([^}]+)}/g, function replaceTemplateNumber(match) {
+    const matchingGitConstant = GIT_CONSTANTS[match.slice(1, -1)];
+    return matchingGitConstant !== undefined ? matchingGitConstant : match;
+  });
+}
+
+/** Error strings to be checked for in git output for various reasons */
+// We are just mapping an object with strings to an object with strings. wah
+// eslint-disable-next-line no-type-assertion/no-type-assertion
+export const ERROR_STRINGS = Object.fromEntries(
+  Object.entries(errorStringTemplates).map(([key, value]) => [key, formatGitErrorTemplate(value)]),
+) as typeof errorStringTemplates;
+
+console.log(JSON.stringify(ERROR_STRINGS, undefined, 2));
+
+// #endregion
 
 /**
  * Executes a git command from the repo root directory, logging both the command and the results.
@@ -44,7 +102,7 @@ export async function execGitCommand(
  * Check the repo for working changes
  *
  * @param quiet Whether to log an error if there are working changes
- * @returns 1 if there were working changes, 0 otherwise
+ * @returns True if there were working changes, false otherwise
  */
 export async function checkForWorkingChanges(quiet = false) {
   // Check the git status to make sure there are no working changes
@@ -59,25 +117,25 @@ export async function checkForWorkingChanges(quiet = false) {
           status,
         )}`,
       );
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 /**
- * Fetch latest from paranext-extension-template
+ * Fetch latest from SINGLE_TEMPLATE_REMOTE_NAME
  *
- * @returns 1 if there was an error, 0 otherwise
+ * @returns True if successful, false otherwise
  */
 export async function fetchFromSingleTemplate() {
-  // Fetch latest paranext-extension-template branch
+  // Fetch latest SINGLE_TEMPLATE_REMOTE_NAME branch
   try {
-    await execGitCommand(`git fetch paranext-extension-template ${SINGLE_TEMPLATE_BRANCH}`);
+    await execGitCommand(`git fetch ${SINGLE_TEMPLATE_NAME} ${SINGLE_TEMPLATE_BRANCH}`);
   } catch (e) {
-    console.error(`Error on git fetch on paranext-extension-template: ${e}`);
-    return 1;
+    console.error(`Error on git fetch on ${SINGLE_TEMPLATE_NAME}: ${e}`);
+    return false;
   }
-  return 0;
+  return true;
 }
 
 /**
