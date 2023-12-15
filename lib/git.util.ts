@@ -64,8 +64,6 @@ export const ERROR_STRINGS = Object.fromEntries(
   Object.entries(errorStringTemplates).map(([key, value]) => [key, formatGitErrorTemplate(value)]),
 ) as typeof errorStringTemplates;
 
-console.log(JSON.stringify(ERROR_STRINGS, undefined, 2));
-
 // #endregion
 
 /**
