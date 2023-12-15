@@ -29,6 +29,7 @@ const textCollectionWebViewProvider: IWebViewProvider = {
 
     // Type assert the WebView state since TypeScript doesn't know what type it is
     // TODO: Fix after https://github.com/paranext/paranext-core/issues/585 is done
+    // eslint-disable-next-line no-type-assertion/no-type-assertion
     const projectIds = options.projectIds || (savedWebView.state?.projectIds as string[]) || [];
 
     let projectsMetadata: ProjectMetadata[] | undefined;
@@ -80,9 +81,10 @@ export async function activate(context: ExecutionActivationContext) {
       // If the user didn't select a project, return undefined and don't show the text collection
       if (!projectIdsForWebView) return undefined;
 
+      // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
+      // eslint-disable-next-line no-type-assertion/no-type-assertion
       return papi.webViews.getWebView(TEXT_COLLECTION_WEB_VIEW_TYPE, undefined, {
         projectIds: projectIdsForWebView,
-        // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
       } as GetWebViewOptions);
     }),
   );

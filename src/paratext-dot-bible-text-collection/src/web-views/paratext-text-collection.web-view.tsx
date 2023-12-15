@@ -4,9 +4,9 @@ import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { IconButton, ScriptureReference } from 'papi-components';
 import { VerseRef } from '@sillsdev/scripture';
 import { ProjectMetadata, WebViewProps } from '@papi/core';
-import { getTextCollectionTitle, getTextCollectionTooltip } from 'src/util';
 import { Divider } from '@mui/material';
 import { Allotment } from 'allotment';
+import { getTextCollectionTitle, getTextCollectionTooltip } from '../util';
 import VerseDisplay from './components/verse-display.component';
 import ChapterView from './components/chapter-view.component';
 

@@ -124,6 +124,8 @@ globalThis.webViewComponent = function WordListWebView({ useWebViewState }: WebV
         <ComboBox
           title="Scope"
           value={scope}
+          // ComboBox doesn't have perfect types right now. https://github.com/paranext/paranext-core/issues/560
+          // eslint-disable-next-line no-type-assertion/no-type-assertion
           onChange={(_event, value) => setScope(value as Scope)}
           options={Object.values(Scope)}
           isClearable={false}
