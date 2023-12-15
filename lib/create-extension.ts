@@ -1,5 +1,6 @@
 import {
   SINGLE_TEMPLATE_BRANCH,
+  SINGLE_TEMPLATE_NAME,
   checkForWorkingChanges,
   execGitCommand,
   fetchFromSingleTemplate,
@@ -11,10 +12,10 @@ const newExtensionName = process.argv[2];
 
 (async () => {
   // Make sure there are not working changes as this will not work with working changes
-  if ((await checkForWorkingChanges()) === 1) return 1;
+  if (await checkForWorkingChanges()) return 1;
 
-  // Fetch latest on paranext-extension-template to make sure we're up to date
-  if ((await fetchFromSingleTemplate()) === 1) return 1;
+  // Fetch latest on SINGLE_TEMPLATE_REMOTE_NAME to make sure we're up to date
+  if (!(await fetchFromSingleTemplate())) return 1;
 
   /**
    * Path to the extension to format relative to root
@@ -25,10 +26,10 @@ const newExtensionName = process.argv[2];
    */
   const extensionPathOSIndependent = getExtensionPathOSIndependent(newExtensionName);
 
-  // Try putting paranext-extension-template into a new extension folder
+  // Try putting SINGLE_TEMPLATE_REMOTE_NAME into a new extension folder
   try {
     await execGitCommand(
-      `git subtree add --prefix ${extensionPathOSIndependent} paranext-extension-template ${SINGLE_TEMPLATE_BRANCH} --squash`,
+      `git subtree add --prefix ${extensionPathOSIndependent} ${SINGLE_TEMPLATE_NAME} ${SINGLE_TEMPLATE_BRANCH} --squash`,
     );
   } catch (e) {
     console.error(`Error on adding extension ${newExtensionName}: ${e}`);
@@ -40,9 +41,9 @@ const newExtensionName = process.argv[2];
 
   // Check for working changes to see if formatting the extension changed anything
   // Don't commit for them so they know what is going on
-  if ((await checkForWorkingChanges(true)) === 1)
+  if (await checkForWorkingChanges(true))
     console.log(
-      `After creating the extension at ${extensionPathOSIndependent} from paranext-extension-template and formatting it, there are working changes.\nThis is likely expected. Please commit the result.`,
+      `After creating the extension at ${extensionPathOSIndependent} from ${SINGLE_TEMPLATE_NAME} and formatting it, there are working changes.\nThis is likely expected. Please commit the result.`,
     );
 
   return 0;
