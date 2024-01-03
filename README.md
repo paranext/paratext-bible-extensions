@@ -1,4 +1,4 @@
-# paratext-dot-bible-extensions
+# paratext-bible-extensions
 
 Official Paratext.Bible extensions for Platform.Bible
 

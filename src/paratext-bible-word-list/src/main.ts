@@ -11,11 +11,7 @@ import {
   WithNotifyUpdate,
 } from '@papi/core';
 
-import type {
-  WordListDataTypes,
-  WordListEntry,
-  WordListSelector,
-} from 'paratext-dot-bible-word-list';
+import type { WordListDataTypes, WordListEntry, WordListSelector } from 'paratext-bible-word-list';
 import { ScriptureReference } from 'papi-components';
 import { VerseRef } from '@sillsdev/scripture';
 import wordListReact from './word-list.web-view?inline';
@@ -201,7 +197,7 @@ const wordListDataProviderEngine: IDataProviderEngine<WordListDataTypes> &
   },
 };
 
-const WORD_LIST_WEB_VIEW_TYPE = 'paratextDotBibleWordList.react';
+const WORD_LIST_WEB_VIEW_TYPE = 'paratextBibleWordList.react';
 
 const wordListWebViewProvider: IWebViewProvider = {
   async getWebView(
@@ -256,7 +252,7 @@ export async function activate(context: ExecutionActivationContext) {
   );
 
   context.registrations.add(
-    await papi.commands.registerCommand('paratextDotBibleWordList.open', async (projectId) => {
+    await papi.commands.registerCommand('paratextBibleWordList.open', async (projectId) => {
       let projectIdForWebView = projectId;
 
       // If projectIds weren't passed in, get from dialog

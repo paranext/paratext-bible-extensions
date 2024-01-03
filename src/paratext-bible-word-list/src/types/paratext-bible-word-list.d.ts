@@ -1,4 +1,4 @@
-declare module 'paratext-dot-bible-word-list' {
+declare module 'paratext-bible-word-list' {
   import { ScriptureReference } from 'papi-components';
   import { DataProviderDataType, IDataProvider } from '@papi/core';
 
@@ -28,7 +28,7 @@ declare module 'paratext-dot-bible-word-list' {
 }
 
 declare module 'papi-shared-types' {
-  import type { WordListDataProvider } from 'paratext-dot-bible-word-list';
+  import type { WordListDataProvider } from 'paratext-bible-word-list';
 
   export interface CommandHandlers {
     /**
@@ -38,7 +38,7 @@ declare module 'papi-shared-types' {
      *   not provided
      * @returns WebView id for new word list WebView or `undefined` if the user canceled the dialog
      */
-    'paratextDotBibleWordList.open': (projectId?: string) => Promise<string | undefined>;
+    'paratextBibleWordList.open': (projectId?: string) => Promise<string | undefined>;
   }
 
   export interface DataProviders {

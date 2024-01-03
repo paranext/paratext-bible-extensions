@@ -14,7 +14,7 @@ import { getTextCollectionTitle } from './util';
 
 logger.info('Text collection extension is importing!');
 
-const TEXT_COLLECTION_WEB_VIEW_TYPE = 'paratextDotBibleTextCollection.react';
+const TEXT_COLLECTION_WEB_VIEW_TYPE = 'paratextBibleTextCollection.react';
 
 /** Text collection web view provider - provides Text collection web view when papi asks for it */
 const textCollectionWebViewProvider: IWebViewProvider = {
@@ -46,7 +46,7 @@ const textCollectionWebViewProvider: IWebViewProvider = {
         ? getTextCollectionTitle(projectsMetadata, new VerseRef(1, 1, 1))
         : 'Text Collection',
       ...savedWebView,
-      iconUrl: 'papi-extension://paratext-dot-bible-text-collection/assets/Group24.svg',
+      iconUrl: 'papi-extension://paratext-bible-text-collection/assets/Group24.svg',
       content: textCollectionReact,
       styles: textCollectionReactStyles,
       state: {
@@ -67,7 +67,7 @@ export async function activate(context: ExecutionActivationContext) {
 
   context.registrations.add(
     await papi.commands.registerCommand(
-      'paratextDotBibleTextCollection.open',
+      'paratextBibleTextCollection.open',
       async (projectIds) => {
         let projectIdsForWebView = projectIds;
 

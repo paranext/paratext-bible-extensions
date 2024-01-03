@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Table, TableCellClickArgs, TableSortColumn } from 'papi-components';
-import type { WordListEntry } from 'paratext-dot-bible-word-list';
+import type { WordListEntry } from 'paratext-bible-word-list';
 
 type Row = {
   word: string;
