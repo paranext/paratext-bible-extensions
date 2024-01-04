@@ -1,0 +1,17 @@
+.word-list {
+  overflow: auto;
+  padding: 10px;
+
+  .filters {
+    display: flex;
+    align-items: center;
+  }
+
+  .filters > * {
+    margin-right: 10px;
+  }
+}
+
+.word-list > * {
+  margin-top: 10px;
+}
