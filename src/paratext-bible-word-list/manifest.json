@@ -1,10 +1,10 @@
 {
-  "name": "paratext-bible-word-list",
+  "name": "paranext-extension-template",
   "version": "0.0.1",
-  "description": "Word list extension for Platform.Bible/Paratext.Bible",
-  "author": "Platform.Bible Bundled Extensions Team - Rolf Heij",
+  "description": "Extension template for Paranext. Powered by webpack",
+  "author": "Paranext",
   "license": "MIT",
   "main": "src/main.ts",
-  "types": "src/types/paratext-bible-word-list.d.ts",
+  "types": "src/types/paranext-extension-template.d.ts",
   "activationEvents": []
 }
