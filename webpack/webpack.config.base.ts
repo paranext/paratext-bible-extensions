@@ -1,4 +1,4 @@
-// #region shared with https://github.com/paranext/paranext-extension-template/blob/main/webpack/webpack.config.base.ts
+// #region shared with https://github.com/paranext/paranext-multi-extension-template/blob/main/webpack/webpack.config.base.ts
 
 import path from 'path';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';

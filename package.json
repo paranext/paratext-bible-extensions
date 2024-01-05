@@ -1,7 +1,9 @@
 {
-  "name": "paratext-bible-extensions",
+  "name": "paranext-extension-template",
   "private": true,
   "version": "0.0.1",
+  "main": "src/main.js",
+  "types": "src/types/paranext-extension-template.d.ts",
   "author": "Paranext",
   "license": "MIT",
   "scripts": {
@@ -11,20 +13,17 @@
     "watch": "npm run build -- --watch",
     "build:production": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=false webpack",
     "watch:production": "npm run build:production -- --watch",
-    "zip": "ts-node ./lib/zip-extensions.ts",
+    "zip": "zip-build dist release --template '%NAME%_%VERSION%.%EXT%' --override",
     "package": "npm run build:production && npm run zip",
     "package:debug": "cross-env DEBUG_PROD=true npm run package",
     "start:core": "cd ../paranext-core && npm run start",
-    "start": "cross-env MAIN_ARGS=\"--extensionDirs $INIT_CWD/dist\" concurrently \"npm:watch\" \"npm:start:core\"",
-    "start:production": "cross-env MAIN_ARGS=\"--extensionDirs $INIT_CWD/dist\" concurrently \"npm:watch:production\" \"npm:start:core\"",
+    "start": "cross-env MAIN_ARGS=\"--extensions $INIT_CWD/dist\" concurrently \"npm:watch\" \"npm:start:core\"",
+    "start:production": "cross-env MAIN_ARGS=\"--extensions $INIT_CWD/dist\" concurrently \"npm:watch:production\" \"npm:start:core\"",
     "lint": "npm run lint:scripts && npm run lint:styles",
-    "lint:scripts": "cross-env NODE_ENV=development eslint --ext .cjs,.js,.jsx,.ts,.tsx --cache .",
+    "lint:scripts": "eslint --ext .cjs,.js,.jsx,.ts,.tsx --cache .",
     "lint:styles": "stylelint **/*.{css,scss}",
     "lint-fix": "npm run lint-fix:scripts && npm run lint:styles -- --fix",
-    "lint-fix:scripts": "prettier --write \"**/*.{ts,tsx,js,jsx,csj}\" && npm run lint:scripts",
-    "postinstall": "ts-node ./lib/add-remotes.ts",
-    "create-extension": "ts-node ./lib/create-extension.ts",
-    "update-from-templates": "ts-node ./lib/update-from-templates.ts"
+    "lint-fix:scripts": "prettier --write \"**/*.{ts,tsx,js,jsx}\" && npm run lint:scripts"
   },
   "browserslist": [],
   "peerDependencies": {
@@ -33,21 +32,12 @@
     "react-dom": ">=18.2.0"
   },
   "devDependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.18",
-    "@mui/material": "^5.14.18",
     "@types/node": "^18.17.12",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@types/webpack": "^5.28.2",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
-    "@visx/responsive": "^3.3.0",
-    "@visx/scale": "^3.3.0",
-    "@visx/text": "^3.3.0",
-    "@visx/wordcloud": "^3.3.0",
-    "allotment": "^1.19.3",
     "concurrently": "^8.2.1",
     "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
@@ -71,7 +61,6 @@
     "papi-dts": "file:../paranext-core/lib/papi-dts",
     "prettier": "^2.8.8",
     "prettier-plugin-jsdoc": "^0.4.2",
-    "replace-in-file": "^7.0.2",
     "sass": "^1.66.1",
     "sass-loader": "^13.3.2",
     "stylelint": "^15.10.3",
@@ -85,6 +74,6 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^5.9.0",
-    "zip-folder-promise": "^1.2.0"
+    "zip-build": "^1.8.0"
   }
 }
