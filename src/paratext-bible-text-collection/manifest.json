@@ -1,10 +1,10 @@
 {
-  "name": "paratext-bible-text-collection",
+  "name": "paranext-extension-template",
   "version": "0.0.1",
-  "description": "Text collection extension. First extension of the Paratext.Bible extension suite.",
-  "author": "Platform.Bible Bundled Extensions Team - Rolf Heij",
+  "description": "Extension template for Paranext. Powered by webpack",
+  "author": "Paranext",
   "license": "MIT",
   "main": "src/main.ts",
-  "types": "src/types/paratext-bible-text-collection.d.ts",
+  "types": "src/types/paranext-extension-template.d.ts",
   "activationEvents": []
 }
