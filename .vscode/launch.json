@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Watch and Build Extensions",
+      "name": "Watch and Build Extension",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npm",
@@ -29,7 +29,7 @@
       "runtimeArgs": ["run", "build:main"]
     },
     {
-      "name": "Build Extensions",
+      "name": "Build Extension",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npm",
@@ -37,7 +37,7 @@
       "runtimeArgs": ["run", "build"]
     },
     {
-      "name": "Debug Platform with Extensions",
+      "name": "Debug Platform with Extension",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npm",

@@ -1,4 +1,4 @@
-// #region shared with https://github.com/paranext/paranext-extension-template/blob/main/webpack/webpack.config.web-view.ts
+// #region shared with https://github.com/paranext/paranext-multi-extension-template/blob/main/webpack/webpack.config.web-view.ts
 
 import webpack from 'webpack';
 import merge from 'webpack-merge';

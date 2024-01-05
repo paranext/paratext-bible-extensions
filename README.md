@@ -1,24 +1,80 @@
-# paratext-bible-extensions
+# paranext-extension-template
 
-Official Paratext.Bible extensions for Platform.Bible
+Basic extension template for Platform.Bible
+
+## Template Info
+
+This is a webpack project template pre-configured to build a Platform.Bible extension. It contains the bare minimum of what an extension needs. Note that the `*.web-view.*` files and the `public/assets` folder mentioned in [Summary](#summary) are not present in this template. For inspiration on what these could look like, refer to any extension that is built using this template. An example would be the [Text Collection extension](https://github.com/paranext/paranext-extension-text-collection).
+
+There is also [a template pre-configured to build an arbitrary number of Platform.Bible extensions in one repo](https://github.com/paranext/paranext-multi-extension-template).
+
+### Customize extension details
+
+Follow these instructions to customize the template to be your own Platform.Bible extension. This section is a more compact version of the [`Your first extension` guide](https://github.com/paranext/paranext-extension-template/wiki/Your-First-Extension).
+
+#### Install and hook up to the template
+
+Note: please skip this section and continue with [Replace placeholders](#replace-placeholders) if you are following these instructions as part of [creating an extension within `paranext-multi-extension-template`](https://github.com/paranext/paranext-multi-extension-template#to-create-a-new-extension-in-this-repo).
+
+To make the process of customizing from the template as smooth as possible, we recommend you do the following before anything else:
+
+- [Install and set up this repo](#to-install)
+- [Update this extension from the template](#to-update-this-extension-from-the-template)
+
+#### Replace placeholders
+
+- At the top of this `README.md`:
+
+  - Replace the first line `# paranext-extension-template` with `# your-extension-name`
+  - Below the first line, replace the extension description with your own description
+  - In the [Summary](#summary) section, replace `src/types/paranext-extension-template.d.ts` with `src/types/<your_extension_name>.d.ts`
+
+- In `manifest.json`:
+
+  - Replace `paranext-extension-template` with `your-extension-name` (2 occurrences)
+  - Replace the description with your own description
+  - Update ownership information and other relevant fields as desired
+
+- In `package.json`:
+
+  - Replace `paranext-extension-template` with `your-extension-name` (2 occurrences)
+  - Replace the description with your own description
+  - Update ownership information and other relevant fields as desired
+
+- In `LICENSE`:
+
+  - Adjust as desired (feel free to choose a different license)
+  - If you choose to stay with the current license, update the copyright statement
+
+- Rename `src/types/paranext-extension-template.d.ts` to `src/types/<your_extension_name>.d.ts`
+
+  - In this renamed file, replace `paranext-extension-template` with `your-extension-name`
+
+- In `src/main.ts`, replace `Extension template` with `Your Extension Name` (2 occurrences)
+
+#### Customize the extension manifest and package information
+
+The `manifest.json` and `package.json` files contain information specific to your extension. Add your extension's details in these two files as needed. See more information on the `manifest.json` and `package.json` files in [Extension Anatomy](https://github.com/paranext/paranext-extension-template/wiki/Extension-Anatomy#extension-manifest).
+
+#### Remove Template Info
+
+Once finished customizing this template to be your own, you can remove the [Template Info](#template-info) section and sub-sections of this readme.
 
 ## Summary
 
-This is a webpack project configured to build Platform.Bible extensions. The general file structure is as follows:
+The general file structure is as follows:
 
-- `src/` contains the source code for all extensions
-  - Each sub-folder in `src/` with a `manifest.json` in it is an extension
-    - `package.json` contains information about this extension's npm package. It is required for Platform.Bible to use the extension properly. It is copied into the build folder
-    - `manifest.json` is the manifest file that defines the extension and important properties for Platform.Bible. It is copied into the build folder
-    - `src/` contains the source code for the extension
-      - `src/main.ts` is the main entry file for the extension
-      - `src/types/<extension_name>.d.ts` is this extension's types file that defines how other extensions can use this extension through the `papi`
-      - `*.web-view.tsx` files will be treated as React WebViews
-      - `*.web-view.html` files are a conventional way to provide HTML WebViews (no special functionality)
-    - `assets/` contains asset files the extension and its WebViews can retrieve using the `papi-extension:` protocol. It is copied into the build folder
-    - `public/` contains other static files that are copied into the build folder
+- `package.json` contains information about this extension's npm package. It is required for Platform.Bible to use the extension properly. It is copied into the build folder
+- `manifest.json` is the manifest file that defines the extension and important properties for Platform.Bible. It is copied into the build folder
+- `src/` contains the source code for the extension
+  - `src/main.ts` is the main entry file for the extension
+  - `src/types/paranext-extension-template.d.ts` is this extension's types file that defines how other extensions can use this extension through the `papi`. It is copied into the build folder
+  - `*.web-view.tsx` files will be treated as React WebViews
+  - `*.web-view.html` files are a conventional way to provide HTML WebViews (no special functionality)
+- `assets/` contains asset files the extension and its WebViews can retrieve using the `papi-extension:` protocol. It is copied into the build folder
+- `public/` contains other static files that are copied into the build folder
 - `dist/` is a generated folder containing the built extension files
-- `release/` is a generated folder containing zips of the built extension files
+- `release/` is a generated folder containing a zip of the built extension files
 
 ## To install
 
@@ -26,23 +82,6 @@ This is a webpack project configured to build Platform.Bible extensions. The gen
 
 1. Follow the instructions to install [`paranext-core`](https://github.com/paranext/paranext-core#developer-install).
 2. In this repo, run `npm install` to install local and published dependencies
-
-Note: running `npm install` automatically adds remotes that help with [updating from the templates](#to-update-this-repo-and-extensions-from-the-templates).
-
-<details>
-    <summary>[Optional] Adding remotes manually</summary>
-
-#### Adding remotes manually
-
-To add these remotes manually, run the following commands:
-
-```bash
-git remote add paranext-multi-extension-template https://github.com/paranext/paranext-multi-extension-template
-
-git remote add paranext-extension-template https://github.com/paranext/paranext-extension-template
-```
-
-</details>
 
 ### Configure paths to `paranext-core` repo
 
@@ -53,147 +92,51 @@ In order to interact with `paranext-core`, you must point `package.json` to your
 
 ## To run
 
-### Running Platform.Bible with these extensions
+### Running Platform.Bible with this extension
 
-To run Platform.Bible with these extensions:
+To run Platform.Bible with this extension:
 
 `npm start`
 
-Note: The built extensions will be the `dist` folder. In order for Platform.Bible to run these extensions, you must provide the directory to these built extensions to Platform.Bible via a command-line argument. This command-line argument is already provided in this `package.json`'s `start` script. If you want to start Platform.Bible and use these extensions any other way, you must provide this command-line argument or put the `dist` folder into Platform.Bible's `extensions` folder.
+Note: The built extension will be in the `dist` folder. In order for Platform.Bible to run this extension, you must provide the directory to this built extension to Platform.Bible via a command-line argument. This command-line argument is already provided in this `package.json`'s `start` script. If you want to start Platform.Bible and use this extension any other way, you must provide this command-line argument or put the `dist` folder into Platform.Bible's `extensions` folder.
 
-### Building these extensions independently
+### Building this extension independently
 
 To watch extension files (in `src`) for changes:
 
 `npm run watch`
 
-To build the extensions once:
+To build the extension once:
 
 `npm run build`
 
 ## To package for distribution
 
-To package these extensions into a zip file for distribution:
+To package this extension into a zip file for distribution:
 
 `npm run package`
 
-## To create a new extension in this repo
+## To update this extension from the template
 
-To create a new extension in this repo, make sure your repo has no working changes, then run the following command (replace `<extension_name>` with the preferred extension name. This will also be the extension's folder name in the `src` folder):
+This extension project is forked from [`paranext-extension-template`](https://github.com/paranext/paranext-extension-template), which is updated periodically and will sometimes receive updates that help with breaking changes on [`paranext-core`](https://github.com/paranext/paranext-core). We recommend you periodically update your extension by merging the latest template updates into your extension.
 
-```bash
-npm run create-extension -- <extension_name>
-```
-
-Then follow [the instructions for customizing the new extension](https://github.com/paranext/paranext-extension-template#customize-extension-details).
-
-**Note:** The merge/squash commits created when creating a new extension are important; Git uses them to compare the files for future updates. If you edit this repo's Git history, please preserve these commits (do not squash them, for example) to avoid duplicated merge conflicts in the future.
-
-<details>
-    <summary>[Optional] Creating a new extension manually</summary>
-
-#### Manually create a new extension
-
-Alternatively, you can create a new extension manually:
+To set up this extension to be updated from the template, run the following command once after cloning this repo:
 
 ```bash
-git fetch paranext-extension-template main
-
-git subtree add --prefix src/<extension_name> paranext-extension-template main --squash
+git remote add template https://github.com/paranext/paranext-extension-template
 ```
 
-</details>
-
-## To update this repo and extensions from the templates
-
-This project is forked from [`paranext-multi-extension-template`](https://github.com/paranext/paranext-multi-extension-template), and its extensions are derived from [`paranext-extension-template`](https://github.com/paranext/paranext-extension-template). Both are updated periodically and will sometimes receive updates that help with breaking changes on [`paranext-core`](https://github.com/paranext/paranext-core). We recommend you periodically update your repo and extensions by merging the latest template updates into them.
-
-To update this repo including all extensions to have the latest updates and upgrades from the templates, make sure your repo has no working changes, then run the following `npm` script:
+To update this extension from the template, make sure your repo has no working changes. Then run the following commands:
 
 ```bash
-npm run update-from-templates
+git fetch template
+git merge template/main --allow-unrelated-histories
 ```
 
-If you encounter errors from merge conflicts, please resolve the merge conflicts, finish the commit, and run the script above again.
+For more information, read [the instructions on the wiki](https://github.com/paranext/paranext-extension-template/wiki/Merging-Template-Changes-into-Your-Extension).
 
-**Note:** The merge/squash commits created when updating this repo and its extensions from the templates are important; Git uses them to compare the files for future updates. If you edit this repo's Git history, please preserve these commits (do not squash them, for example) to avoid duplicated merge conflicts in the future.
-
-<details>
-    <summary>[Optional] Update from the templates manually</summary>
-
-### Update from the templates manually
-
-Alternatively, you can update from the templates manually.
-
-#### Manually update this repo from `paranext-multi-extension-template`
-
-```bash
-git fetch paranext-multi-extension-template main
-
-git merge paranext-multi-extension-template/main --allow-unrelated-histories
-```
-
-#### Manually update extensions from `paranext-extension-template`
-
-```bash
-git fetch paranext-extension-template main
-```
-
-For each extension, run the following (replace `<extension_name>` with each extension's folder name):
-
-```bash
-git subtree pull --prefix src/<extension_name> paranext-extension-template main --squash
-```
-
-</details>
+**Note:** The merge/squash commits created when updating this repo from the template are important; Git uses them to compare the files for future updates. If you edit this repo's Git history, please preserve these commits (do not squash them, for example) to avoid duplicated merge conflicts in the future.
 
 ## Special features in this project
 
-This project has special features and specific configuration to make building extensions for Platform.Bible easier. In the following expandable section are a few important notes:
-
-<details>
-    <summary>Expand to read about special features in this project</summary>
-
-### React WebView files - `.web-view.tsx`
-
-Platform.Bible WebViews must be treated differently than other code, so this project makes doing that simpler:
-
-- WebView code must be bundled and can only import specific packages provided by Platform.Bible (see `externals` in `webpack.config.base.ts`), so this project bundles React WebViews before bundling the main extension file to support this requirement. The project discovers and bundles files that end with `.web-view.tsx` in this way.
-  - Note: while watching for changes, if you add a new `.web-view.tsx` file, you must either restart webpack or make a nominal change and save in an existing `.web-view.tsx` file for webpack to discover and bundle this new file.
-- WebView code and styles must be provided to the `papi` as strings, so you can import WebView files with [`?inline`](#special-imports) after the file path to import the file as a string.
-
-### Special imports
-
-- Adding `?inline` to the end of a file import causes that file to be imported as a string after being transformed by webpack loaders but before bundling dependencies (except if that file is a React WebView file, in which case dependencies will be bundled). The contents of the file will be on the file's default export.
-  - Ex: `import myFile from './file-path?inline`
-- Adding `?raw` to the end of a file import treats a file the same way as `?inline` except that it will be imported directly without being transformed by webpack.
-
-### Misc features
-
-- Platform.Bible extensions' code must be bundled all together in one file, so webpack bundles all the code together into one main file per extension.
-- Platform.Bible extensions can interact with other extensions, but they cannot import and export like in a normal Node environment. Instead, they interact through the `papi`. As such, each extension's `src/types` folder contains its declarations file that tells other extensions how to interact with it through the `papi`.
-
-### Two-step webpack build
-
-These extensions are built by webpack (`webpack.config.ts`) in two steps: a WebView bundling step and a main bundling step:
-
-#### Build 1: TypeScript WebView bundling
-
-Webpack (`./webpack/webpack.config.web-view.ts`) prepares TypeScript WebViews for use and outputs them into temporary build folders adjacent to the WebView files:
-
-- Formats WebViews to match how they should look to work in Platform.Bible
-- Transpiles React/TypeScript WebViews into JavaScript
-- Bundles dependencies into the WebViews
-- Embeds Sourcemaps into the WebViews inline
-
-#### Build 2: Main and final bundling
-
-Webpack (`./webpack/webpack.config.main.ts`) prepares the main extension files and bundles each extension together into the `dist` folder:
-
-- Transpiles the main TypeScript file and its imported modules into JavaScript
-- Injects the bundled WebViews into the main file
-- Bundles dependencies into the main file
-- Embeds Sourcemaps into the file inline
-- Packages everything up into an extension folder `dist`
-
-</details>
+This project has special features and specific configuration to make building an extension for Platform.Bible easier. See [Special features of `paranext-multi-extension-template`](https://github.com/paranext/paranext-multi-extension-template#special-features-of-the-template) for information on these special features.
