@@ -48,6 +48,7 @@ const configBase: webpack.Configuration = {
     '@papi/frontend',
     '@papi/frontend/react',
     '@sillsdev/scripture',
+    'platform-bible-utils',
   ],
   module: {
     // Please keep these JSDocs up-to-date with their counterparts in `webpack-env.d.ts`

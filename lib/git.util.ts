@@ -12,7 +12,7 @@ export const MULTI_TEMPLATE_URL = 'https://github.com/paranext/paranext-multi-ex
 /** The branch to use in pulling changes from `paranext-multi-extension-template` */
 export const MULTI_TEMPLATE_BRANCH = 'update-libraries';
 /** The name for the single extension template remote as used in the git scripts */
-export const SINGLE_TEMPLATE_NAME = 'paranext-extension-template';
+export const SINGLE_TEMPLATE_NAME = 'main';
 /** The url for the single extension template remote as used in the git scripts */
 export const SINGLE_TEMPLATE_URL = 'https://github.com/paranext/paranext-extension-template';
 /** The branch to use in pulling changes from `paranext-extension-template` */
