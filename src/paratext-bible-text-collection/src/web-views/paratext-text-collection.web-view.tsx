@@ -1,7 +1,8 @@
 import papi from '@papi/frontend';
-import { useSetting, usePromise, useDialogCallback } from '@papi/frontend/react';
+import { useSetting, useDialogCallback } from '@papi/frontend/react';
 import { Fragment, useCallback, useEffect, useMemo } from 'react';
-import { IconButton, ScriptureReference } from 'papi-components';
+import { IconButton, ScriptureReference, usePromise } from 'platform-bible-react';
+import { deepEqual } from 'platform-bible-utils';
 import { VerseRef } from '@sillsdev/scripture';
 import { ProjectMetadata, WebViewProps } from '@papi/core';
 import { Divider } from '@mui/material';
@@ -83,7 +84,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
         // Update the selected project ids
         if (
           selectedProjectIds &&
-          !papi.utils.deepEqual([...selectedProjectIds].sort(), [...projectIds].sort())
+          !deepEqual([...selectedProjectIds].sort(), [...projectIds].sort())
         )
           setProjectIds(selectedProjectIds);
       },

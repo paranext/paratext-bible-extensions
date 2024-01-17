@@ -59,7 +59,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "glob": "^10.3.3",
-    "papi-components": "file:../../../paranext-core/lib/papi-components",
+    "platform-bible-react": "file:../../../paranext-core/lib/platform-bible-react",
     "papi-dts": "file:../../../paranext-core/lib/papi-dts",
     "prettier": "^2.8.8",
     "prettier-plugin-jsdoc": "^0.4.2",
@@ -82,6 +82,7 @@
     "@visx/responsive": "^3.3.0",
     "@visx/scale": "^3.3.0",
     "@visx/text": "^3.3.0",
-    "@visx/wordcloud": "^3.3.0"
+    "@visx/wordcloud": "^3.3.0",
+    "platform-bible-utils": "file:../../../paranext-core/lib/platform-bible-utils"
   }
 }

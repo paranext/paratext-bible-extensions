@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Table, TableCellClickArgs, TableSortColumn } from 'papi-components';
+import { Table, TableCellClickArgs, TableSortColumn } from 'platform-bible-react';
 import type { WordListEntry } from 'paratext-bible-word-list';
 
 type Row = {
