@@ -63,7 +63,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "glob": "^10.3.3",
     "platform-bible-react": "file:../../../paranext-core/lib/platform-bible-react",
-    "platform-bible-utils": "file:../../../paranext-core/lib/platform-bible-utils",
     "papi-dts": "file:../../../paranext-core/lib/papi-dts",
     "prettier": "^2.8.8",
     "prettier-plugin-jsdoc": "^0.4.2",
@@ -81,5 +80,8 @@
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^5.9.0",
     "zip-build": "^1.8.0"
+  },
+  "dependencies": {
+    "platform-bible-utils": "file:../../../paranext-core/lib/platform-bible-utils"
   }
 }
