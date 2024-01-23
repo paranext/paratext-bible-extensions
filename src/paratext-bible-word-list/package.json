@@ -27,7 +27,6 @@
   },
   "browserslist": [],
   "peerDependencies": {
-    "@sillsdev/scripture": "^1.4.0",
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0"
   },
@@ -59,8 +58,8 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "glob": "^10.3.3",
-    "platform-bible-react": "file:../../../paranext-core/lib/platform-bible-react",
     "papi-dts": "file:../../../paranext-core/lib/papi-dts",
+    "platform-bible-react": "file:../../../paranext-core/lib/platform-bible-react",
     "prettier": "^2.8.8",
     "prettier-plugin-jsdoc": "^0.4.2",
     "sass": "^1.66.1",
@@ -79,6 +78,7 @@
     "zip-build": "^1.8.0"
   },
   "dependencies": {
+    "@sillsdev/scripture": "^1.4.0",
     "@visx/responsive": "^3.3.0",
     "@visx/scale": "^3.3.0",
     "@visx/text": "^3.3.0",
