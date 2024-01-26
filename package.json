@@ -31,6 +31,10 @@
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0"
   },
+  "dependencies": {
+    "@sillsdev/scripture": "^1.4.0",
+    "platform-bible-utils": "file:../paranext-core/lib/platform-bible-utils"
+  },
   "devDependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -86,8 +90,7 @@
     "webpack-merge": "^5.9.0",
     "zip-folder-promise": "^1.2.0"
   },
-  "dependencies": {
-    "@sillsdev/scripture": "^1.4.0",
-    "platform-bible-utils": "file:../paranext-core/lib/platform-bible-utils"
+  "volta": {
+    "node": "18.18.2"
   }
 }
