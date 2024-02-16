@@ -74,6 +74,7 @@ export async function activate(context: ExecutionActivationContext) {
         const userProjectIds = await papi.dialogs.showDialog('platform.selectMultipleProjects', {
           title: 'Open Text Collection',
           prompt: 'Please select projects to open in the text collection:',
+          includeProjectTypes: '^ParatextStandard$',
         });
         if (userProjectIds) projectIdsForWebView = userProjectIds;
       }
