@@ -76,6 +76,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
         title: 'Select projects in Text Collection',
         prompt: 'Please select projects to show in the text collection:',
         selectedProjectIds: projectIds,
+        includeProjectTypes: '^ParatextStandard$',
       }),
       [projectIds],
     ),

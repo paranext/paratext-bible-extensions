@@ -260,6 +260,7 @@ export async function activate(context: ExecutionActivationContext) {
         const userProjectIds = await papi.dialogs.showDialog('platform.selectProject', {
           title: 'Open Word List',
           prompt: 'Please select project to open in the word list:',
+          includeProjectTypes: '^ParatextStandard$',
         });
         if (userProjectIds) projectIdForWebView = userProjectIds;
       }
