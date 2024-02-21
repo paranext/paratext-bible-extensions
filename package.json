@@ -11,7 +11,7 @@
     "watch": "npm run build -- --watch",
     "build:production": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=false webpack",
     "watch:production": "npm run build:production -- --watch",
-    "zip": "ts-node ./lib/zip-extensions.ts",
+    "zip": "tsx ./lib/zip-extensions.ts",
     "package": "npm run build:production && npm run zip",
     "package:debug": "cross-env DEBUG_PROD=true npm run package",
     "start:core": "cd ../paranext-core && npm run start",
@@ -22,9 +22,9 @@
     "lint:styles": "stylelint **/*.{css,scss}",
     "lint-fix": "npm run lint-fix:scripts && npm run lint:styles -- --fix",
     "lint-fix:scripts": "prettier --write \"**/*.{ts,tsx,js,jsx,csj}\" && npm run lint:scripts",
-    "postinstall": "ts-node ./lib/add-remotes.ts",
-    "create-extension": "ts-node ./lib/create-extension.ts",
-    "update-from-templates": "ts-node ./lib/update-from-templates.ts"
+    "postinstall": "tsx ./lib/add-remotes.ts",
+    "create-extension": "tsx ./lib/create-extension.ts",
+    "update-from-templates": "tsx ./lib/update-from-templates.ts"
   },
   "browserslist": [],
   "peerDependencies": {
@@ -76,6 +76,7 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "tsx": "^4.7.1",
     "typescript": "^5.3.3",
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
@@ -83,6 +84,6 @@
     "zip-folder-promise": "^1.2.0"
   },
   "volta": {
-    "node": "18.18.2"
+    "node": "20.11.1"
   }
 }
