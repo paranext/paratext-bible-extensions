@@ -59,7 +59,7 @@ body {
   flex-direction: column;
   flex: 1;
 
-  .verse {
+  .verse-content {
     cursor: pointer;
 
     &.selected {
@@ -103,15 +103,6 @@ body {
 
   .position-title {
     @extend %text-title;
-
-    position: absolute;
-    top: 0;
-    left: 10px;
-  }
-
-  .position-button {
-    position: absolute;
-    right: 0;
   }
 
   .position-text {
