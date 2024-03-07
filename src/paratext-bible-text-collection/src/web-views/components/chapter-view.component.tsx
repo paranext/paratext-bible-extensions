@@ -1,6 +1,8 @@
-import { useProjectData } from '@papi/frontend/react';
 import { VerseRef } from '@sillsdev/scripture';
 import { ProjectMetadata } from '@papi/core';
+import { logger } from '@papi/frontend';
+import { Editor } from '@biblionexus-foundation/platform-editor';
+import useProjectUsj from '../hooks/use-project-usj.hook';
 
 export type ChapterViewProps = {
   projectId: string;
@@ -9,13 +11,14 @@ export type ChapterViewProps = {
 };
 
 function ChapterView({ projectId, projectMetadata, verseRef }: ChapterViewProps) {
-  const [usfm] = useProjectData('ParatextStandard', projectId).ChapterUSFM(verseRef, 'Loading');
+  const [usj] = useProjectUsj(projectId, verseRef);
+
   return (
     <div className="full-chapter-view">
       <div className="position-title">
         <p>{projectMetadata?.name || '...'}</p>
       </div>
-      <p className="position-text">{usfm}</p>
+      <Editor usj={usj} scrRef={verseRef} logger={logger} isReadonly />
     </div>
   );
 }

@@ -77,7 +77,7 @@ function VerseDisplay({
   return (
     <div
       onClick={handleDivClick}
-      className={`verse${isSelected ? ' selected' : ''}`}
+      className={`verse-content${isSelected ? ' selected' : ''}`}
       aria-hidden="true"
     >
       <div className="row">

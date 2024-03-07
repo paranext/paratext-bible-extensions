@@ -1,6 +1,6 @@
 {
   "name": "paratext-bible-text-collection",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Text collection extension. First extension of the Paratext.Bible extension suite.",
   "author": "Platform.Bible Bundled Extensions Team - Rolf Heij",
   "license": "MIT",
