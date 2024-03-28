@@ -2,7 +2,15 @@
   "mainMenu": {
     "columns": {},
     "groups": {},
-    "items": []
+    "items": [
+      {
+        "label": "%mainMenu_openWordList%",
+        "localizeNotes": "Application main menu > Project > Open Word List",
+        "group": "platform.projectResources",
+        "order": -99.8,
+        "command": "paratextBibleWordList.open"
+      }
+    ]
   },
   "defaultWebViewTopMenu": {
     "columns": {},
