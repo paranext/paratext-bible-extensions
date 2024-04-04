@@ -1,7 +1,8 @@
+import { Editor, EditorRef } from '@biblionexus-foundation/platform-editor';
 import { VerseRef } from '@sillsdev/scripture';
+import { useEffect, useRef } from 'react';
 import { ProjectMetadata } from '@papi/core';
 import { logger } from '@papi/frontend';
-import { Editor } from '@biblionexus-foundation/platform-editor';
 import useProjectUsj from '../hooks/use-project-usj.hook';
 
 export type ChapterViewProps = {
@@ -11,14 +12,21 @@ export type ChapterViewProps = {
 };
 
 function ChapterView({ projectId, projectMetadata, verseRef }: ChapterViewProps) {
+  // This ref becomes defined when passed to the editor.
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const editorRef = useRef<EditorRef>(null!);
   const [usj] = useProjectUsj(projectId, verseRef);
+
+  useEffect(() => {
+    editorRef.current.setUsj(usj);
+  }, [usj]);
 
   return (
     <div className="full-chapter-view">
       <div className="position-title">
         <p>{projectMetadata?.name || '...'}</p>
       </div>
-      <Editor usj={usj} scrRef={verseRef} logger={logger} isReadonly />
+      <Editor ref={editorRef} scrRef={verseRef} logger={logger} isReadonly />
     </div>
   );
 }
