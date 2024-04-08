@@ -13,8 +13,8 @@ export type ChapterViewProps = {
 
 function ChapterView({ projectId, projectMetadata, verseRef }: ChapterViewProps) {
   // This ref becomes defined when passed to the editor.
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const editorRef = useRef<EditorRef>(null!);
+  // eslint-disable-next-line no-type-assertion/no-type-assertion
+  const editorRef = useRef<EditorRef>(undefined!);
   const [usj] = useProjectUsj(projectId, verseRef);
 
   useEffect(() => {
