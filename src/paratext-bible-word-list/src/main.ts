@@ -209,10 +209,7 @@ const wordListWebViewProvider: IWebViewProvider = {
         `${WORD_LIST_WEB_VIEW_TYPE} provider received request to provide a ${savedWebView.webViewType} web view`,
       );
 
-    // Type assert the WebView state since TypeScript doesn't know what type it is
-    // TODO: Fix after https://github.com/paranext/paranext-core/issues/585 is done
-    // eslint-disable-next-line no-type-assertion/no-type-assertion
-    const projectId = options.projectId || (savedWebView.state?.projectId as string) || '';
+    const projectId = options.projectId || savedWebView.projectId;
 
     let projectMetadata: ProjectMetadata | undefined;
     try {
@@ -230,10 +227,7 @@ const wordListWebViewProvider: IWebViewProvider = {
       ...savedWebView,
       content: wordListReact,
       styles: wordListReactStyles,
-      state: {
-        ...savedWebView.state,
-        projectId,
-      },
+      projectId,
     };
   },
 };
