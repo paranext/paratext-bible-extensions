@@ -143,6 +143,15 @@ git fetch paranext-extension-template main
 git subtree add --prefix src/<extension_name> paranext-extension-template main --squash
 ```
 
+After running these commands, run a regex find and replace inside the new extension folder to fix
+the file paths pointing to `paranext-core`:
+
+- Find: `([^/])\.\.\/paranext-core`
+- Replace with: `$1../../../paranext-core`
+
+You can ignore occurrences from many files. Please see [`./lib/git.util.ts`](./lib/git.util.ts) -> `formatExtensionFolder` for more
+information.
+
 </details>
 
 ## To update this repo and extensions from the templates
