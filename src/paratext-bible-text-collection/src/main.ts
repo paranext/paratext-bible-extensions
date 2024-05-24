@@ -27,7 +27,10 @@ const textCollectionWebViewProvider: IWebViewProvider = {
         `${TEXT_COLLECTION_WEB_VIEW_TYPE} provider received request to provide a ${savedWebView.webViewType} web view`,
       );
 
-    const projectIds = options.projectIds || savedWebView.projectIds || [];
+    // Type assert the WebView state since TypeScript doesn't know what type it is
+    // TODO: Fix after https://github.com/paranext/paranext-core/issues/585 is done
+    // eslint-disable-next-line no-type-assertion/no-type-assertion
+    const projectIds = options.projectIds || (savedWebView.state?.projectIds as string[]) || [];
 
     let projectsMetadata: ProjectMetadata[] | undefined;
     try {
@@ -46,7 +49,10 @@ const textCollectionWebViewProvider: IWebViewProvider = {
       iconUrl: 'papi-extension://paratext-bible-text-collection/assets/Group24.svg',
       content: textCollectionReact,
       styles: textCollectionReactStyles,
-      projectIds,
+      state: {
+        ...savedWebView.state,
+        projectIds,
+      },
       // In case projectIds changed, make sure projectId (the focused Scripture) is in projectIds
       projectId:
         savedWebView.projectId && projectIds.includes(savedWebView.projectId)

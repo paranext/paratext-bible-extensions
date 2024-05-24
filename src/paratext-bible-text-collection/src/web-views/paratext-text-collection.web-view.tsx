@@ -27,11 +27,12 @@ const defaultScrRef: ScriptureReference = { bookNum: 1, chapterNum: 1, verseNum:
 globalThis.webViewComponent = function TextCollectionWebView({
   // Project ID of the project that is focused or undefined if no project selected
   projectId: expandedProjectId = '',
-  // Project IDs to show in the text collection
-  projectIds = [],
   updateWebViewDefinition,
   useWebViewState,
 }: WebViewProps) {
+  // Project IDs to show in the text collection
+  const [projectIds, setProjectIds] = useWebViewState<string[]>('projectIds', []);
+
   // Project metadata to show in the text collection - each entry is the metadata or undefined if
   // not fetched yet
   const [projectsMetadata] = usePromise<(ProjectMetadata | undefined)[]>(
@@ -82,9 +83,9 @@ globalThis.webViewComponent = function TextCollectionWebView({
           selectedProjectIds &&
           !deepEqual([...selectedProjectIds].sort(), [...projectIds].sort())
         )
-          updateWebViewDefinition({ projectIds: selectedProjectIds });
+          setProjectIds(selectedProjectIds);
       },
-      [projectIds, updateWebViewDefinition],
+      [projectIds, setProjectIds],
     ),
   );
 
@@ -97,7 +98,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
       projectIdsCopy[newIndex],
       projectIdsCopy[index],
     ];
-    updateWebViewDefinition({ projectIds: projectIdsCopy });
+    setProjectIds(projectIdsCopy);
   };
 
   const closeProjectHandler = (projectId: string) => {
@@ -106,7 +107,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
     if (index > -1) {
       projectIdsCopy.splice(index, 1);
     }
-    updateWebViewDefinition({ projectIds: projectIdsCopy });
+    setProjectIds(projectIdsCopy);
   };
 
   const verseView = (
