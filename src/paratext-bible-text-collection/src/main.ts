@@ -53,6 +53,11 @@ const textCollectionWebViewProvider: IWebViewProvider = {
         ...savedWebView.state,
         projectIds,
       },
+      // In case projectIds changed, make sure projectId (the focused Scripture) is in projectIds
+      projectId:
+        savedWebView.projectId && projectIds.includes(savedWebView.projectId)
+          ? savedWebView.projectId
+          : undefined,
     };
   },
 };

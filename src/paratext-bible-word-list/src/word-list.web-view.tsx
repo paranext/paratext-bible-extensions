@@ -55,11 +55,13 @@ function newDataNeeded(
   return false;
 }
 
-globalThis.webViewComponent = function WordListWebView({ useWebViewState }: WebViewProps) {
+globalThis.webViewComponent = function WordListWebView({
+  projectId,
+  useWebViewState,
+}: WebViewProps) {
   const [scrRef, setScrRef] = useSetting('platform.verseRef', defaultScrRef);
   const [scope, setScope] = useWebViewState<Scope>('scope', Scope.Book);
   const [wordFilter, setWordFilter] = useState<string>('');
-  const [projectId] = useWebViewState<string>('projectId', '');
   const [selectedWord, setSelectedWord] = useState<WordListEntry>();
   const [showWordCloud, setShowWordCloud] = useWebViewState<boolean>('wordcloud', false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -77,11 +79,11 @@ globalThis.webViewComponent = function WordListWebView({ useWebViewState }: WebV
   );
 
   useEffect(() => {
-    if (newDataNeeded(dataSelector, projectId, scope, scrRef)) {
+    if (newDataNeeded(dataSelector, projectId || '', scope, scrRef)) {
       setLoading(true);
       setSelectedWord(undefined);
       setDataSelector({
-        projectId,
+        projectId: projectId || '',
         scope,
         scrRef,
       });

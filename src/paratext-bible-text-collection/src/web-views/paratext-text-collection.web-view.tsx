@@ -25,6 +25,8 @@ const getResourceVerseRef = (scrRef: ScriptureReference) => {
 const defaultScrRef: ScriptureReference = { bookNum: 1, chapterNum: 1, verseNum: 1 };
 
 globalThis.webViewComponent = function TextCollectionWebView({
+  // Project ID of the project that is focused or undefined if no project selected
+  projectId: expandedProjectId = '',
   updateWebViewDefinition,
   useWebViewState,
 }: WebViewProps) {
@@ -43,16 +45,10 @@ globalThis.webViewComponent = function TextCollectionWebView({
     useMemo(() => projectIds.map(() => undefined), [projectIds]),
   );
 
-  // Project ID of the project that is focused or undefined if no project selected
-  const [expandedProjectId, setExpandedProjectId] = useWebViewState<string>(
-    'expandedProjectId',
-    '',
-  );
-
   // Reset the expanded project ID if it is no longer available as a choice
   useEffect(() => {
-    if (!projectIds.includes(expandedProjectId)) setExpandedProjectId('');
-  }, [projectIds, expandedProjectId, setExpandedProjectId]);
+    if (!projectIds.includes(expandedProjectId)) updateWebViewDefinition({ projectId: '' });
+  }, [projectIds, expandedProjectId, updateWebViewDefinition]);
 
   // Current verse reference
   const [scrRef] = useSetting('platform.verseRef', defaultScrRef);
@@ -128,7 +124,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
                 projectId={projectId}
                 projectMetadata={projectMetadata}
                 selectedProjectId={expandedProjectId}
-                selectProjectId={setExpandedProjectId}
+                selectProjectId={(pId) => updateWebViewDefinition({ projectId: pId })}
                 verseRef={verseRef}
                 isFirstProject={isFirstProject}
                 isLastProject={isLastProject}
