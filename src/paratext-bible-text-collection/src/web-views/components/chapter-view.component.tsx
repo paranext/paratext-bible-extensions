@@ -1,4 +1,4 @@
-import { Editor, EditorOptions, EditorRef } from '@biblionexus-foundation/platform-editor';
+import { Editorial, EditorOptions, EditorRef } from '@biblionexus-foundation/platform-editor';
 import { VerseRef } from '@sillsdev/scripture';
 import { useEffect, useRef } from 'react';
 import { ProjectMetadata } from '@papi/core';
@@ -28,7 +28,7 @@ function ChapterView({ projectId, projectMetadata, verseRef }: ChapterViewProps)
       <div className="position-title">
         <p>{projectMetadata?.name || '...'}</p>
       </div>
-      <Editor ref={editorRef} scrRef={verseRef} options={options} logger={logger} />
+      <Editorial ref={editorRef} scrRef={verseRef} options={options} logger={logger} />
     </div>
   );
 }
