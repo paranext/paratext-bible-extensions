@@ -4,7 +4,6 @@ import {
   GetWebViewOptions,
   IDataProviderEngine,
   IWebViewProvider,
-  ProjectMetadata,
   SavedWebViewDefinition,
   WebViewDefinition,
   WithNotifyUpdate,
@@ -169,7 +168,10 @@ const wordListDataProviderEngine: IDataProviderEngine<WordListDataTypes> &
     scope,
     scrRef,
   }: WordListSelector): Promise<WordListEntry[] | undefined> {
-    const projectDataProvider = await papi.projectDataProviders.get('ParatextStandard', projectId);
+    const projectDataProvider = await papi.projectDataProviders.get(
+      'platformScripture.USFM_BookChapterVerse',
+      projectId,
+    );
     if (this.projectDataUnsubscriber) await this.projectDataUnsubscriber();
     const verseRef = new VerseRef(scrRef.bookNum, scrRef.chapterNum, scrRef.verseNum);
     const bookText = await projectDataProvider.getBookUSFM(verseRef);
@@ -211,19 +213,19 @@ const wordListWebViewProvider: IWebViewProvider = {
 
     const projectId = options.projectId || savedWebView.projectId;
 
-    let projectMetadata: ProjectMetadata | undefined;
+    let projectName: string | undefined;
     try {
       if (projectId) {
-        projectMetadata = await Promise.resolve<ProjectMetadata>(
-          papi.projectLookup.getMetadataForProject(projectId),
-        );
+        projectName = await (
+          await papi.projectDataProviders.get('platform.base', projectId)
+        ).getSetting('platform.name');
       }
     } catch (e) {
       logger.error(`Word list web view provider error: Could not get project metadata: ${e}`);
     }
 
     return {
-      title: projectMetadata ? `Word List for project ${projectMetadata.name}` : 'Word List',
+      title: projectName ? `Word List for project ${projectName}` : 'Word List',
       ...savedWebView,
       content: wordListReact,
       styles: wordListReactStyles,
@@ -254,7 +256,7 @@ export async function activate(context: ExecutionActivationContext) {
         const userProjectIds = await papi.dialogs.showDialog('platform.selectProject', {
           title: 'Open Word List',
           prompt: 'Please select project to open in the word list:',
-          includeProjectTypes: '^ParatextStandard$',
+          includeProjectInterfaces: 'platformScripture.USFM_BookChapterVerse',
         });
         if (userProjectIds) projectIdForWebView = userProjectIds;
       }

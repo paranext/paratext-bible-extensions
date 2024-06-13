@@ -4,10 +4,15 @@ import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { IconButton, ScriptureReference, usePromise } from 'platform-bible-react';
 import { deepEqual } from 'platform-bible-utils';
 import { VerseRef } from '@sillsdev/scripture';
-import { ProjectMetadata, WebViewProps } from '@papi/core';
+import { WebViewProps } from '@papi/core';
 import { Divider } from '@mui/material';
 import { Allotment } from 'allotment';
-import { getTextCollectionTitle, getTextCollectionTooltip } from '../util';
+import {
+  ProjectInfo,
+  REQUIRED_PROJECT_INTERFACES,
+  getTextCollectionTitle,
+  getTextCollectionTooltip,
+} from '../util';
 import VerseDisplay from './components/verse-display.component';
 import ChapterView from './components/chapter-view.component';
 
@@ -33,14 +38,18 @@ globalThis.webViewComponent = function TextCollectionWebView({
   // Project IDs to show in the text collection
   const [projectIds, setProjectIds] = useWebViewState<string[]>('projectIds', []);
 
-  // Project metadata to show in the text collection - each entry is the metadata or undefined if
+  // Project info to show in the text collection - each entry is the info or undefined if
   // not fetched yet
-  const [projectsMetadata] = usePromise<(ProjectMetadata | undefined)[]>(
+  const [projectsInfo] = usePromise<(ProjectInfo | undefined)[]>(
     useCallback(async () => {
-      const metadataPromises = projectIds.map((projectId) =>
-        papi.projectLookup.getMetadataForProject(projectId),
-      );
-      return Promise.all(metadataPromises);
+      const infoPromises = projectIds.map(async (projectId) => {
+        const pdp = await papi.projectDataProviders.get('platform.base', projectId);
+
+        const name = await pdp.getSetting('platform.name');
+
+        return { id: projectId, name };
+      });
+      return Promise.all(infoPromises);
     }, [projectIds]),
     useMemo(() => projectIds.map(() => undefined), [projectIds]),
   );
@@ -56,14 +65,15 @@ globalThis.webViewComponent = function TextCollectionWebView({
 
   // Keep the title up-to-date
   useEffect(() => {
-    const newTitle = getTextCollectionTitle(projectsMetadata, verseRef);
-    const newTooltip = getTextCollectionTooltip(projectsMetadata);
+    const projectNames = projectsInfo.map((projectInfo) => projectInfo?.name);
+    const newTitle = getTextCollectionTitle(projectNames, verseRef);
+    const newTooltip = getTextCollectionTooltip(projectNames);
     if (newTitle || newTooltip)
       updateWebViewDefinition({
         title: newTitle,
         tooltip: newTooltip,
       });
-  }, [updateWebViewDefinition, projectsMetadata, verseRef]);
+  }, [updateWebViewDefinition, projectsInfo, verseRef]);
 
   const selectProjects = useDialogCallback(
     'platform.selectMultipleProjects',
@@ -72,7 +82,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
         title: 'Select projects in Text Collection',
         prompt: 'Please select projects to show in the text collection:',
         selectedProjectIds: projectIds,
-        includeProjectTypes: '^ParatextStandard$',
+        includeProjectInterfaces: [REQUIRED_PROJECT_INTERFACES],
       }),
       [projectIds],
     ),
@@ -116,13 +126,13 @@ globalThis.webViewComponent = function TextCollectionWebView({
         projectIds.map((projectId, i) => {
           const isFirstProject = i === 0;
           const isLastProject = i === projectIds.length - 1;
-          const projectMetadata = projectsMetadata.find((metadata) => metadata?.id === projectId);
+          const projectInfo = projectsInfo.find((info) => info?.id === projectId);
 
           return (
             <Fragment key={projectId}>
               <VerseDisplay
                 projectId={projectId}
-                projectMetadata={projectMetadata}
+                projectInfo={projectInfo}
                 selectedProjectId={expandedProjectId}
                 selectProjectId={(pId) => updateWebViewDefinition({ projectId: pId })}
                 verseRef={verseRef}
@@ -157,9 +167,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
         {showFullChapter && (
           <ChapterView
             projectId={expandedProjectId}
-            projectMetadata={projectsMetadata.find(
-              (metadata) => metadata?.id === expandedProjectId,
-            )}
+            projectInfo={projectsInfo.find((metadata) => metadata?.id === expandedProjectId)}
             verseRef={verseRef}
           />
         )}

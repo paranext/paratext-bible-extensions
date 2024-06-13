@@ -1,23 +1,28 @@
-import { Editorial, EditorOptions, EditorRef } from '@biblionexus-foundation/platform-editor';
+import { Editorial, EditorOptions, EditorRef, Usj } from '@biblionexus-foundation/platform-editor';
 import { VerseRef } from '@sillsdev/scripture';
 import { useEffect, useRef } from 'react';
-import { ProjectMetadata } from '@papi/core';
 import { logger } from '@papi/frontend';
-import useProjectUsj from '../hooks/use-project-usj.hook';
+import { useProjectData } from '@papi/frontend/react';
+import { ProjectInfo } from '../../util';
 
 export type ChapterViewProps = {
   projectId: string;
-  projectMetadata: ProjectMetadata | undefined;
+  projectInfo: ProjectInfo | undefined;
   verseRef: VerseRef;
 };
 
 const options: EditorOptions = { isReadonly: true, hasSpellCheck: false };
 
-function ChapterView({ projectId, projectMetadata, verseRef }: ChapterViewProps) {
-  // This ref becomes defined when passed to the editor.
-  // eslint-disable-next-line no-type-assertion/no-type-assertion
+const usjDocumentDefault: Usj = { type: 'USJ', version: '0.2.1', content: [] };
+
+function ChapterView({ projectId, projectInfo, verseRef }: ChapterViewProps) {
+  // This ref becomes defined when passed to the editor. null because React uses null in refs
+  // eslint-disable-next-line no-type-assertion/no-type-assertion, no-null/no-null
   const editorRef = useRef<EditorRef>(null!);
-  const [usj] = useProjectUsj(projectId, verseRef);
+  const [usj] = useProjectData('platformScripture.USJ_Chapter', projectId).ChapterUSJ(
+    verseRef,
+    usjDocumentDefault,
+  );
 
   useEffect(() => {
     editorRef.current.setUsj(usj);
@@ -26,7 +31,7 @@ function ChapterView({ projectId, projectMetadata, verseRef }: ChapterViewProps)
   return (
     <div className="full-chapter-view">
       <div className="position-title">
-        <p>{projectMetadata?.name || '...'}</p>
+        <p>{projectInfo?.name || '...'}</p>
       </div>
       <Editorial ref={editorRef} scrRef={verseRef} options={options} logger={logger} />
     </div>

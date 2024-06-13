@@ -1,25 +1,30 @@
 import { VerseRef } from '@sillsdev/scripture';
-import { ProjectMetadata } from '@papi/core';
+import type { ProjectInterfaces } from 'papi-shared-types';
+
+export type ProjectInfo = { id: string; name: string };
+
+/**
+ * `projectInterface`s the text collection uses. All projects the text collection uses must support
+ * these
+ */
+export const REQUIRED_PROJECT_INTERFACES: ProjectInterfaces[] = [
+  'platformScripture.USFM_BookChapterVerse',
+  'platformScripture.USJ_Chapter',
+];
 
 export function getTextCollectionTitle(
-  projectsMetadata: (ProjectMetadata | undefined)[],
+  projectNames: (string | undefined)[] | undefined,
   verseRef: VerseRef,
 ) {
-  if (!projectsMetadata || projectsMetadata.includes(undefined) || !verseRef) return undefined;
+  if (!projectNames || projectNames.length === 0 || projectNames.includes(undefined) || !verseRef)
+    return undefined;
 
-  // Type assert projectsMetadata as not containing undefined since we just checked for that
-  // eslint-disable-next-line no-type-assertion/no-type-assertion
-  return `${(projectsMetadata as ProjectMetadata[])
-    .map((projectMetadata) => projectMetadata.name)
-    .join(', ')} (${verseRef.toString()})`;
+  return `${projectNames.join(', ')} (${verseRef.toString()})`;
 }
 
-export function getTextCollectionTooltip(projectsMetadata: (ProjectMetadata | undefined)[]) {
-  if (!projectsMetadata || projectsMetadata.includes(undefined)) return undefined;
+export function getTextCollectionTooltip(projectNames: (string | undefined)[] | undefined) {
+  if (!projectNames || projectNames.length === 0 || projectNames.includes(undefined))
+    return undefined;
 
-  // Type assert projectsMetadata as not containing undefined since we just checked for that
-  // eslint-disable-next-line no-type-assertion/no-type-assertion
-  return `Text Collection\n\n${(projectsMetadata as ProjectMetadata[])
-    .map((projectMetadata) => projectMetadata.name)
-    .join('\n')}`;
+  return `Text Collection\n\n${projectNames.join('\n')}`;
 }
