@@ -3,14 +3,17 @@ import type {
   ExecutionActivationContext,
   GetWebViewOptions,
   IWebViewProvider,
-  ProjectMetadata,
   SavedWebViewDefinition,
   WebViewDefinition,
 } from '@papi/core';
 import { VerseRef } from '@sillsdev/scripture';
 import textCollectionReact from './web-views/paratext-text-collection.web-view?inline';
 import textCollectionReactStyles from './web-views/paratext-text-collection.web-view.scss?inline';
-import { getTextCollectionTitle } from './util';
+import {
+  getTextCollectionTitle,
+  getTextCollectionTooltip,
+  REQUIRED_PROJECT_INTERFACES,
+} from './util';
 
 logger.info('Text collection extension is importing!');
 
@@ -32,19 +35,25 @@ const textCollectionWebViewProvider: IWebViewProvider = {
     // eslint-disable-next-line no-type-assertion/no-type-assertion
     const projectIds = options.projectIds || (savedWebView.state?.projectIds as string[]) || [];
 
-    let projectsMetadata: ProjectMetadata[] | undefined;
+    let projectNames: string[] | undefined;
     try {
-      projectsMetadata = await Promise.all(
-        projectIds.map((projectId) => papi.projectLookup.getMetadataForProject(projectId)),
+      // Get project names
+      projectNames = await Promise.all(
+        projectIds.map(async (projectId) => {
+          const pdp = await papi.projectDataProviders.get('platform.base', projectId);
+
+          const name = await pdp.getSetting('platform.name');
+
+          return name;
+        }),
       );
     } catch (e) {
-      logger.error(`Text collection web view provider error: Could not get project metadata: ${e}`);
+      logger.error(`Text collection web view provider error: Could not get project names: ${e}`);
     }
 
     return {
-      title: projectsMetadata
-        ? getTextCollectionTitle(projectsMetadata, new VerseRef(1, 1, 1))
-        : 'Text Collection',
+      title: getTextCollectionTitle(projectNames, new VerseRef(1, 1, 1)) ?? 'Text Collection',
+      tooltip: getTextCollectionTooltip(projectNames),
       ...savedWebView,
       iconUrl: 'papi-extension://paratext-bible-text-collection/assets/Group24.svg',
       content: textCollectionReact,
@@ -79,7 +88,10 @@ export async function activate(context: ExecutionActivationContext) {
         const userProjectIds = await papi.dialogs.showDialog('platform.selectMultipleProjects', {
           title: 'Open Text Collection',
           prompt: 'Please select projects to open in the text collection:',
-          includeProjectTypes: '^ParatextStandard$',
+          // Wrap array of required `projectInterface`s in another array to make these required
+          // `projectInterface`s AND together, not OR, so the only projects that show up are ones
+          // that support all required `projectInterface`s
+          includeProjectInterfaces: [REQUIRED_PROJECT_INTERFACES],
         });
         if (userProjectIds) projectIdsForWebView = userProjectIds;
       }

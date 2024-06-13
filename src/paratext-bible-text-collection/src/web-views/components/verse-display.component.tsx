@@ -1,6 +1,6 @@
 import { useProjectData } from '@papi/frontend/react';
 import { VerseRef } from '@sillsdev/scripture';
-import { ProjectMetadata, UseWebViewStateHook } from '@papi/core';
+import { UseWebViewStateHook } from '@papi/core';
 
 import { Tooltip, IconButton, Menu, MenuItem, Divider } from '@mui/material';
 import {
@@ -12,12 +12,13 @@ import {
   VerticalAlignBottom,
 } from '@mui/icons-material';
 import { useState, MouseEvent } from 'react';
+import { ProjectInfo } from '../../util';
 
 const defaultFontSize: number = 16;
 
 export type VerseDisplayProps = {
   projectId: string;
-  projectMetadata: ProjectMetadata | undefined;
+  projectInfo: ProjectInfo | undefined;
   selectedProjectId: string;
   selectProjectId: (projectId: string) => void;
   verseRef: VerseRef;
@@ -31,7 +32,7 @@ export type VerseDisplayProps = {
 
 function VerseDisplay({
   projectId,
-  projectMetadata,
+  projectInfo,
   selectedProjectId,
   selectProjectId,
   verseRef,
@@ -42,7 +43,10 @@ function VerseDisplay({
   isSelected,
   useWebViewState,
 }: VerseDisplayProps) {
-  const [usfm] = useProjectData('ParatextStandard', projectId).VerseUSFM(verseRef, 'Loading');
+  const [usfm] = useProjectData('platformScripture.USFM_BookChapterVerse', projectId).VerseUSFM(
+    verseRef,
+    'Loading',
+  );
   const [fontSize, setFontSize] = useWebViewState<number>(`fontSize_${projectId}`, defaultFontSize);
   const [anchorEl, setAnchorEl] = useState<undefined | HTMLElement>(undefined);
 
@@ -81,7 +85,7 @@ function VerseDisplay({
       aria-hidden="true"
     >
       <div className="row">
-        <div className="title">{projectMetadata?.name || '...'}</div>
+        <div className="title">{projectInfo?.name || '...'}</div>
         <div>
           <Tooltip title="More Actions">
             <IconButton onClick={handleOpenMenu} size="small" sx={{ ml: 2 }}>
