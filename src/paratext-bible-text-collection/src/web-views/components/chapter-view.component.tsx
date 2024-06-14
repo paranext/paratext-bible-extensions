@@ -1,4 +1,5 @@
-import { Editorial, EditorOptions, EditorRef, Usj } from '@biblionexus-foundation/platform-editor';
+import { Editorial, EditorOptions, EditorRef } from '@biblionexus-foundation/platform-editor';
+import { Usj } from '@biblionexus-foundation/scripture-utilities';
 import { VerseRef } from '@sillsdev/scripture';
 import { useEffect, useRef } from 'react';
 import { logger } from '@papi/frontend';
@@ -15,7 +16,7 @@ const options: EditorOptions = { isReadonly: true, hasSpellCheck: false };
 
 const usjDocumentDefault: Usj = { type: 'USJ', version: '0.2.1', content: [] };
 
-function ChapterView({ projectId, projectInfo, verseRef }: ChapterViewProps) {
+export default function ChapterView({ projectId, projectInfo, verseRef }: ChapterViewProps) {
   // This ref becomes defined when passed to the editor. null because React uses null in refs
   // eslint-disable-next-line no-type-assertion/no-type-assertion, no-null/no-null
   const editorRef = useRef<EditorRef>(null!);
@@ -37,5 +38,3 @@ function ChapterView({ projectId, projectInfo, verseRef }: ChapterViewProps) {
     </div>
   );
 }
-
-export default ChapterView;
