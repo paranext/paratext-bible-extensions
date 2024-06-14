@@ -20,6 +20,7 @@
 .editor-inner {
   background: #fff;
   position: relative;
+  display: flex;
 }
 
 .editor-input {
@@ -31,6 +32,7 @@
   outline: 0;
   padding: 15px 10px;
   caret-color: #444;
+  flex: auto;
 }
 
 .editor-placeholder {
