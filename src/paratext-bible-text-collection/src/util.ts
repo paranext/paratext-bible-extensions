@@ -8,7 +8,7 @@ export type ProjectInfo = { id: string; name: string };
  * these
  */
 export const REQUIRED_PROJECT_INTERFACES: ProjectInterfaces[] = [
-  'platformScripture.USFM_BookChapterVerse',
+  'platformScripture.USFM_Verse',
   'platformScripture.USJ_Chapter',
 ];
 
