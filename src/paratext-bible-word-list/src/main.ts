@@ -169,7 +169,7 @@ const wordListDataProviderEngine: IDataProviderEngine<WordListDataTypes> &
     scrRef,
   }: WordListSelector): Promise<WordListEntry[] | undefined> {
     const projectDataProvider = await papi.projectDataProviders.get(
-      'platformScripture.USFM_BookChapterVerse',
+      'platformScripture.USFM_Book',
       projectId,
     );
     if (this.projectDataUnsubscriber) await this.projectDataUnsubscriber();
@@ -256,7 +256,7 @@ export async function activate(context: ExecutionActivationContext) {
         const userProjectIds = await papi.dialogs.showDialog('platform.selectProject', {
           title: 'Open Word List',
           prompt: 'Please select project to open in the word list:',
-          includeProjectInterfaces: 'platformScripture.USFM_BookChapterVerse',
+          includeProjectInterfaces: 'platformScripture.USFM_Book',
         });
         if (userProjectIds) projectIdForWebView = userProjectIds;
       }

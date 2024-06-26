@@ -43,7 +43,7 @@ function VerseDisplay({
   isSelected,
   useWebViewState,
 }: VerseDisplayProps) {
-  const [usfm] = useProjectData('platformScripture.USFM_BookChapterVerse', projectId).VerseUSFM(
+  const [usfm] = useProjectData('platformScripture.USFM_Verse', projectId).VerseUSFM(
     verseRef,
     'Loading',
   );
