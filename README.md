@@ -56,7 +56,9 @@ This is a webpack project configured to build Platform.Bible extensions. The gen
       - `*.web-view.tsx` files will be treated as React WebViews
       - `*.web-view.html` files are a conventional way to provide HTML WebViews (no special functionality)
     - `assets/` contains asset files the extension and its WebViews can retrieve using the `papi-extension:` protocol. It is copied into the build folder
-    - `contributions/` contains JSON files the platform uses to extend data structures for things like menus and settings. The JSON files are referenced from the manifest
+    - `contributions/` contains JSON files the platform uses to extend data structures for things like menus, settings, and descriptions. The JSON files are referenced from the manifest
+      - `contributions/displayData.json` contains (optionally) a path to the extension's icon file as well as text for the extension's display name, short summary, and path to the full description file
+      - `contributions/description-<locale>.md` contains a brief description of the extension in the language specified by `<locale>`
     - `public/` contains other static files that are copied into the build folder
 - `dist/` is a generated folder containing the built extension files
 - `release/` is a generated folder containing zips of the built extension files
