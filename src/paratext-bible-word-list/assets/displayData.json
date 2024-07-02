@@ -1,0 +1,10 @@
+{
+  "icon": "",
+  "localizedDisplayInfo": {
+    "en": {
+      "displayName": "Paratext Word List",
+      "shortSummary": "Word list extension",
+      "description": "assets/descriptions/description-en.md"
+    }
+  }
+}
