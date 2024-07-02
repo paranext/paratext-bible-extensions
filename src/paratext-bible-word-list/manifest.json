@@ -1,7 +1,7 @@
 {
   "name": "paratext-bible-word-list",
   "version": "0.0.2",
-  "description": "Word list extension for Platform.Bible/Paratext.Bible",
+  "displayData": "assets/displayData.json",
   "author": "Platform.Bible Bundled Extensions Team - Rolf Heij",
   "license": "MIT",
   "main": "src/main.ts",
