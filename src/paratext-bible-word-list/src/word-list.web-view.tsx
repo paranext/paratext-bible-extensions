@@ -1,7 +1,7 @@
 import { useSetting, useData } from '@papi/frontend/react';
 import { WebViewProps } from '@papi/core';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { ComboBox, RefSelector, ScriptureReference, Switch, TextField } from 'platform-bible-react';
+import { ComboBox, ScriptureReference, Switch, TextField } from 'platform-bible-react';
 import type { WordListEntry } from 'paratext-bible-word-list';
 import WordContentViewer from './word-content-viewer.component';
 import WordTable from './word-table.component';
@@ -59,7 +59,7 @@ globalThis.webViewComponent = function WordListWebView({
   projectId,
   useWebViewState,
 }: WebViewProps) {
-  const [scrRef, setScrRef] = useSetting('platform.verseRef', defaultScrRef);
+  const [scrRef] = useSetting('platform.verseRef', defaultScrRef);
   const [scope, setScope] = useWebViewState<Scope>('scope', Scope.Book);
   const [wordFilter, setWordFilter] = useState<string>('');
   const [selectedWord, setSelectedWord] = useState<WordListEntry>();
@@ -116,12 +116,6 @@ globalThis.webViewComponent = function WordListWebView({
 
   return (
     <div className="word-list">
-      <RefSelector
-        scrRef={scrRef}
-        handleSubmit={(newScrRef) => {
-          setScrRef(newScrRef);
-        }}
-      />
       <div className="filters">
         <ComboBox
           title="Scope"

@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Canon } from '@sillsdev/scripture';
-import { Table } from 'platform-bible-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from 'platform-bible-react';
 import type { WordListEntry } from 'paratext-bible-word-list';
 
-type Row = {
+type WordData = {
   reference: string;
   text: string;
 };
@@ -13,42 +20,42 @@ function generateTableData(selectedWord: WordListEntry) {
     Canon.bookNumberToId(selectedWord.scrRefs[0].bookNum),
   );
 
-  const newRows: Row[] = [];
+  const newWordData: WordData[] = [];
   for (let id = 0; id < selectedWord.scrRefs.length; id++) {
     const { chapterNum } = selectedWord.scrRefs[id];
     const { verseNum } = selectedWord.scrRefs[id];
     const fullReference: string = `${bookName} ${chapterNum}:${verseNum}`;
-    newRows.push({ reference: fullReference, text: selectedWord.scriptureSnippets[id] });
+    newWordData.push({ reference: fullReference, text: selectedWord.scriptureSnippets[id] });
   }
 
-  return newRows;
+  return newWordData;
 }
 
 export default function WordContentViewer({ selectedWord }: { selectedWord: WordListEntry }) {
-  const [rows, setRows] = useState<Row[]>([]);
+  const [wordData, setWordData] = useState<WordData[]>([]);
 
   useEffect(() => {
-    setRows([]);
+    setWordData([]);
 
-    setRows(generateTableData(selectedWord));
+    setWordData(generateTableData(selectedWord));
   }, [selectedWord]);
 
   return (
-    <Table<Row>
-      columns={[
-        {
-          key: 'reference',
-          name: 'Reference',
-          width: 150,
-        },
-        {
-          key: 'text',
-          name: 'Text',
-        },
-      ]}
-      rows={rows}
-      rowHeight={30}
-      headerRowHeight={50}
-    />
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Reference</TableHead>
+          <TableHead>Text</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {wordData.map((result) => (
+          <TableRow>
+            <TableCell>{result.reference}</TableCell>
+            <TableCell>{result.text}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }
