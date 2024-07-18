@@ -5,6 +5,8 @@
   "author": "Platform.Bible Bundled Extensions Team - Rolf Heij",
   "license": "MIT",
   "main": "src/main.ts",
+  "extensionDependencies": {},
+  "elevatedPrivileges": [],
   "types": "src/types/paratext-bible-text-collection.d.ts",
   "menus": "contributions/menus.json",
   "settings": "contributions/settings.json",
