@@ -31,7 +31,7 @@
     "react-dom": ">=18.2.0"
   },
   "dependencies": {
-    "@sillsdev/scripture": "^2.0.0",
+    "@sillsdev/scripture": "^2.0.1",
     "@visx/responsive": "^3.3.0",
     "@visx/scale": "^3.5.0",
     "@visx/text": "^3.3.0",
