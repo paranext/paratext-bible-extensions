@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
-import { Button, DataTable } from 'platform-bible-react';
+import { Button, ColumnDef, DataTable, RowContents, SortDirection } from 'platform-bible-react';
 import type { WordListEntry } from 'paratext-bible-word-list';
-import { ColumnDef, Row, SortDirection } from '@tanstack/react-table';
 
 type WordData = {
   word: string;
@@ -56,7 +55,7 @@ export default function WordTable({ wordList, fullWordCount, onWordClick }: Word
     return newWordData;
   }, [wordList]);
 
-  const onCellClick = (row: Row<WordData>): void => {
+  const onCellClick = (row: RowContents<WordData>): void => {
     onWordClick(row.getValue('word'));
   };
 

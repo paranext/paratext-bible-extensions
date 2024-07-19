@@ -42,7 +42,6 @@
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
     "@swc/core": "^1.4.11",
-    "@tanstack/react-table": "^8.19.2",
     "@types/node": "^20.12.2",
     "@types/react": "^18.2.73",
     "@types/react-dom": "^18.2.23",
