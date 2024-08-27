@@ -1,7 +1,7 @@
 {
   "icon": "",
-  "moreInfoUrl": "",
-  "supportUrl": "",
+  "moreInfoUrl": "https://github.com/paranext/paratext-bible-extensions/tree/main/src/paratext-bible-word-list",
+  "supportUrl": "https://github.com/paranext/paratext-bible-extensions/issues",
   "localizedDisplayInfo": {
     "en": {
       "displayName": "Paratext Word List",

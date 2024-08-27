@@ -1,4 +1,4 @@
-import { useSetting, useData } from '@papi/frontend/react';
+import { useData } from '@papi/frontend/react';
 import { WebViewProps } from '@papi/core';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { ComboBox, ScriptureReference, Switch, TextField } from 'platform-bible-react';
@@ -58,8 +58,9 @@ function newDataNeeded(
 globalThis.webViewComponent = function WordListWebView({
   projectId,
   useWebViewState,
+  useWebViewScrollGroupScrRef,
 }: WebViewProps) {
-  const [scrRef] = useSetting('platform.verseRef', defaultScrRef);
+  const [scrRef] = useWebViewScrollGroupScrRef();
   const [scope, setScope] = useWebViewState<Scope>('scope', Scope.Book);
   const [wordFilter, setWordFilter] = useState<string>('');
   const [selectedWord, setSelectedWord] = useState<WordListEntry>();
