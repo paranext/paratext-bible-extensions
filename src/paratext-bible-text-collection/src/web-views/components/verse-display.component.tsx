@@ -1,17 +1,24 @@
+import { UseWebViewStateHook } from '@papi/core';
 import { useProjectData } from '@papi/frontend/react';
 import { VerseRef } from '@sillsdev/scripture';
-import { UseWebViewStateHook } from '@papi/core';
 
-import { Tooltip, IconButton, Menu, MenuItem, Divider } from '@mui/material';
 import {
   HighlightOff,
   RestartAlt,
+  VerticalAlignBottom,
+  VerticalAlignTop,
   ZoomIn,
   ZoomOut,
-  VerticalAlignTop,
-  VerticalAlignBottom,
 } from '@mui/icons-material';
-import { useState, MouseEvent } from 'react';
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from 'platform-bible-react';
+import { MouseEvent } from 'react';
 import { ProjectInfo } from '../../util';
 
 const defaultFontSize: number = 16;
@@ -48,17 +55,7 @@ function VerseDisplay({
     projectId,
   ).VersePlainText(verseRef, '');
   const [fontSize, setFontSize] = useWebViewState<number>(`fontSize_${projectId}`, defaultFontSize);
-  const [anchorEl, setAnchorEl] = useState<undefined | HTMLElement>(undefined);
 
-  const handleOpenMenu = (event: MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setAnchorEl(event.currentTarget);
-  };
-  const isOpen = !!anchorEl;
-  const handleCloseMenu = (event: MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setAnchorEl(undefined);
-  };
   const handleCloseProject = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     onCloseProject(projectId);
@@ -86,65 +83,60 @@ function VerseDisplay({
     >
       <div className="row">
         <div className="title">{projectInfo?.name || '...'}</div>
-        <div>
-          <Tooltip title="More Actions">
-            <IconButton onClick={handleOpenMenu} size="small" sx={{ ml: 2 }}>
-              ...
-            </IconButton>
-          </Tooltip>
-          <Menu
-            className="context-menu"
-            anchorEl={anchorEl}
-            open={isOpen}
-            onClose={handleCloseMenu}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
-            <MenuItem onClick={handleCloseProject}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost">&#x22ee;</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={handleCloseProject}>
               <HighlightOff /> Close Text
-            </MenuItem>
-            <Divider />
-            <MenuItem
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
               onClick={(event) => {
                 handleZoom(event, fontSize + 1);
               }}
             >
               <ZoomIn /> Zoom in
-            </MenuItem>
-            <MenuItem
+            </DropdownMenuItem>
+            <DropdownMenuItem
               onClick={(event) => {
                 handleZoom(event, fontSize - 1);
               }}
             >
               <ZoomOut /> Zoom out
-            </MenuItem>
-            <MenuItem
+            </DropdownMenuItem>
+            <DropdownMenuItem
               onClick={(event) => {
                 handleZoom(event, defaultFontSize);
               }}
               disabled={fontSize === defaultFontSize}
             >
               <RestartAlt /> Zoom Reset
-            </MenuItem>
-            <Divider />
-            <MenuItem
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
               onClick={(event) => {
                 handleProjectUpDown(event, true);
               }}
               disabled={isFirstProject}
             >
               <VerticalAlignTop /> Move Up
-            </MenuItem>
-            <MenuItem
+            </DropdownMenuItem>
+            <DropdownMenuItem
               onClick={(event) => {
                 handleProjectUpDown(event, false);
               }}
               disabled={isLastProject}
             >
               <VerticalAlignBottom /> Move Down
-            </MenuItem>
-          </Menu>
-        </div>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <p className="text" style={{ fontSize }}>
         {versePlainText}

@@ -133,6 +133,7 @@ globalThis.webViewComponent = function WordListWebView({
           value={wordFilter}
           onChange={(event) => onChangeWordFilter(event)}
           isFullWidth
+          className="pr-text-foreground"
         />
         <Switch
           isChecked={showWordCloud}
