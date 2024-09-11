@@ -43,10 +43,10 @@ function VerseDisplay({
   isSelected,
   useWebViewState,
 }: VerseDisplayProps) {
-  const [usfm] = useProjectData('platformScripture.USFM_Verse', projectId).VerseUSFM(
-    verseRef,
-    'Loading',
-  );
+  const [versePlainText] = useProjectData(
+    'platformScripture.PlainText_Verse',
+    projectId,
+  ).VersePlainText(verseRef, '');
   const [fontSize, setFontSize] = useWebViewState<number>(`fontSize_${projectId}`, defaultFontSize);
   const [anchorEl, setAnchorEl] = useState<undefined | HTMLElement>(undefined);
 
@@ -147,7 +147,7 @@ function VerseDisplay({
         </div>
       </div>
       <p className="text" style={{ fontSize }}>
-        {usfm}
+        {versePlainText}
       </p>
     </div>
   );
