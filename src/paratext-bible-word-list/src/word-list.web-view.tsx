@@ -1,7 +1,7 @@
 import { useData } from '@papi/frontend/react';
 import { WebViewProps } from '@papi/core';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { ComboBox, ScriptureReference, Switch, TextField } from 'platform-bible-react';
+import { ComboBox, Input, ScriptureReference, Switch } from 'platform-bible-react';
 import type { WordListEntry } from 'paratext-bible-word-list';
 import WordContentViewer from './word-content-viewer.component';
 import WordTable from './word-table.component';
@@ -119,21 +119,14 @@ globalThis.webViewComponent = function WordListWebView({
     <div className="word-list">
       <div className="filters">
         <ComboBox
-          title="Scope"
           value={scope}
-          // ComboBox doesn't have perfect types right now. https://github.com/paranext/paranext-core/issues/560
-          // eslint-disable-next-line no-type-assertion/no-type-assertion
-          onChange={(_event, value) => setScope(value as Scope)}
+          onChange={(value) => setScope(value)}
           options={Object.values(Scope)}
-          isClearable={false}
-          width={150}
         />
-        <TextField
-          label="Word filter"
+        <Input
+          placeholder="Word filter"
           value={wordFilter}
           onChange={(event) => onChangeWordFilter(event)}
-          isFullWidth
-          className="pr-text-foreground"
         />
         <Switch
           isChecked={showWordCloud}
