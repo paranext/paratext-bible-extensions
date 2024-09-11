@@ -17,9 +17,32 @@
   padding: 0;
 }
 
+// CAUTION: Keep in sync withhttps://github.com/paranext/paranext-core/blob/main/extensions/src/platform-scripture-editor/src/_editor-overrides.scss
 body {
-  background-color: white;
-  color: black;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+// text selection
+:focus ::selection {
+  color: hsl(var(--primary-foreground));
+  background-color: hsl(var(--primary));
+}
+
+::selection {
+  color: hsl(var(--secondary-foreground));
+  background-color: hsl(var(--secondary));
+}
+
+// inside the editor
+
+.editor-inner {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.formatted-font .verse {
+  background-color: hsl(var(--secondary));
 }
 
 // #endregion

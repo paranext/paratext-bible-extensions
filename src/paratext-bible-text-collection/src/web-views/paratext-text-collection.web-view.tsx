@@ -1,7 +1,7 @@
 import papi from '@papi/frontend';
 import { useDialogCallback } from '@papi/frontend/react';
 import { Fragment, useCallback, useEffect, useMemo } from 'react';
-import { IconButton, ScriptureReference, usePromise } from 'platform-bible-react';
+import { Button, ScriptureReference, usePromise } from 'platform-bible-react';
 import { deepEqual } from 'platform-bible-utils';
 import { VerseRef } from '@sillsdev/scripture';
 import { WebViewProps } from '@papi/core';
@@ -146,14 +146,15 @@ globalThis.webViewComponent = function TextCollectionWebView({
             </Fragment>
           );
         })}
-      <IconButton
-        label="Select projects"
-        size="medium"
+      <Button
+        title="Select projects"
+        size="icon"
+        variant="ghost"
         className="select-projects-button"
         onClick={() => selectProjects()}
       >
         +
-      </IconButton>
+      </Button>
     </div>
   );
 
