@@ -1,6 +1,6 @@
 import { UseWebViewStateHook } from '@papi/core';
 import { useProjectData } from '@papi/frontend/react';
-import { VerseRef } from '@sillsdev/scripture';
+import { Canon, VerseRef } from '@sillsdev/scripture';
 
 import {
   HighlightOff,
@@ -138,7 +138,13 @@ function VerseDisplay({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <p className="text" style={{ fontSize }}>
+      <p
+        dir={
+          projectInfo?.name === 'OHEBGRK' && Canon.isBookOT(verseRef.bookNum) ? 'rtl' : undefined
+        }
+        className="text"
+        style={{ fontSize }}
+      >
         {versePlainText}
       </p>
     </div>
