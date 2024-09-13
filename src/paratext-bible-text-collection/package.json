@@ -1,7 +1,7 @@
 {
   "name": "paratext-bible-text-collection",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.1.0",
   "main": "src/main.js",
   "types": "src/types/paratext-bible-text-collection.d.ts",
   "author": "Platform.Bible Bundled Extensions Team - Rolf Heij",
