@@ -1,3 +1,14 @@
+# 0.1.1 (2024.9.14)
+
+## What's Changed
+
+- update SCSS after editor upgrade by @irahopkinson in https://github.com/paranext/paratext-bible-extensions/pull/38
+- Merge Release/v0.1.0 back to main by @tjcouch-sil in https://github.com/paranext/paratext-bible-extensions/pull/39
+
+**Full Changelog**: https://github.com/paranext/paratext-bible-extensions/compare/v0.1.0...v0.1.1
+
+# 0.1.0 (2024.9.13)
+
 ## What's Changed
 
 - Implement Shared Scripture Editor, bump version to 0.0.2 by @tjcouch-sil in https://github.com/paranext/paratext-bible-extensions/pull/11
