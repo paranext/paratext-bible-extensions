@@ -1,6 +1,6 @@
 {
   "name": "paratext-bible-text-collection",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "displayData": "assets/displayData.json",
   "author": "Platform.Bible Bundled Extensions Team - Rolf Heij",
   "license": "MIT",
