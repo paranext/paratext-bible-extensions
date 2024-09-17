@@ -1,17 +1,31 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+}
+
 .word-list {
-  overflow: auto;
-  padding: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   .filters {
     display: flex;
     align-items: center;
   }
-
-  .filters > * {
-    margin-right: 10px;
-  }
 }
 
-.word-list > * {
-  margin-top: 10px;
+.word-component {
+  flex: 1 1 0%;
+  overflow: auto;
+  border-radius: calc(var(--radius) - 2px);
+  border-width: 1px;
+  margin: 0.25rem /* 4px */;
 }

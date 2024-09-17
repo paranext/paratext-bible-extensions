@@ -67,8 +67,7 @@ export default function WordTable({ wordList, fullWordCount, onWordClick }: Word
 
   return (
     <DataTable
-      enablePagination
-      showPaginationControls
+      stickyHeader
       columns={columns(wordColumnTitle)}
       data={wordData}
       onRowClickHandler={onCellClick}
