@@ -20,6 +20,10 @@ body {
     display: flex;
     align-items: center;
   }
+
+  .filters > * {
+    margin: 0.25rem /* 4px */;
+  }
 }
 
 .word-component {
