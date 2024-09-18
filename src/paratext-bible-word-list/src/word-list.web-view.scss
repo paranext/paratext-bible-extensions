@@ -37,23 +37,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    .spin {
-      margin: 1rem;
-      width: 1rem;
-      height: 1rem;
-
-      animation: spin 1s linear infinite;
-
-      @keyframes spin {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-    }
   }
 
   .word-component {

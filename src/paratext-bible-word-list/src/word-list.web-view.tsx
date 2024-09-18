@@ -1,8 +1,14 @@
 import { WebViewProps } from '@papi/core';
 import { useData } from '@papi/frontend/react';
-import { Loader2 } from 'lucide-react';
 import type { WordListEntry } from 'paratext-bible-word-list';
-import { ComboBox, Input, Label, ScriptureReference, ShadCnSwitch } from 'platform-bible-react';
+import {
+  ComboBox,
+  Input,
+  Label,
+  ScriptureReference,
+  ShadCnSwitch,
+  Spinner,
+} from 'platform-bible-react';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import WordCloud from './word-cloud.component';
 import WordContentViewer from './word-content-viewer.component';
@@ -143,7 +149,7 @@ globalThis.webViewComponent = function WordListWebView({
       </div>
       {loading && (
         <div className="loader">
-          <Loader2 className="spin" />
+          <Spinner />
           <Label>Generating word list</Label>
         </div>
       )}
