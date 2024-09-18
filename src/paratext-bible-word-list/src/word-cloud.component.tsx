@@ -38,10 +38,10 @@ export default function WordCloud({ wordList }: WordCloudProps) {
   const fontSizeSetter = (data: CloudData) => fontScale(data.value);
 
   return (
-    <ParentSize>
-      {({ width }) => (
+    <ParentSize style={{ height: '95%' }}>
+      {({ width, height }) => (
         <Wordcloud
-          height={500}
+          height={height}
           rotate={0}
           width={width}
           fontSize={fontSizeSetter}

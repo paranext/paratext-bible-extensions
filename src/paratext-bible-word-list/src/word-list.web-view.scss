@@ -24,12 +24,43 @@ body {
   .filters > * {
     margin: 0.25rem /* 4px */;
   }
-}
 
-.word-component {
-  flex: 1 1 0%;
-  overflow: auto;
-  border-radius: calc(var(--radius) - 2px);
-  border-width: 1px;
-  margin: 0.25rem /* 4px */;
+  .input {
+    margin: 0.25rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+  }
+
+  .loader {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .spin {
+      margin: 1rem;
+      width: 1rem;
+      height: 1rem;
+
+      animation: spin 1s linear infinite;
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
+
+  .word-component {
+    flex: 1 1 0%;
+    overflow: auto;
+    margin: 0.25rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+  }
 }
