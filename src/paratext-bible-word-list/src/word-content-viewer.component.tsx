@@ -41,8 +41,8 @@ export default function WordContentViewer({ selectedWord }: { selectedWord: Word
   }, [selectedWord]);
 
   return (
-    <Table>
-      <TableHeader>
+    <Table stickyHeader>
+      <TableHeader stickyHeader>
         <TableRow>
           <TableHead>Reference</TableHead>
           <TableHead>Text</TableHead>

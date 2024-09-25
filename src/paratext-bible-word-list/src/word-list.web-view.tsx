@@ -1,11 +1,18 @@
-import { useData } from '@papi/frontend/react';
 import { WebViewProps } from '@papi/core';
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { ComboBox, Input, ScriptureReference, Switch } from 'platform-bible-react';
+import { useData } from '@papi/frontend/react';
 import type { WordListEntry } from 'paratext-bible-word-list';
+import {
+  ComboBox,
+  Input,
+  Label,
+  ScriptureReference,
+  ShadCnSwitch,
+  Spinner,
+} from 'platform-bible-react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import WordCloud from './word-cloud.component';
 import WordContentViewer from './word-content-viewer.component';
 import WordTable from './word-table.component';
-import WordCloud from './word-cloud.component';
 
 const defaultScrRef: ScriptureReference = {
   bookNum: 1,
@@ -124,32 +131,48 @@ globalThis.webViewComponent = function WordListWebView({
           options={Object.values(Scope)}
         />
         <Input
+          className="input"
           placeholder="Word filter"
           value={wordFilter}
           onChange={(event) => onChangeWordFilter(event)}
         />
-        <Switch
-          isChecked={showWordCloud}
-          onChange={() => {
+        <ShadCnSwitch
+          id="view-mode"
+          checked={showWordCloud}
+          onCheckedChange={() => {
             setShowWordCloud(!showWordCloud);
             setSelectedWord(undefined);
           }}
         />
-        <p>{showWordCloud ? 'Cloud' : 'Table'} view</p>
+
+        <Label htmlFor="view-mode">{`${showWordCloud ? 'Cloud' : 'Table'} view`}</Label>
       </div>
-      {loading && <p>Generating word list</p>}
+      {loading && (
+        <div className="loader">
+          <Spinner />
+          <Label>Generating word list</Label>
+        </div>
+      )}
       {!loading &&
         wordList &&
         (showWordCloud ? (
-          <WordCloud wordList={shownWordList} />
+          <div className="word-component">
+            <WordCloud wordList={shownWordList} />
+          </div>
         ) : (
-          <WordTable
-            wordList={shownWordList}
-            fullWordCount={wordList.length}
-            onWordClick={(word: string) => findSelectedWordEntry(word)}
-          />
+          <div className="word-component">
+            <WordTable
+              wordList={shownWordList}
+              fullWordCount={wordList.length}
+              onWordClick={(word: string) => findSelectedWordEntry(word)}
+            />
+          </div>
         ))}
-      {selectedWord && <WordContentViewer selectedWord={selectedWord} />}
+      {selectedWord && (
+        <div className="word-component">
+          <WordContentViewer selectedWord={selectedWord} />
+        </div>
+      )}
     </div>
   );
 };
