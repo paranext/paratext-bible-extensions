@@ -63,7 +63,7 @@ To run Platform.Bible with these extensions:
 
 `npm start`
 
-Note: The built extensions will be the `dist` folder. In order for Platform.Bible to run these extensions, you must provide the directory to these built extensions to Platform.Bible via a command-line argument. This command-line argument is already provided in this `package.json`'s `start` script. If you want to start Platform.Bible and use these extensions any other way, you must provide this command-line argument or put the `dist` folder into Platform.Bible's `extensions` folder.
+Note: The built extensions will be the `dist` folder. In order for Platform.Bible to run these extensions, you must provide the directory to these built extensions to Platform.Bible via a command-line argument. This command-line argument is already provided in this `package.json`'s `start` script. If you want to start Platform.Bible and use these extensions any other way, you must provide this command-line argument (e.g. `Platform.Bible.exe --extensions ./dist`) or put the `dist` folder into Platform.Bible's [extensions folder](https://github.com/paranext/paranext-core/blob/edce560ccb0de06b6e98707bfb1879b359194ea2/src/extension-host/services/extension.service.ts#L162).
 
 ### Building these extensions independently
 
