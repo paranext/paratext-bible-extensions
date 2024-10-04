@@ -323,6 +323,46 @@ export type ExtensionInfo = ExtensionManifest & {
   shouldCopyOnly?: boolean;
 };
 
+/** Cached list of extension folder names */
+let extensionFolderNamesCached: string[] | undefined;
+
+/**
+ * Get a list of the names of the folders with extensions in them (in the source folder)
+ *
+ * Synchronous version of `getExtensionFolderNames`
+ */
+export function getExtensionFolderNamesSync(): string[] {
+  if (extensionFolderNamesCached) return extensionFolderNamesCached;
+
+  extensionFolderNamesCached = fs
+    .readdirSync(sourceFolder, {
+      withFileTypes: true,
+    })
+    .filter((dirEntry) => dirEntry.isDirectory())
+    .map((dirEntry) => dirEntry.name);
+
+  return extensionFolderNamesCached;
+}
+
+/**
+ * Get a list of the names of the folders with extensions in them (in the source folder)
+ *
+ * Asynchronous version of `getExtensionFolderNamesSync`
+ */
+export async function getExtensionFolderNames(): Promise<string[]> {
+  if (extensionFolderNamesCached) return extensionFolderNamesCached;
+
+  extensionFolderNamesCached = (
+    await fs.promises.readdir(sourceFolder, {
+      withFileTypes: true,
+    })
+  )
+    .filter((dirEntry) => dirEntry.isDirectory())
+    .map((dirEntry) => dirEntry.name);
+
+  return extensionFolderNamesCached;
+}
+
 /**
  * Gets a list of the extension folders and their respective entry files
  *
@@ -330,13 +370,7 @@ export type ExtensionInfo = ExtensionManifest & {
  */
 export async function getExtensions(): Promise<ExtensionInfo[]> {
   // Get names of each folder in the source folder
-  const extensionFolderNames = (
-    await fs.promises.readdir(sourceFolder, {
-      withFileTypes: true,
-    })
-  )
-    .filter((dirEntry) => dirEntry.isDirectory())
-    .map((dirEntry) => dirEntry.name);
+  const extensionFolderNames = await getExtensionFolderNames();
 
   // Return extension info for each extension folder
   // We're filtering out the `undefined` entries, so assert that there is no `undefined`
