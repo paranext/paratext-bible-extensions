@@ -72,8 +72,8 @@
     "prettier": "^3.3.3",
     "prettier-plugin-jsdoc": "^1.3.0",
     "replace-in-file": "^7.2.0",
-    "sass": "^1.78.0",
-    "sass-loader": "^14.2.1",
+    "sass": "^1.79.4",
+    "sass-loader": "^16.0.2",
     "stylelint": "^16.9.0",
     "stylelint-config-recommended": "^14.0.1",
     "stylelint-config-sass-guidelines": "^12.1.0",
@@ -92,6 +92,6 @@
   },
   "workspaces": ["src/*"],
   "volta": {
-    "node": "20.11.1"
+    "node": "20.18.0"
   }
 }
