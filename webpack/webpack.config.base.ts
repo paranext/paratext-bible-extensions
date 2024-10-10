@@ -3,12 +3,24 @@
 import path from 'path';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import webpack from 'webpack';
+import { getExtensionFolderNamesSync } from './webpack.util';
 
 const isDev = process.env.NODE_ENV !== 'production';
 const shouldGenerateSourceMaps = isDev || process.env.DEBUG_PROD;
 
 /** The base directory from which webpack should operate (should be the root repo folder) */
 export const rootDir = path.resolve(__dirname, '..');
+
+// Exit if there are no extensions yet
+const areExtensionsPresent = getExtensionFolderNamesSync().length > 0;
+if (!areExtensionsPresent) {
+  // This is a command-line utility for which it is fine to print to the console
+  // eslint-disable-next-line no-console
+  console.log(
+    'No extensions found! Please run `npm run create-extension -- <extension_name>` to create an extension. See README.md for more information.',
+  );
+  process.exit(0);
+}
 
 /**
  * The module format of library we want webpack to use for externals and create for our extensions
@@ -98,6 +110,8 @@ const configBase: webpack.Configuration = {
           // into dom. style-loader would add html style elements for our styles if we used it
           // We are not using css-loader since we are getting style files using ?inline. css-loader
           // would allow us to import CSS into CommonJS
+          // Processes style transformations in PostCSS - after scss so PostCSS runs on just css
+          'postcss-loader',
           // Compiles Sass to CSS
           'sass-loader',
         ],
