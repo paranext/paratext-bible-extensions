@@ -9,12 +9,12 @@ import {
   WithNotifyUpdate,
 } from '@papi/core';
 
+import { VerseRef } from '@sillsdev/scripture';
 import type { WordListDataTypes, WordListEntry, WordListSelector } from 'paratext-bible-word-list';
 import { ScriptureReference } from 'platform-bible-react';
 import { UnsubscriberAsync } from 'platform-bible-utils';
-import { VerseRef } from '@sillsdev/scripture';
-import wordListReact from './word-list.web-view?inline';
 import wordListReactStyles from './word-list.web-view.scss?inline';
+import wordListReact from './word-list.web-view?inline';
 
 const { logger } = papi;
 
