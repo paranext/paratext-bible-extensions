@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@sillsdev/scripture": "^2.0.2",
-    "platform-bible-utils": "file:../paranext-core/lib/platform-bible-utils"
+    "platform-bible-utils": "file:../../../paranext-core/lib/platform-bible-utils"
   },
   "devDependencies": {
     "@biblionexus-foundation/platform-editor": "^0.6.1",
