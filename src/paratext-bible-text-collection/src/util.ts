@@ -22,9 +22,12 @@ export function getTextCollectionTitle(
   return `${projectNames.join(', ')} (${verseRef.toString()})`;
 }
 
-export function getTextCollectionTooltip(projectNames: (string | undefined)[] | undefined) {
+export function getTextCollectionTooltip(
+  localizedTextCollection: string | undefined,
+  projectNames: (string | undefined)[] | undefined,
+) {
   if (!projectNames || projectNames.length === 0 || projectNames.includes(undefined))
     return undefined;
 
-  return `Text Collection\n\n${projectNames.join('\n')}`;
+  return `${localizedTextCollection ?? 'Text Collection'}\n\n${projectNames.join('\n')}`;
 }

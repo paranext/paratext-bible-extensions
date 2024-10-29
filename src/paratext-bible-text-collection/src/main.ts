@@ -6,6 +6,7 @@ import type {
   SavedWebViewDefinition,
   WebViewDefinition,
 } from '@papi/core';
+import localizationService from '@papi/frontend';
 import { VerseRef } from '@sillsdev/scripture';
 import textCollectionReact from './web-views/paratext-text-collection.web-view?inline';
 import textCollectionReactStyles from './web-views/paratext-text-collection.web-view.scss?inline';
@@ -30,6 +31,15 @@ const textCollectionWebViewProvider: IWebViewProvider = {
         `${TEXT_COLLECTION_WEB_VIEW_TYPE} provider received request to provide a ${savedWebView.webViewType} web view`,
       );
 
+    let localizedTextCollection: string | undefined;
+    try {
+      localizedTextCollection = await localizationService.localization.getLocalizedString({
+        localizeKey: '%textCollection_defaultTitle%',
+      });
+    } catch (e) {
+      logger.error(`Localization for 'Text Collection' failed with error: ${e}`);
+    }
+
     // Type assert the WebView state since TypeScript doesn't know what type it is
     // TODO: Fix after https://github.com/paranext/paranext-core/issues/585 is done
     // eslint-disable-next-line no-type-assertion/no-type-assertion
@@ -52,8 +62,10 @@ const textCollectionWebViewProvider: IWebViewProvider = {
     }
 
     return {
-      title: getTextCollectionTitle(projectNames, new VerseRef(1, 1, 1)) ?? 'Text Collection',
-      tooltip: getTextCollectionTooltip(projectNames),
+      title:
+        getTextCollectionTitle(projectNames, new VerseRef(1, 1, 1)) ??
+        '%textCollection_defaultTitle%',
+      tooltip: getTextCollectionTooltip(localizedTextCollection, projectNames),
       ...savedWebView,
       iconUrl: 'papi-extension://paratext-bible-text-collection/assets/Group24.svg',
       content: textCollectionReact,
@@ -86,8 +98,8 @@ export async function activate(context: ExecutionActivationContext) {
       // If projectIds weren't passed in, get from dialog
       if (!projectIdsForWebView) {
         const userProjectIds = await papi.dialogs.showDialog('platform.selectMultipleProjects', {
-          title: 'Open Text Collection',
-          prompt: 'Please select projects to open in the text collection:',
+          title: '%textCollection_dialog_openTextCollection_title%',
+          prompt: '%textCollection_dialog_selectProjectsToOpen_prompt%',
           // Wrap array of required `projectInterface`s in another array to make these required
           // `projectInterface`s AND together, not OR, so the only projects that show up are ones
           // that support all required `projectInterface`s

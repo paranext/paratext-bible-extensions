@@ -1,4 +1,4 @@
-import { useProjectData } from '@papi/frontend/react';
+import { useLocalizedStrings, useProjectData } from '@papi/frontend/react';
 import { VerseRef } from '@sillsdev/scripture';
 import { UseWebViewStateHook } from '@papi/core';
 
@@ -43,9 +43,39 @@ function VerseDisplay({
   isSelected,
   useWebViewState,
 }: VerseDisplayProps) {
+  const loadingKey = '%textCollection_verseDisplay_loading%';
+  const ellipsisKey = '%textCollection_verseDisplay_projectNameMissing%';
+  const moreActionsKey = '%textCollection_verseDisplay_openMenu_tooltips%';
+  const closeTextKey = '%textCollection_verseDisplay_closeText%';
+  const zoomInKey = '%textCollection_verseDisplay_zoomIn%';
+  const zoomOutKey = '%textCollection_verseDisplay_zoomOut%';
+  const zoomResetKey = '%textCollection_verseDisplay_zoomReset%';
+  const moveUpKey = '%textCollection_verseDisplay_moveTextUp%';
+  const moveDownKey = '%textCollection_verseDisplay_moveTextDown%';
+  const [localizedStrings] = useLocalizedStrings([
+    loadingKey,
+    ellipsisKey,
+    moreActionsKey,
+    closeTextKey,
+    zoomInKey,
+    zoomOutKey,
+    zoomResetKey,
+    moveUpKey,
+    moveDownKey,
+  ]);
+  const localizedLoading = localizedStrings[loadingKey];
+  const localizedEllipsis = localizedStrings[ellipsisKey];
+  const localizedMoreActions = localizedStrings[moreActionsKey];
+  const localizedCloseText = localizedStrings[closeTextKey];
+  const localizedZoomIn = localizedStrings[zoomInKey];
+  const localizedZoomOut = localizedStrings[zoomOutKey];
+  const localizedZoomReset = localizedStrings[zoomResetKey];
+  const localizedMoveUp = localizedStrings[moveUpKey];
+  const localizedMoveDown = localizedStrings[moveDownKey];
+
   const [usfm] = useProjectData('platformScripture.USFM_Verse', projectId).VerseUSFM(
     verseRef,
-    'Loading',
+    localizedLoading,
   );
   const [fontSize, setFontSize] = useWebViewState<number>(`fontSize_${projectId}`, defaultFontSize);
   const [anchorEl, setAnchorEl] = useState<undefined | HTMLElement>(undefined);
@@ -85,9 +115,9 @@ function VerseDisplay({
       aria-hidden="true"
     >
       <div className="row">
-        <div className="title">{projectInfo?.name || '...'}</div>
+        <div className="title">{projectInfo?.name || localizedEllipsis}</div>
         <div>
-          <Tooltip title="More Actions">
+          <Tooltip title={localizedMoreActions}>
             <IconButton onClick={handleOpenMenu} size="small" sx={{ ml: 2 }}>
               ...
             </IconButton>
@@ -101,7 +131,7 @@ function VerseDisplay({
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <MenuItem onClick={handleCloseProject}>
-              <HighlightOff /> Close Text
+              <HighlightOff /> {localizedCloseText}
             </MenuItem>
             <Divider />
             <MenuItem
@@ -109,14 +139,14 @@ function VerseDisplay({
                 handleZoom(event, fontSize + 1);
               }}
             >
-              <ZoomIn /> Zoom in
+              <ZoomIn /> {localizedZoomIn}
             </MenuItem>
             <MenuItem
               onClick={(event) => {
                 handleZoom(event, fontSize - 1);
               }}
             >
-              <ZoomOut /> Zoom out
+              <ZoomOut /> {localizedZoomOut}
             </MenuItem>
             <MenuItem
               onClick={(event) => {
@@ -124,7 +154,7 @@ function VerseDisplay({
               }}
               disabled={fontSize === defaultFontSize}
             >
-              <RestartAlt /> Zoom Reset
+              <RestartAlt /> {localizedZoomReset}
             </MenuItem>
             <Divider />
             <MenuItem
@@ -133,7 +163,7 @@ function VerseDisplay({
               }}
               disabled={isFirstProject}
             >
-              <VerticalAlignTop /> Move Up
+              <VerticalAlignTop /> {localizedMoveUp}
             </MenuItem>
             <MenuItem
               onClick={(event) => {
@@ -141,7 +171,7 @@ function VerseDisplay({
               }}
               disabled={isLastProject}
             >
-              <VerticalAlignBottom /> Move Down
+              <VerticalAlignBottom /> {localizedMoveDown}
             </MenuItem>
           </Menu>
         </div>
