@@ -9,14 +9,12 @@
       "%textCollection_dialog_selectProjectsInTextCollection_title%": "Select projects in Text Collection",
       "%textCollection_dialog_openTextCollection_title%": "Open Text Collection",
       "%textCollection_verseDisplay_projectNameMissing%": "...",
-      "%textCollection_verseDisplay_loading%": "Loading",
       "%textCollection_verseDisplay_closeText%": "Close Text",
       "%textCollection_verseDisplay_moveTextDown%": "Move Down",
       "%textCollection_verseDisplay_moveTextUp%": "Move Up",
       "%textCollection_verseDisplay_zoomIn%": "Zoom in",
       "%textCollection_verseDisplay_zoomOut%": "Zoom out",
       "%textCollection_verseDisplay_zoomReset%": "Zoom Reset",
-      "%textCollection_verseDisplay_openMenu_tooltips%": "More Actions",
       "%webview_selectProjects%": "Select projects"
     }
   }

@@ -54,9 +54,7 @@ function VerseDisplay({
     'platformScripture.PlainText_Verse',
     projectId,
   ).VersePlainText(verseRef, '');
-  const loadingKey = '%textCollection_verseDisplay_loading%';
   const ellipsisKey = '%textCollection_verseDisplay_projectNameMissing%';
-  const moreActionsKey = '%textCollection_verseDisplay_openMenu_tooltips%';
   const closeTextKey = '%textCollection_verseDisplay_closeText%';
   const zoomInKey = '%textCollection_verseDisplay_zoomIn%';
   const zoomOutKey = '%textCollection_verseDisplay_zoomOut%';
@@ -64,9 +62,7 @@ function VerseDisplay({
   const moveUpKey = '%textCollection_verseDisplay_moveTextUp%';
   const moveDownKey = '%textCollection_verseDisplay_moveTextDown%';
   const [localizedStrings] = useLocalizedStrings([
-    loadingKey,
     ellipsisKey,
-    moreActionsKey,
     closeTextKey,
     zoomInKey,
     zoomOutKey,
@@ -74,9 +70,7 @@ function VerseDisplay({
     moveUpKey,
     moveDownKey,
   ]);
-  const localizedLoading = localizedStrings[loadingKey];
   const localizedEllipsis = localizedStrings[ellipsisKey];
-  const localizedMoreActions = localizedStrings[moreActionsKey];
   const localizedCloseText = localizedStrings[closeTextKey];
   const localizedZoomIn = localizedStrings[zoomInKey];
   const localizedZoomOut = localizedStrings[zoomOutKey];
@@ -84,10 +78,6 @@ function VerseDisplay({
   const localizedMoveUp = localizedStrings[moveUpKey];
   const localizedMoveDown = localizedStrings[moveDownKey];
 
-  const [usfm] = useProjectData('platformScripture.USFM_Verse', projectId).VerseUSFM(
-    verseRef,
-    localizedLoading,
-  );
   const [fontSize, setFontSize] = useWebViewState<number>(`fontSize_${projectId}`, defaultFontSize);
 
   const handleCloseProject = (event: MouseEvent<HTMLElement>) => {
