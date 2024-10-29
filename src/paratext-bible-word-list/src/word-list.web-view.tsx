@@ -1,11 +1,11 @@
-import { useSetting, useData } from '@papi/frontend/react';
 import { WebViewProps } from '@papi/core';
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { ComboBox, ScriptureReference, Switch, TextField } from 'platform-bible-react';
+import { useData } from '@papi/frontend/react';
 import type { WordListEntry } from 'paratext-bible-word-list';
+import { ComboBox, Input, Label, ScriptureReference, Spinner, Switch } from 'platform-bible-react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import WordCloud from './word-cloud.component';
 import WordContentViewer from './word-content-viewer.component';
 import WordTable from './word-table.component';
-import WordCloud from './word-cloud.component';
 
 const defaultScrRef: ScriptureReference = {
   bookNum: 1,
@@ -58,8 +58,9 @@ function newDataNeeded(
 globalThis.webViewComponent = function WordListWebView({
   projectId,
   useWebViewState,
+  useWebViewScrollGroupScrRef,
 }: WebViewProps) {
-  const [scrRef] = useSetting('platform.verseRef', defaultScrRef);
+  const [scrRef] = useWebViewScrollGroupScrRef();
   const [scope, setScope] = useWebViewState<Scope>('scope', Scope.Book);
   const [wordFilter, setWordFilter] = useState<string>('');
   const [selectedWord, setSelectedWord] = useState<WordListEntry>();
@@ -118,43 +119,53 @@ globalThis.webViewComponent = function WordListWebView({
     <div className="word-list">
       <div className="filters">
         <ComboBox
-          title="Scope"
           value={scope}
-          // ComboBox doesn't have perfect types right now. https://github.com/paranext/paranext-core/issues/560
-          // eslint-disable-next-line no-type-assertion/no-type-assertion
-          onChange={(_event, value) => setScope(value as Scope)}
+          onChange={(value) => setScope(value)}
           options={Object.values(Scope)}
-          isClearable={false}
-          width={150}
         />
-        <TextField
-          label="Word filter"
+        <Input
+          className="input"
+          placeholder="Word filter"
           value={wordFilter}
           onChange={(event) => onChangeWordFilter(event)}
-          isFullWidth
         />
         <Switch
-          isChecked={showWordCloud}
-          onChange={() => {
+          id="view-mode"
+          checked={showWordCloud}
+          onCheckedChange={() => {
             setShowWordCloud(!showWordCloud);
             setSelectedWord(undefined);
           }}
         />
-        <p>{showWordCloud ? 'Cloud' : 'Table'} view</p>
+
+        <Label htmlFor="view-mode">{`${showWordCloud ? 'Cloud' : 'Table'} view`}</Label>
       </div>
-      {loading && <p>Generating word list</p>}
+      {loading && (
+        <div className="loader">
+          <Spinner />
+          <Label>Generating word list</Label>
+        </div>
+      )}
       {!loading &&
         wordList &&
         (showWordCloud ? (
-          <WordCloud wordList={shownWordList} />
+          <div className="word-component">
+            <WordCloud wordList={shownWordList} />
+          </div>
         ) : (
-          <WordTable
-            wordList={shownWordList}
-            fullWordCount={wordList.length}
-            onWordClick={(word: string) => findSelectedWordEntry(word)}
-          />
+          <div className="word-component">
+            <WordTable
+              wordList={shownWordList}
+              fullWordCount={wordList.length}
+              onWordClick={(word: string) => findSelectedWordEntry(word)}
+            />
+          </div>
         ))}
-      {selectedWord && <WordContentViewer selectedWord={selectedWord} />}
+      {selectedWord && (
+        <div className="word-component">
+          <WordContentViewer selectedWord={selectedWord} />
+        </div>
+      )}
     </div>
   );
 };

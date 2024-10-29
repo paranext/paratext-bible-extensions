@@ -1,7 +1,7 @@
 import { Editorial, EditorOptions, EditorRef } from '@biblionexus-foundation/platform-editor';
 import { Usj } from '@biblionexus-foundation/scripture-utilities';
-import { VerseRef } from '@sillsdev/scripture';
-import { useEffect, useRef } from 'react';
+import { Canon, VerseRef } from '@sillsdev/scripture';
+import { useEffect, useMemo, useRef } from 'react';
 import { logger } from '@papi/frontend';
 import { useProjectData } from '@papi/frontend/react';
 import { ProjectInfo } from '../../util';
@@ -11,8 +11,6 @@ export type ChapterViewProps = {
   projectInfo: ProjectInfo | undefined;
   verseRef: VerseRef;
 };
-
-const options: EditorOptions = { isReadonly: true, hasSpellCheck: false };
 
 const usjDocumentDefault: Usj = { type: 'USJ', version: '0.2.1', content: [] };
 
@@ -28,6 +26,16 @@ export default function ChapterView({ projectId, projectInfo, verseRef }: Chapte
   useEffect(() => {
     editorRef.current.setUsj(usj);
   }, [usj]);
+
+  const options = useMemo<EditorOptions>(
+    () => ({
+      isReadonly: true,
+      hasSpellCheck: false,
+      textDirection:
+        projectInfo?.name === 'OHEBGRK' && Canon.isBookOT(verseRef.bookNum) ? 'rtl' : 'ltr',
+    }),
+    [projectInfo, verseRef],
+  );
 
   return (
     <div className="full-chapter-view">

@@ -28,7 +28,7 @@ const columns = (wordColumnTitle: string): ColumnDef<WordData>[] => [
     accessorKey: 'word',
     header: ({ column }) => {
       return (
-        <Button onClick={() => column.toggleSorting(undefined)}>
+        <Button variant="ghost" onClick={() => column.toggleSorting(undefined)}>
           {`${wordColumnTitle} ${getSortingIcon(column.getIsSorted())}`}
         </Button>
       );
@@ -38,7 +38,7 @@ const columns = (wordColumnTitle: string): ColumnDef<WordData>[] => [
     accessorKey: 'count',
     header: ({ column }) => {
       return (
-        <Button onClick={() => column.toggleSorting(undefined)}>
+        <Button variant="ghost" onClick={() => column.toggleSorting(undefined)}>
           {`Count ${getSortingIcon(column.getIsSorted())}`}
         </Button>
       );
@@ -67,8 +67,7 @@ export default function WordTable({ wordList, fullWordCount, onWordClick }: Word
 
   return (
     <DataTable
-      enablePagination
-      showPaginationControls
+      stickyHeader
       columns={columns(wordColumnTitle)}
       data={wordData}
       onRowClickHandler={onCellClick}

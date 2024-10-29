@@ -1,17 +1,24 @@
 import { useLocalizedStrings, useProjectData } from '@papi/frontend/react';
-import { VerseRef } from '@sillsdev/scripture';
 import { UseWebViewStateHook } from '@papi/core';
+import { Canon, VerseRef } from '@sillsdev/scripture';
 
-import { Tooltip, IconButton, Menu, MenuItem, Divider } from '@mui/material';
 import {
   HighlightOff,
   RestartAlt,
+  VerticalAlignBottom,
+  VerticalAlignTop,
   ZoomIn,
   ZoomOut,
-  VerticalAlignTop,
-  VerticalAlignBottom,
 } from '@mui/icons-material';
-import { useState, MouseEvent } from 'react';
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from 'platform-bible-react';
+import { MouseEvent } from 'react';
 import { ProjectInfo } from '../../util';
 
 const defaultFontSize: number = 16;
@@ -43,6 +50,10 @@ function VerseDisplay({
   isSelected,
   useWebViewState,
 }: VerseDisplayProps) {
+  const [versePlainText] = useProjectData(
+    'platformScripture.PlainText_Verse',
+    projectId,
+  ).VersePlainText(verseRef, '');
   const loadingKey = '%textCollection_verseDisplay_loading%';
   const ellipsisKey = '%textCollection_verseDisplay_projectNameMissing%';
   const moreActionsKey = '%textCollection_verseDisplay_openMenu_tooltips%';
@@ -78,17 +89,7 @@ function VerseDisplay({
     localizedLoading,
   );
   const [fontSize, setFontSize] = useWebViewState<number>(`fontSize_${projectId}`, defaultFontSize);
-  const [anchorEl, setAnchorEl] = useState<undefined | HTMLElement>(undefined);
 
-  const handleOpenMenu = (event: MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setAnchorEl(event.currentTarget);
-  };
-  const isOpen = !!anchorEl;
-  const handleCloseMenu = (event: MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setAnchorEl(undefined);
-  };
   const handleCloseProject = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     onCloseProject(projectId);
@@ -116,68 +117,69 @@ function VerseDisplay({
     >
       <div className="row">
         <div className="title">{projectInfo?.name || localizedEllipsis}</div>
-        <div>
-          <Tooltip title={localizedMoreActions}>
-            <IconButton onClick={handleOpenMenu} size="small" sx={{ ml: 2 }}>
-              ...
-            </IconButton>
-          </Tooltip>
-          <Menu
-            className="context-menu"
-            anchorEl={anchorEl}
-            open={isOpen}
-            onClose={handleCloseMenu}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
-            <MenuItem onClick={handleCloseProject}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost">&#x22ee;</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={handleCloseProject}>
               <HighlightOff /> {localizedCloseText}
-            </MenuItem>
-            <Divider />
-            <MenuItem
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
               onClick={(event) => {
                 handleZoom(event, fontSize + 1);
               }}
             >
               <ZoomIn /> {localizedZoomIn}
-            </MenuItem>
-            <MenuItem
+            </DropdownMenuItem>
+            <DropdownMenuItem
               onClick={(event) => {
                 handleZoom(event, fontSize - 1);
               }}
             >
               <ZoomOut /> {localizedZoomOut}
-            </MenuItem>
-            <MenuItem
+            </DropdownMenuItem>
+            <DropdownMenuItem
               onClick={(event) => {
                 handleZoom(event, defaultFontSize);
               }}
               disabled={fontSize === defaultFontSize}
             >
               <RestartAlt /> {localizedZoomReset}
-            </MenuItem>
-            <Divider />
-            <MenuItem
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
               onClick={(event) => {
                 handleProjectUpDown(event, true);
               }}
               disabled={isFirstProject}
             >
               <VerticalAlignTop /> {localizedMoveUp}
-            </MenuItem>
-            <MenuItem
+            </DropdownMenuItem>
+            <DropdownMenuItem
               onClick={(event) => {
                 handleProjectUpDown(event, false);
               }}
               disabled={isLastProject}
             >
               <VerticalAlignBottom /> {localizedMoveDown}
-            </MenuItem>
-          </Menu>
-        </div>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-      <p className="text" style={{ fontSize }}>
-        {usfm}
+      <p
+        dir={
+          projectInfo?.name === 'OHEBGRK' && Canon.isBookOT(verseRef.bookNum) ? 'rtl' : undefined
+        }
+        className="text"
+        style={{ fontSize }}
+      >
+        {versePlainText}
       </p>
     </div>
   );

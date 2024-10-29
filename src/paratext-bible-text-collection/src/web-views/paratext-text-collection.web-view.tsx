@@ -1,7 +1,7 @@
 import papi from '@papi/frontend';
-import { useSetting, useDialogCallback, useLocalizedStrings } from '@papi/frontend/react';
+import { useDialogCallback } from '@papi/frontend/react';
 import { Fragment, useCallback, useEffect, useMemo } from 'react';
-import { IconButton, ScriptureReference, usePromise } from 'platform-bible-react';
+import { Button, ScriptureReference, usePromise } from 'platform-bible-react';
 import { deepEqual } from 'platform-bible-utils';
 import { VerseRef } from '@sillsdev/scripture';
 import { WebViewProps } from '@papi/core';
@@ -27,13 +27,12 @@ const getResourceVerseRef = (scrRef: ScriptureReference) => {
   return resourceVerseRef;
 };
 
-const defaultScrRef: ScriptureReference = { bookNum: 1, chapterNum: 1, verseNum: 1 };
-
 globalThis.webViewComponent = function TextCollectionWebView({
   // Project ID of the project that is focused or undefined if no project selected
   projectId: expandedProjectId = '',
   updateWebViewDefinition,
   useWebViewState,
+  useWebViewScrollGroupScrRef,
 }: WebViewProps) {
   // Project IDs to show in the text collection
   const [projectIds, setProjectIds] = useWebViewState<string[]>('projectIds', []);
@@ -75,7 +74,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
   }, [projectIds, expandedProjectId, updateWebViewDefinition]);
 
   // Current verse reference
-  const [scrRef] = useSetting('platform.verseRef', defaultScrRef);
+  const [scrRef] = useWebViewScrollGroupScrRef();
   const verseRef = useMemo(() => getResourceVerseRef(scrRef), [scrRef]);
 
   // Keep the title up-to-date
@@ -116,7 +115,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
 
   const moveProjectUpDownHandler = (directionUp: boolean, projectId: string) => {
     const projectIdsCopy = [...projectIds];
-    const index = projectIdsCopy.findIndex((id) => id === projectId);
+    const index = projectIdsCopy.findIndex((pid) => pid === projectId);
     const newIndex = directionUp ? index - 1 : index + 1;
     if (newIndex < 0 || newIndex > projectIdsCopy.length - 1) return;
     [projectIdsCopy[index], projectIdsCopy[newIndex]] = [
@@ -162,14 +161,15 @@ globalThis.webViewComponent = function TextCollectionWebView({
             </Fragment>
           );
         })}
-      <IconButton
-        label={localizedSelectProjects}
-        size="medium"
+      <Button
+        title={localizedSelectProjects}
+        size="icon"
+        variant="ghost"
         className="select-projects-button"
         onClick={() => selectProjects()}
       >
         +
-      </IconButton>
+      </Button>
     </div>
   );
 
