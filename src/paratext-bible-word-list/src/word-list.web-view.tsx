@@ -1,5 +1,5 @@
 import { WebViewProps } from '@papi/core';
-import { useData } from '@papi/frontend/react';
+import { useData, useLocalizedStrings } from '@papi/frontend/react';
 import type { WordListEntry } from 'paratext-bible-word-list';
 import { ComboBox, Input, Label, ScriptureReference, Spinner, Switch } from 'platform-bible-react';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
@@ -115,6 +115,20 @@ globalThis.webViewComponent = function WordListWebView({
     setWordFilter(event.target.value);
   }
 
+  const filterDefaultKey = '%wordList_filter_defaultText%';
+  const cloudViewKey = '%wordList_cloudView_label%';
+  const tableViewKey = '%wordList_tableView_label%';
+  const viewKey = '%wordList_view_label%';
+
+  const [localizedStrings] = useLocalizedStrings(
+    useMemo(() => [filterDefaultKey, cloudViewKey, tableViewKey, viewKey], []),
+  );
+
+  const localizedFilterDefault = localizedStrings[filterDefaultKey];
+  const localizedCloudView = localizedStrings[cloudViewKey];
+  const localizedTableView = localizedStrings[tableViewKey];
+  const localizedView = localizedStrings[viewKey];
+
   return (
     <div className="word-list">
       <div className="filters">
@@ -125,7 +139,7 @@ globalThis.webViewComponent = function WordListWebView({
         />
         <Input
           className="input"
-          placeholder="Word filter"
+          placeholder={localizedFilterDefault}
           value={wordFilter}
           onChange={(event) => onChangeWordFilter(event)}
         />
@@ -138,7 +152,7 @@ globalThis.webViewComponent = function WordListWebView({
           }}
         />
 
-        <Label htmlFor="view-mode">{`${showWordCloud ? 'Cloud' : 'Table'} view`}</Label>
+        <Label htmlFor="view-mode">{`${showWordCloud ? localizedCloudView : localizedTableView} ${localizedView}`}</Label>
       </div>
       {loading && (
         <div className="loader">

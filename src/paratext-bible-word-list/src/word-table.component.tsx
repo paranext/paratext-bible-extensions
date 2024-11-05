@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import { Button, ColumnDef, DataTable, RowContents, SortDirection } from 'platform-bible-react';
 import type { WordListEntry } from 'paratext-bible-word-list';
+import { useLocalizedStrings } from '@papi/frontend/react';
+import { formatReplacementString } from 'platform-bible-utils';
 
 type WordData = {
   word: string;
@@ -13,6 +15,10 @@ type WordTableProps = {
   onWordClick: (word: string) => void;
 };
 
+const countFormatKey = '%wordList_wordCount_format%';
+const fullCountFormatKey = '%wordList_totalCount_titleFormat%';
+const partialCountFormatKey = '%wordList_partialWordCount_titleFormat%';
+
 const getSortingIcon = (sortDirection: false | SortDirection): string => {
   if (sortDirection === 'asc') {
     return '↑';
@@ -23,13 +29,16 @@ const getSortingIcon = (sortDirection: false | SortDirection): string => {
   return '↕';
 };
 
-const columns = (wordColumnTitle: string): ColumnDef<WordData>[] => [
+const columns = (
+  wordColumnTitleFormat: string,
+  localizedCountFormat: string,
+): ColumnDef<WordData>[] => [
   {
     accessorKey: 'word',
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(undefined)}>
-          {`${wordColumnTitle} ${getSortingIcon(column.getIsSorted())}`}
+          {`${formatReplacementString(wordColumnTitleFormat, { sortingDirectionIcon: getSortingIcon(column.getIsSorted()) })}`}
         </Button>
       );
     },
@@ -39,7 +48,7 @@ const columns = (wordColumnTitle: string): ColumnDef<WordData>[] => [
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(undefined)}>
-          {`Count ${getSortingIcon(column.getIsSorted())}`}
+          {`${formatReplacementString(localizedCountFormat, { sortingDirectionIcon: getSortingIcon(column.getIsSorted()) })}`}
         </Button>
       );
     },
@@ -59,16 +68,27 @@ export default function WordTable({ wordList, fullWordCount, onWordClick }: Word
     onWordClick(row.getValue('word'));
   };
 
-  const wordColumnTitle = useMemo(() => {
+  const [localizedStrings] = useLocalizedStrings(
+    useMemo(() => [countFormatKey, fullCountFormatKey], []),
+  );
+
+  const localizedCountFormat = localizedStrings[countFormatKey];
+  const localizedFullCountFormat = localizedStrings[fullCountFormatKey];
+  const localizedPartialCountFormat = localizedStrings[partialCountFormatKey];
+
+  const wordColumnTitleFormat = useMemo(() => {
     return wordList.length === fullWordCount
-      ? `Words (${fullWordCount})`
-      : `Words (${wordList.length} of ${fullWordCount})`;
-  }, [fullWordCount, wordList.length]);
+      ? formatReplacementString(localizedFullCountFormat, { fullWordCount })
+      : formatReplacementString(localizedPartialCountFormat, {
+          wordListLength: wordList.length,
+          fullWordCount,
+        });
+  }, [fullWordCount, localizedFullCountFormat, localizedPartialCountFormat, wordList.length]);
 
   return (
     <DataTable
       stickyHeader
-      columns={columns(wordColumnTitle)}
+      columns={columns(wordColumnTitleFormat, localizedCountFormat)}
       data={wordData}
       onRowClickHandler={onCellClick}
     />
