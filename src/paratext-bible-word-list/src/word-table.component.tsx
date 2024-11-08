@@ -82,6 +82,7 @@ export default function WordTable({ wordList, fullWordCount, onWordClick }: Word
       : formatReplacementString(localizedPartialCountFormat, {
           wordListLength: wordList.length,
           fullWordCount,
+          sortingDirectionIcon: '{sortingDirectionIcon}',
         });
   }, [fullWordCount, localizedFullCountFormat, localizedPartialCountFormat, wordList.length]);
 

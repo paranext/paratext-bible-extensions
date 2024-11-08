@@ -8,9 +8,9 @@
       "%wordList_fullWordCount_titleFormat%": "Words ({fullWordCount}) \\{sortingDirectionIcon\\}",
       "%wordList_openListForProject_prompt%": "Please select project to open in the word list:",
       "%wordList_openListForProject_title%": "Open Word List",
-      "%wordList_partialWordCount_titleFormat%": "Words ({wordListLength} of {fullWordCount}) \\{sortingDirectionIcon\\}",
+      "%wordList_partialWordCount_titleFormat%": "Words ({wordListLength} of {fullWordCount}) {sortingDirectionIcon}",
       "%wordList_tableView_label%": "Table",
-      "%wordList_title_format%": "Word List",
+      "%wordList_title_format%": "Word List {projectName}",
       "%wordList_titleWithProjectName_format%": "Word List for project {projectName}",
       "%wordList_view_label%": "view",
       "%wordList_wordCount_format%": "Count {sortingDirectionIcon}"
