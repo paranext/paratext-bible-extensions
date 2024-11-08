@@ -1,5 +1,5 @@
+import { useLocalizedStrings, useProjectData } from '@papi/frontend/react';
 import { UseWebViewStateHook } from '@papi/core';
-import { useProjectData } from '@papi/frontend/react';
 import { Canon, VerseRef } from '@sillsdev/scripture';
 
 import {
@@ -54,6 +54,30 @@ function VerseDisplay({
     'platformScripture.PlainText_Verse',
     projectId,
   ).VersePlainText(verseRef, '');
+  const ellipsisKey = '%textCollection_verseDisplay_projectNameMissing%';
+  const closeTextKey = '%textCollection_verseDisplay_closeText%';
+  const zoomInKey = '%textCollection_verseDisplay_zoomIn%';
+  const zoomOutKey = '%textCollection_verseDisplay_zoomOut%';
+  const zoomResetKey = '%textCollection_verseDisplay_zoomReset%';
+  const moveUpKey = '%textCollection_verseDisplay_moveTextUp%';
+  const moveDownKey = '%textCollection_verseDisplay_moveTextDown%';
+  const [localizedStrings] = useLocalizedStrings([
+    ellipsisKey,
+    closeTextKey,
+    zoomInKey,
+    zoomOutKey,
+    zoomResetKey,
+    moveUpKey,
+    moveDownKey,
+  ]);
+  const localizedEllipsis = localizedStrings[ellipsisKey];
+  const localizedCloseText = localizedStrings[closeTextKey];
+  const localizedZoomIn = localizedStrings[zoomInKey];
+  const localizedZoomOut = localizedStrings[zoomOutKey];
+  const localizedZoomReset = localizedStrings[zoomResetKey];
+  const localizedMoveUp = localizedStrings[moveUpKey];
+  const localizedMoveDown = localizedStrings[moveDownKey];
+
   const [fontSize, setFontSize] = useWebViewState<number>(`fontSize_${projectId}`, defaultFontSize);
 
   const handleCloseProject = (event: MouseEvent<HTMLElement>) => {
@@ -82,14 +106,14 @@ function VerseDisplay({
       aria-hidden="true"
     >
       <div className="row">
-        <div className="title">{projectInfo?.name || '...'}</div>
+        <div className="title">{projectInfo?.name || localizedEllipsis}</div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost">&#x22ee;</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem onClick={handleCloseProject}>
-              <HighlightOff /> Close Text
+              <HighlightOff /> {localizedCloseText}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
@@ -99,14 +123,14 @@ function VerseDisplay({
                 handleZoom(event, fontSize + 1);
               }}
             >
-              <ZoomIn /> Zoom in
+              <ZoomIn /> {localizedZoomIn}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={(event) => {
                 handleZoom(event, fontSize - 1);
               }}
             >
-              <ZoomOut /> Zoom out
+              <ZoomOut /> {localizedZoomOut}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={(event) => {
@@ -114,7 +138,7 @@ function VerseDisplay({
               }}
               disabled={fontSize === defaultFontSize}
             >
-              <RestartAlt /> Zoom Reset
+              <RestartAlt /> {localizedZoomReset}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
@@ -125,7 +149,7 @@ function VerseDisplay({
               }}
               disabled={isFirstProject}
             >
-              <VerticalAlignTop /> Move Up
+              <VerticalAlignTop /> {localizedMoveUp}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={(event) => {
@@ -133,7 +157,7 @@ function VerseDisplay({
               }}
               disabled={isLastProject}
             >
-              <VerticalAlignBottom /> Move Down
+              <VerticalAlignBottom /> {localizedMoveDown}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

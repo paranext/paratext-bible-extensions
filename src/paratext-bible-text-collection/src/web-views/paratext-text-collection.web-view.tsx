@@ -37,6 +37,21 @@ globalThis.webViewComponent = function TextCollectionWebView({
   // Project IDs to show in the text collection
   const [projectIds, setProjectIds] = useWebViewState<string[]>('projectIds', []);
 
+  const selectProjectsTitleKey = '%textCollection_dialog_selectProjectsInTextCollection_title%';
+  const selectProjectsPromptKey = '%textCollection_dialog_selectProjectsToShow_prompt%';
+  const selectProjectsKey = '%webview_selectProjects%';
+  const textCollectionKey = '%textCollection_defaultTitle%';
+  const [localizedStrings] = useLocalizedStrings([
+    selectProjectsTitleKey,
+    selectProjectsPromptKey,
+    selectProjectsKey,
+    textCollectionKey,
+  ]);
+  const localizedSelectProjectsTitle = localizedStrings[selectProjectsTitleKey];
+  const localizedSelectProjectsPrompt = localizedStrings[selectProjectsPromptKey];
+  const localizedSelectProjects = localizedStrings[selectProjectsKey];
+  const localizedTextCollection = localizedStrings[textCollectionKey];
+
   // Project info to show in the text collection - each entry is the info or undefined if
   // not fetched yet
   const [projectsInfo] = usePromise<(ProjectInfo | undefined)[]>(
@@ -66,24 +81,24 @@ globalThis.webViewComponent = function TextCollectionWebView({
   useEffect(() => {
     const projectNames = projectsInfo.map((projectInfo) => projectInfo?.name);
     const newTitle = getTextCollectionTitle(projectNames, verseRef);
-    const newTooltip = getTextCollectionTooltip(projectNames);
+    const newTooltip = getTextCollectionTooltip(localizedTextCollection, projectNames);
     if (newTitle || newTooltip)
       updateWebViewDefinition({
         title: newTitle,
         tooltip: newTooltip,
       });
-  }, [updateWebViewDefinition, projectsInfo, verseRef]);
+  }, [localizedTextCollection, updateWebViewDefinition, projectsInfo, verseRef]);
 
   const selectProjects = useDialogCallback(
     'platform.selectMultipleProjects',
     useMemo(
       () => ({
-        title: 'Select projects in Text Collection',
-        prompt: 'Please select projects to show in the text collection:',
+        title: localizedSelectProjectsTitle,
+        prompt: localizedSelectProjectsPrompt,
         selectedProjectIds: projectIds,
         includeProjectInterfaces: [REQUIRED_PROJECT_INTERFACES],
       }),
-      [projectIds],
+      [localizedSelectProjectsTitle, localizedSelectProjectsPrompt, projectIds],
     ),
     useCallback(
       (selectedProjectIds) => {
@@ -147,7 +162,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
           );
         })}
       <Button
-        title="Select projects"
+        title={localizedSelectProjects}
         size="icon"
         variant="ghost"
         className="select-projects-button"

@@ -12,7 +12,8 @@ import {
 import { VerseRef } from '@sillsdev/scripture';
 import type { WordListDataTypes, WordListEntry, WordListSelector } from 'paratext-bible-word-list';
 import { ScriptureReference } from 'platform-bible-react';
-import { UnsubscriberAsync } from 'platform-bible-utils';
+import { formatReplacementString, UnsubscriberAsync } from 'platform-bible-utils';
+import localizationService from '@papi/frontend';
 import wordListReactStyles from './word-list.web-view.scss?inline';
 import wordListReact from './word-list.web-view?inline';
 
@@ -212,7 +213,6 @@ const wordListWebViewProvider: IWebViewProvider = {
       );
 
     const projectId = options.projectId || savedWebView.projectId;
-
     let projectName: string | undefined;
     try {
       if (projectId) {
@@ -224,8 +224,31 @@ const wordListWebViewProvider: IWebViewProvider = {
       logger.error(`Word list web view provider error: Could not get project metadata: ${e}`);
     }
 
+    const titleWithProjectFormatKey = '%wordList_titleWithProjectName_format%';
+    const titleKey = '%wordList_title_format%';
+    let localizedTitleWithProjectFormat: string;
+    let localizedTitleWithProject: string;
+    let localizedTitle: string;
+    try {
+      const localizedStrings = await localizationService.localization.getLocalizedStrings({
+        localizeKeys: [titleWithProjectFormatKey, titleKey],
+      });
+      localizedTitleWithProjectFormat = localizedStrings[titleWithProjectFormatKey];
+      localizedTitle = localizedStrings[titleKey];
+
+      localizedTitleWithProject = formatReplacementString(localizedTitleWithProjectFormat, {
+        projectName,
+      });
+    } catch (e) {
+      logger.error(`'Getting localizations for titles failed with error: ${e}`);
+      localizedTitleWithProject = projectName
+        ? `Word List for project ${projectName}`
+        : 'Word List';
+      localizedTitle = 'Word List';
+    }
+
     return {
-      title: projectName ? `Word List for project ${projectName}` : 'Word List',
+      title: projectName ? localizedTitleWithProject : localizedTitle,
       ...savedWebView,
       content: wordListReact,
       styles: wordListReactStyles,
@@ -254,8 +277,8 @@ export async function activate(context: ExecutionActivationContext) {
       // If projectIds weren't passed in, get from dialog
       if (!projectIdForWebView) {
         const userProjectIds = await papi.dialogs.showDialog('platform.selectProject', {
-          title: 'Open Word List',
-          prompt: 'Please select project to open in the word list:',
+          title: '%wordList_openListForProject_title%',
+          prompt: '%wordList_openListForProject_prompt%',
           includeProjectInterfaces: 'platformScripture.USFM_Book',
         });
         if (userProjectIds) projectIdForWebView = userProjectIds;
