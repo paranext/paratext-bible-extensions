@@ -6,7 +6,6 @@ import type {
   SavedWebViewDefinition,
   WebViewDefinition,
 } from '@papi/core';
-import localizationService from '@papi/frontend';
 import { VerseRef } from '@sillsdev/scripture';
 import textCollectionReact from './web-views/paratext-text-collection.web-view?inline';
 import textCollectionReactStyles from './web-views/paratext-text-collection.web-view.scss?inline';
@@ -33,7 +32,7 @@ const textCollectionWebViewProvider: IWebViewProvider = {
 
     let localizedTextCollection: string | undefined;
     try {
-      localizedTextCollection = await localizationService.localization.getLocalizedString({
+      localizedTextCollection = await papi.localization.getLocalizedString({
         localizeKey: '%textCollection_defaultTitle%',
       });
     } catch (e) {
