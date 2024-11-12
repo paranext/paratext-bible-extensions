@@ -13,7 +13,6 @@ import { VerseRef } from '@sillsdev/scripture';
 import type { WordListDataTypes, WordListEntry, WordListSelector } from 'paratext-bible-word-list';
 import { ScriptureReference } from 'platform-bible-react';
 import { formatReplacementString, UnsubscriberAsync } from 'platform-bible-utils';
-import localizationService from '@papi/frontend';
 import wordListReactStyles from './word-list.web-view.scss?inline';
 import wordListReact from './word-list.web-view?inline';
 
@@ -230,7 +229,7 @@ const wordListWebViewProvider: IWebViewProvider = {
     let localizedTitleWithProject: string;
     let localizedTitle: string;
     try {
-      const localizedStrings = await localizationService.localization.getLocalizedStrings({
+      const localizedStrings = await papi.localization.getLocalizedStrings({
         localizeKeys: [titleWithProjectFormatKey, titleKey],
       });
       localizedTitleWithProjectFormat = localizedStrings[titleWithProjectFormatKey];
