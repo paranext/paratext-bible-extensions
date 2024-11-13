@@ -69,7 +69,7 @@ export default function WordTable({ wordList, fullWordCount, onWordClick }: Word
   };
 
   const [localizedStrings] = useLocalizedStrings(
-    useMemo(() => [countFormatKey, fullCountFormatKey], []),
+    useMemo(() => [countFormatKey, fullCountFormatKey, partialCountFormatKey], []),
   );
 
   const localizedCountFormat = localizedStrings[countFormatKey];
