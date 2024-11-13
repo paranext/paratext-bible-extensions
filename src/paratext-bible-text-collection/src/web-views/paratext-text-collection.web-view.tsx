@@ -1,5 +1,5 @@
 import papi from '@papi/frontend';
-import { useDialogCallback } from '@papi/frontend/react';
+import { useDialogCallback, useLocalizedStrings } from '@papi/frontend/react';
 import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { Button, ScriptureReference, usePromise } from 'platform-bible-react';
 import { deepEqual } from 'platform-bible-utils';

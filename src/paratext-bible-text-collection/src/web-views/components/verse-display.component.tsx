@@ -18,7 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from 'platform-bible-react';
-import { MouseEvent } from 'react';
+import { MouseEvent, useMemo } from 'react';
 import { ProjectInfo } from '../../util';
 
 const defaultFontSize: number = 16;
@@ -61,15 +61,20 @@ function VerseDisplay({
   const zoomResetKey = '%textCollection_verseDisplay_zoomReset%';
   const moveUpKey = '%textCollection_verseDisplay_moveTextUp%';
   const moveDownKey = '%textCollection_verseDisplay_moveTextDown%';
-  const [localizedStrings] = useLocalizedStrings([
-    ellipsisKey,
-    closeTextKey,
-    zoomInKey,
-    zoomOutKey,
-    zoomResetKey,
-    moveUpKey,
-    moveDownKey,
-  ]);
+  const [localizedStrings] = useLocalizedStrings(
+    useMemo(
+      () => [
+        ellipsisKey,
+        closeTextKey,
+        zoomInKey,
+        zoomOutKey,
+        zoomResetKey,
+        moveUpKey,
+        moveDownKey,
+      ],
+      [],
+    ),
+  );
   const localizedEllipsis = localizedStrings[ellipsisKey];
   const localizedCloseText = localizedStrings[closeTextKey];
   const localizedZoomIn = localizedStrings[zoomInKey];
