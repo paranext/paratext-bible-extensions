@@ -44,7 +44,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
   const [localizedStrings] = useLocalizedStrings(
     useMemo(
       () => [selectProjectsTitleKey, selectProjectsPromptKey, selectProjectsKey, textCollectionKey],
-      [],
+      [selectProjectsTitleKey, selectProjectsPromptKey, selectProjectsKey, textCollectionKey],
     ),
   );
   const localizedSelectProjectsTitle = localizedStrings[selectProjectsTitleKey];
