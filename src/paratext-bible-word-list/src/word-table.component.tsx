@@ -16,7 +16,7 @@ type WordTableProps = {
 };
 
 const countFormatKey = '%wordList_wordCount_format%';
-const fullCountFormatKey = '%wordList_totalCount_titleFormat%';
+const fullCountFormatKey = '%wordList_fullWordCount_titleFormat%';
 const partialCountFormatKey = '%wordList_partialWordCount_titleFormat%';
 
 const getSortingIcon = (sortDirection: false | SortDirection): string => {
