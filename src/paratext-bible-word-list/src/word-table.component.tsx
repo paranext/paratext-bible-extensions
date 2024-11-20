@@ -16,7 +16,7 @@ type WordTableProps = {
 };
 
 const countFormatKey = '%wordList_wordCount_format%';
-const fullCountFormatKey = '%wordList_totalCount_titleFormat%';
+const fullCountFormatKey = '%wordList_fullWordCount_titleFormat%';
 const partialCountFormatKey = '%wordList_partialWordCount_titleFormat%';
 
 const getSortingIcon = (sortDirection: false | SortDirection): string => {
@@ -78,7 +78,10 @@ export default function WordTable({ wordList, fullWordCount, onWordClick }: Word
 
   const wordColumnTitleFormat = useMemo(() => {
     return wordList.length === fullWordCount
-      ? formatReplacementString(localizedFullCountFormat, { fullWordCount })
+      ? formatReplacementString(localizedFullCountFormat, {
+          fullWordCount,
+          sortingDirectionIcon: '{sortingDirectionIcon}',
+        })
       : formatReplacementString(localizedPartialCountFormat, {
           wordListLength: wordList.length,
           fullWordCount,

@@ -41,12 +41,12 @@ globalThis.webViewComponent = function TextCollectionWebView({
   const selectProjectsPromptKey = '%textCollection_dialog_selectProjectsToShow_prompt%';
   const selectProjectsKey = '%webview_selectProjects%';
   const textCollectionKey = '%textCollection_defaultTitle%';
-  const [localizedStrings] = useLocalizedStrings([
-    selectProjectsTitleKey,
-    selectProjectsPromptKey,
-    selectProjectsKey,
-    textCollectionKey,
-  ]);
+  const [localizedStrings] = useLocalizedStrings(
+    useMemo(
+      () => [selectProjectsTitleKey, selectProjectsPromptKey, selectProjectsKey, textCollectionKey],
+      [selectProjectsTitleKey, selectProjectsPromptKey, selectProjectsKey, textCollectionKey],
+    ),
+  );
   const localizedSelectProjectsTitle = localizedStrings[selectProjectsTitleKey];
   const localizedSelectProjectsPrompt = localizedStrings[selectProjectsPromptKey];
   const localizedSelectProjects = localizedStrings[selectProjectsKey];
