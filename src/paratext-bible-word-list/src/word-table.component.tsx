@@ -78,7 +78,10 @@ export default function WordTable({ wordList, fullWordCount, onWordClick }: Word
 
   const wordColumnTitleFormat = useMemo(() => {
     return wordList.length === fullWordCount
-      ? formatReplacementString(localizedFullCountFormat, { fullWordCount })
+      ? formatReplacementString(localizedFullCountFormat, {
+          fullWordCount,
+          sortingDirectionIcon: '{sortingDirectionIcon}',
+        })
       : formatReplacementString(localizedPartialCountFormat, {
           wordListLength: wordList.length,
           fullWordCount,
