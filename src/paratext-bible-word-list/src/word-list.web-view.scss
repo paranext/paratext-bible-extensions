@@ -1,6 +1,20 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+}
+
 .word-list {
-  overflow: auto;
-  padding: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   .filters {
     display: flex;
@@ -8,10 +22,28 @@
   }
 
   .filters > * {
-    margin-right: 10px;
+    margin: 0.25rem /* 4px */;
   }
-}
 
-.word-list > * {
-  margin-top: 10px;
+  .input {
+    margin: 0.25rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+  }
+
+  .loader {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .word-component {
+    flex: 1 1 0%;
+    overflow: auto;
+    margin: 0.25rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+  }
 }

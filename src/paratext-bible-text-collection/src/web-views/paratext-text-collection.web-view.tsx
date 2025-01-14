@@ -1,7 +1,7 @@
 import papi from '@papi/frontend';
-import { useSetting, useDialogCallback } from '@papi/frontend/react';
+import { useDialogCallback, useLocalizedStrings } from '@papi/frontend/react';
 import { Fragment, useCallback, useEffect, useMemo } from 'react';
-import { IconButton, ScriptureReference, usePromise } from 'platform-bible-react';
+import { Button, ScriptureReference, usePromise } from 'platform-bible-react';
 import { deepEqual } from 'platform-bible-utils';
 import { VerseRef } from '@sillsdev/scripture';
 import { WebViewProps } from '@papi/core';
@@ -27,16 +27,30 @@ const getResourceVerseRef = (scrRef: ScriptureReference) => {
   return resourceVerseRef;
 };
 
-const defaultScrRef: ScriptureReference = { bookNum: 1, chapterNum: 1, verseNum: 1 };
-
 globalThis.webViewComponent = function TextCollectionWebView({
   // Project ID of the project that is focused or undefined if no project selected
   projectId: expandedProjectId = '',
   updateWebViewDefinition,
   useWebViewState,
+  useWebViewScrollGroupScrRef,
 }: WebViewProps) {
   // Project IDs to show in the text collection
   const [projectIds, setProjectIds] = useWebViewState<string[]>('projectIds', []);
+
+  const selectProjectsTitleKey = '%textCollection_dialog_selectProjectsInTextCollection_title%';
+  const selectProjectsPromptKey = '%textCollection_dialog_selectProjectsToShow_prompt%';
+  const selectProjectsKey = '%webview_selectProjects%';
+  const textCollectionKey = '%textCollection_defaultTitle%';
+  const [localizedStrings] = useLocalizedStrings(
+    useMemo(
+      () => [selectProjectsTitleKey, selectProjectsPromptKey, selectProjectsKey, textCollectionKey],
+      [selectProjectsTitleKey, selectProjectsPromptKey, selectProjectsKey, textCollectionKey],
+    ),
+  );
+  const localizedSelectProjectsTitle = localizedStrings[selectProjectsTitleKey];
+  const localizedSelectProjectsPrompt = localizedStrings[selectProjectsPromptKey];
+  const localizedSelectProjects = localizedStrings[selectProjectsKey];
+  const localizedTextCollection = localizedStrings[textCollectionKey];
 
   // Project info to show in the text collection - each entry is the info or undefined if
   // not fetched yet
@@ -60,31 +74,31 @@ globalThis.webViewComponent = function TextCollectionWebView({
   }, [projectIds, expandedProjectId, updateWebViewDefinition]);
 
   // Current verse reference
-  const [scrRef] = useSetting('platform.verseRef', defaultScrRef);
+  const [scrRef] = useWebViewScrollGroupScrRef();
   const verseRef = useMemo(() => getResourceVerseRef(scrRef), [scrRef]);
 
   // Keep the title up-to-date
   useEffect(() => {
     const projectNames = projectsInfo.map((projectInfo) => projectInfo?.name);
     const newTitle = getTextCollectionTitle(projectNames, verseRef);
-    const newTooltip = getTextCollectionTooltip(projectNames);
+    const newTooltip = getTextCollectionTooltip(localizedTextCollection, projectNames);
     if (newTitle || newTooltip)
       updateWebViewDefinition({
         title: newTitle,
         tooltip: newTooltip,
       });
-  }, [updateWebViewDefinition, projectsInfo, verseRef]);
+  }, [localizedTextCollection, updateWebViewDefinition, projectsInfo, verseRef]);
 
   const selectProjects = useDialogCallback(
     'platform.selectMultipleProjects',
     useMemo(
       () => ({
-        title: 'Select projects in Text Collection',
-        prompt: 'Please select projects to show in the text collection:',
+        title: localizedSelectProjectsTitle,
+        prompt: localizedSelectProjectsPrompt,
         selectedProjectIds: projectIds,
         includeProjectInterfaces: [REQUIRED_PROJECT_INTERFACES],
       }),
-      [projectIds],
+      [localizedSelectProjectsTitle, localizedSelectProjectsPrompt, projectIds],
     ),
     useCallback(
       (selectedProjectIds) => {
@@ -101,7 +115,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
 
   const moveProjectUpDownHandler = (directionUp: boolean, projectId: string) => {
     const projectIdsCopy = [...projectIds];
-    const index = projectIdsCopy.findIndex((id) => id === projectId);
+    const index = projectIdsCopy.findIndex((pid) => pid === projectId);
     const newIndex = directionUp ? index - 1 : index + 1;
     if (newIndex < 0 || newIndex > projectIdsCopy.length - 1) return;
     [projectIdsCopy[index], projectIdsCopy[newIndex]] = [
@@ -147,14 +161,15 @@ globalThis.webViewComponent = function TextCollectionWebView({
             </Fragment>
           );
         })}
-      <IconButton
-        label="Select projects"
-        size="medium"
+      <Button
+        title={localizedSelectProjects}
+        size="icon"
+        variant="ghost"
         className="select-projects-button"
         onClick={() => selectProjects()}
       >
         +
-      </IconButton>
+      </Button>
     </div>
   );
 

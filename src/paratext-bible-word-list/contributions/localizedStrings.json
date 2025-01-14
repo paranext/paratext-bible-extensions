@@ -2,7 +2,32 @@
   "metadata": {},
   "localizedStrings": {
     "en": {
-      "%mainMenu_openWordList%": "Open Word List"
+      "%mainMenu_openWordList%": "Open Word List",
+      "%wordList_cloudView_label%": "Cloud",
+      "%wordList_filter_defaultText%": "Word filter",
+      "%wordList_fullWordCount_titleFormat%": "Words ({fullWordCount}) {sortingDirectionIcon}",
+      "%wordList_openListForProject_prompt%": "Please select project to open in the word list:",
+      "%wordList_openListForProject_title%": "Open Word List",
+      "%wordList_partialWordCount_titleFormat%": "Words ({wordListLength} of {fullWordCount}) {sortingDirectionIcon}",
+      "%wordList_tableView_label%": "Table",
+      "%wordList_title_format%": "Word List {projectName}",
+      "%wordList_titleWithProjectName_format%": "Word List for project {projectName}",
+      "%wordList_view_label%": "view",
+      "%wordList_wordCount_format%": "Count {sortingDirectionIcon}"
+    },
+    "es": {
+      "%mainMenu_openWordList%": "Abrir Lista de Palabras",
+      "%wordList_cloudView_label%": "Nube",
+      "%wordList_filter_defaultText%": "Filtro de palabra",
+      "%wordList_fullWordCount_titleFormat%": "Palabras ({fullWordCount}) {sortingDirectionIcon}",
+      "%wordList_openListForProject_prompt%": "Por favor, seleccione proyecto para abrir en la lista de palabras:",
+      "%wordList_openListForProject_title%": "Abrir Lista de Palabras",
+      "%wordList_partialWordCount_titleFormat%": "Palabras ({wordListLength} de {fullWordCount}) {sortingDirectionIcon}",
+      "%wordList_tableView_label%": "Tabla",
+      "%wordList_title_format%": "Lista de Palabras {projectName}",
+      "%wordList_titleWithProjectName_format%": "Lista de Palabras para el proyecto {projectName}",
+      "%wordList_view_label%": "vista",
+      "%wordList_wordCount_format%": "Conteo {sortingDirectionIcon}"
     }
   }
 }

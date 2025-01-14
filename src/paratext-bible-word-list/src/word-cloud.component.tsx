@@ -14,7 +14,7 @@ export interface CloudData {
   value: number;
 }
 
-const colors = ['#d1160f', '#a8120d', '#7a0f0b', '#440705', '#3d0604', '#000000'];
+const colors = ['#858585', '#919191', '#6b6b6b', '#4e4e4e', '#222222', '#000000'];
 
 export default function WordCloud({ wordList }: WordCloudProps) {
   const cloudData = useMemo((): CloudData[] => {
@@ -38,10 +38,10 @@ export default function WordCloud({ wordList }: WordCloudProps) {
   const fontSizeSetter = (data: CloudData) => fontScale(data.value);
 
   return (
-    <ParentSize>
-      {({ width }) => (
+    <ParentSize style={{ height: '95%' }}>
+      {({ width, height }) => (
         <Wordcloud
-          height={500}
+          height={height}
           rotate={0}
           width={width}
           fontSize={fontSizeSetter}
