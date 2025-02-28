@@ -1,9 +1,10 @@
-@import '../../../../node_modules/allotment/dist/style';
+@use '../../../../node_modules/allotment/dist/style';
 
 // Copied from paranext-core's resource-viewer for now
-@import './editor-styles/usj-nodes';
-@import './editor-styles/editor';
-@import './editor-styles/editor-overrides';
+@use './editor-styles/usj-nodes';
+@use './editor-styles/editor';
+@use './editor-styles/editor-overrides';
+@use './editor-styles/nodes_menu';
 
 %full-height {
   height: 100%;

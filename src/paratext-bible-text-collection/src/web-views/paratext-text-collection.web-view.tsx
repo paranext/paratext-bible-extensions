@@ -1,8 +1,8 @@
 import papi from '@papi/frontend';
 import { useDialogCallback, useLocalizedStrings } from '@papi/frontend/react';
 import { Fragment, useCallback, useEffect, useMemo } from 'react';
-import { Button, ScriptureReference, usePromise } from 'platform-bible-react';
-import { deepEqual } from 'platform-bible-utils';
+import { Button, usePromise } from 'platform-bible-react';
+import { deepEqual, ScriptureReference } from 'platform-bible-utils';
 import { VerseRef } from '@sillsdev/scripture';
 import { WebViewProps } from '@papi/core';
 import { Divider } from '@mui/material';
@@ -82,11 +82,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
     const projectNames = projectsInfo.map((projectInfo) => projectInfo?.name);
     const newTitle = getTextCollectionTitle(projectNames, verseRef);
     const newTooltip = getTextCollectionTooltip(localizedTextCollection, projectNames);
-    if (newTitle || newTooltip)
-      updateWebViewDefinition({
-        title: newTitle,
-        tooltip: newTooltip,
-      });
+    if (newTitle || newTooltip) updateWebViewDefinition({ title: newTitle, tooltip: newTooltip });
   }, [localizedTextCollection, updateWebViewDefinition, projectsInfo, verseRef]);
 
   const selectProjects = useDialogCallback(
