@@ -1,6 +1,6 @@
 import { Editorial, EditorOptions, EditorRef } from '@biblionexus-foundation/platform-editor';
-import { Usj } from '@biblionexus-foundation/scripture-utilities';
-import { Canon, VerseRef } from '@sillsdev/scripture';
+import { Usj, USJ_TYPE, USJ_VERSION } from '@biblionexus-foundation/scripture-utilities';
+import { Canon, SerializedVerseRef, VerseRef } from '@sillsdev/scripture';
 import { useEffect, useMemo, useRef } from 'react';
 import { logger } from '@papi/frontend';
 import { useProjectData } from '@papi/frontend/react';
@@ -12,7 +12,7 @@ export type ChapterViewProps = {
   verseRef: VerseRef;
 };
 
-const usjDocumentDefault: Usj = { type: 'USJ', version: '0.2.1', content: [] };
+const usjDefault: Usj = { type: USJ_TYPE, version: USJ_VERSION, content: [] };
 
 export default function ChapterView({ projectId, projectInfo, verseRef }: ChapterViewProps) {
   // This ref becomes defined when passed to the editor. null because React uses null in refs
@@ -20,11 +20,12 @@ export default function ChapterView({ projectId, projectInfo, verseRef }: Chapte
   const editorRef = useRef<EditorRef>(null!);
   const [usj] = useProjectData('platformScripture.USJ_Chapter', projectId).ChapterUSJ(
     verseRef,
-    usjDocumentDefault,
+    usjDefault,
   );
+  const verseLocation = useMemo<SerializedVerseRef>(() => verseRef.toJSON(), [verseRef]);
 
   useEffect(() => {
-    editorRef.current.setUsj(usj);
+    if (usj) editorRef.current.setUsj(usj);
   }, [usj]);
 
   const options = useMemo<EditorOptions>(
@@ -40,9 +41,9 @@ export default function ChapterView({ projectId, projectInfo, verseRef }: Chapte
   return (
     <div className="full-chapter-view">
       <div className="position-title">
-        <p>{projectInfo?.name || '...'}</p>
+        <p>{projectInfo?.name ?? '...'}</p>
       </div>
-      <Editorial ref={editorRef} scrRef={verseRef} options={options} logger={logger} />
+      <Editorial ref={editorRef} scrRef={verseLocation} options={options} logger={logger} />
     </div>
   );
 }

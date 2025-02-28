@@ -5,6 +5,9 @@ module.exports = {
     // https://github.com/electron-react-boilerplate/eslint-config-erb/blob/main/index.js
     // airbnb rules are embedded in erb https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb
     'erb',
+    // https://github.com/import-js/eslint-plugin-import?tab=readme-ov-file#typescript
+    'plugin:import/recommended',
+    'plugin:import/typescript',
     // Make sure this is last so it gets the chance to override other configs.
     // See https://github.com/prettier/eslint-config-prettier and https://github.com/prettier/eslint-plugin-prettier
     'plugin:prettier/recommended',
@@ -18,11 +21,11 @@ module.exports = {
 
     // Use `noImplicitReturns` instead. See https://typescript-eslint.io/rules/consistent-return/.
     'consistent-return': 'off',
+    'import/default': 'off',
     'import/extensions': 'off',
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
     'import/no-import-module-exports': 'off',
-    'import/no-unresolved': 'error',
     'react/jsx-filename-extension': 'off',
     'react/react-in-jsx-scope': 'off',
 
@@ -49,9 +52,7 @@ module.exports = {
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': [
       'error',
-      {
-        allow: ['arrowFunctions', 'functions', 'methods'],
-      },
+      { allow: ['arrowFunctions', 'functions', 'methods'] },
     ],
     '@typescript-eslint/no-explicit-any': 'error',
     'no-redeclare': 'off',
@@ -82,12 +83,7 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     'import/no-anonymous-default-export': ['error', { allowCallExpression: false }],
     indent: 'off',
-    'jsx-a11y/label-has-associated-control': [
-      'error',
-      {
-        assert: 'either',
-      },
-    ],
+    'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
     // Should use our logger anytime you want logs that persist. Otherwise use console only in testing
     'no-console': 'warn',
     'no-null/no-null': 2,
@@ -108,29 +104,18 @@ module.exports = {
 
     // #endregion
   },
-  globals: {
-    globalThis: 'readonly',
-  },
+  globals: { globalThis: 'readonly' },
   overrides: [
     {
       // Allow this file to have overrides to rules from paranext-core
       files: ['.eslintrc.*js'],
-      rules: {
-        'no-dupe-keys': 'off',
-      },
+      rules: { 'no-dupe-keys': 'off' },
     },
-    {
-      files: ['*.js'],
-      rules: {
-        strict: 'off',
-      },
-    },
+    { files: ['*.js'], rules: { strict: 'off' } },
     {
       // Don't require extensions to have a default export for "activate()"
       files: ['*.ts'],
-      rules: {
-        'import/prefer-default-export': 'off',
-      },
+      rules: { 'import/prefer-default-export': 'off' },
     },
     {
       files: ['./lib/*', './webpack/*'],
@@ -156,14 +141,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'no-type-assertion', 'no-null'],
   settings: {
-    'import/resolver': {
-      typescript: {
-        alwaysTryTypes: true,
-      },
-    },
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
+    'import/resolver': { typescript: { alwaysTryTypes: true } },
+    'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
   },
 };
 
