@@ -1,5 +1,5 @@
 declare module 'paratext-bible-word-list' {
-  import { ScriptureReference } from 'platform-bible-react';
+  import { ScriptureReference } from 'platform-bible-utils';
   import { DataProviderDataType, IDataProvider } from '@papi/core';
 
   export type WordListEntry = {
