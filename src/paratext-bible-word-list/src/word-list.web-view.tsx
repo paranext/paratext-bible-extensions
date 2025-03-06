@@ -2,7 +2,7 @@ import { WebViewProps } from '@papi/core';
 import { useData, useLocalizedStrings } from '@papi/frontend/react';
 import type { WordListEntry } from 'paratext-bible-word-list';
 import { ComboBox, Input, Label, Spinner, Switch } from 'platform-bible-react';
-import { ScriptureReference } from 'platform-bible-utils';
+import { isPlatformError, ScriptureReference } from 'platform-bible-utils';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import WordCloud from './word-cloud.component';
 import WordContentViewer from './word-content-viewer.component';
@@ -93,14 +93,14 @@ globalThis.webViewComponent = function WordListWebView({
   }, [dataSelector, projectId, scope, scrRef]);
 
   useEffect(() => {
-    if (wordList && wordList.length > 0) {
+    if (isPlatformError(wordList) || (wordList && wordList.length > 0)) {
       setLoading(false);
     }
   }, [wordList]);
 
   const shownWordList: WordListEntry[] = useMemo((): WordListEntry[] => {
     setSelectedWord(undefined);
-    if (!wordList) return [];
+    if (!wordList || isPlatformError(wordList)) return [];
     if (wordFilter === '') {
       return wordList;
     }
@@ -171,7 +171,7 @@ globalThis.webViewComponent = function WordListWebView({
           <div className="word-component">
             <WordTable
               wordList={shownWordList}
-              fullWordCount={wordList.length}
+              fullWordCount={isPlatformError(wordList) ? 0 : wordList.length}
               onWordClick={(word: string) => findSelectedWordEntry(word)}
             />
           </div>
