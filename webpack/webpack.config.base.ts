@@ -9,7 +9,7 @@ if (!areExtensionsPresent) {
   // This is a command-line utility for which it is fine to print to the console
   // eslint-disable-next-line no-console
   console.log(
-    'No extensions found! Please run `npm run create-extension -- <extension_name>` to create an extension. See README.md for more information.',
+    'No extensions found! Please run `npm run create-extension -- <extension-name>` (kebab-case) to create an extension. See README.md for more information.',
   );
   process.exit(0);
 }

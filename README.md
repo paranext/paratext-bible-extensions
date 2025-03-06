@@ -21,14 +21,16 @@ To make the process of customizing from the template as smooth as possible, we r
 
 #### Replace placeholders
 
+When using your extension name, we recommend that you use [lowerCamelCase](https://developer.mozilla.org/en-US/docs/Glossary/Camel_case) in some contexts and [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case) in other contexts. We generally recommend lowerCamelCase when using the name in code (like making a new command on the PAPI, for example), and we recommend kebab-case when using the name in relation to the file system, the repository, `npm`, and the extension's `.d.ts` types module. The following instructions are written accordingly.
+
 - At the top of this `README.md`:
 
-  - Replace the first line `# paranext-multi-extension-template` with `# your-extension-repo-name`
+  - Replace the first line `# paranext-multi-extension-template` with `# your-extension-repo-name` (kebab-case)
   - Below the first line, replace the repo description with your own description
 
 - In `package.json`:
 
-  - Replace `"paranext-multi-extension-template"` with `"your-extension-repo-name"`
+  - Replace `paranext-multi-extension-template` with `your-extension-repo-name` (kebab-case)
   - Update ownership information and other relevant fields as desired
 
 - In `LICENSE`:
@@ -58,7 +60,7 @@ This is a webpack project configured to build Platform.Bible extensions. The gen
     - `manifest.json` is the manifest file that defines the extension and important properties for Platform.Bible. It is copied into the build folder
     - `src/` contains the source code for the extension
       - `src/main.ts` is the main entry file for the extension
-      - `src/types/<extension_name>.d.ts` is this extension's types file that defines how other extensions can use this extension through the `papi`
+      - `src/types/<extension-name>.d.ts` is this extension's types file that defines how other extensions can use this extension through the `papi`
       - `*.web-view.tsx` files will be treated as React WebViews
       - `*.web-view.html` files are a conventional way to provide HTML WebViews (no special functionality)
     - `assets/` contains asset files the extension and its WebViews can retrieve using the `papi-extension:` protocol, as well as textual descriptions in various languages. It is copied into the build folder
@@ -129,10 +131,10 @@ To package these extensions into a zip file for distribution:
 
 ## To create a new extension in this repo
 
-To create a new extension in this repo, make sure your repo has no working changes, then run the following command (replace `<extension_name>` with the preferred extension name. This will also be the extension's folder name in the `src` folder):
+To create a new extension in this repo, make sure your repo has no working changes, then run the following command (replace `<extension-name>` with the preferred extension name. This will also be the extension's folder name in the `src` folder. We strongly recommend using kebab-case for this name):
 
 ```bash
-npm run create-extension -- <extension_name>
+npm run create-extension -- <extension-name>
 ```
 
 Then follow [the instructions for customizing the new extension](https://github.com/paranext/paranext-extension-template#customize-extension-details).
@@ -149,7 +151,7 @@ Alternatively, you can create a new extension manually:
 ```bash
 git fetch paranext-extension-template main
 
-git subtree add --prefix src/<extension_name> paranext-extension-template main --squash
+git subtree add --prefix src/<extension-name> paranext-extension-template main --squash
 ```
 
 After running these commands, run a regex find and replace inside the new extension folder to fix
@@ -198,10 +200,10 @@ git merge paranext-multi-extension-template/main --allow-unrelated-histories
 git fetch paranext-extension-template main
 ```
 
-For each extension, run the following (replace `<extension_name>` with each extension's folder name):
+For each extension, run the following (replace `<extension-name>` with each extension's folder name):
 
 ```bash
-git subtree pull --prefix src/<extension_name> paranext-extension-template main --squash
+git subtree pull --prefix src/<extension-name> paranext-extension-template main --squash
 ```
 
 </details>
