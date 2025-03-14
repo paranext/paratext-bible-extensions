@@ -6,7 +6,7 @@ Template for creating multiple Platform.Bible extensions in one repo
 
 ## Template Info
 
-This is a webpack project template pre-configured to build an arbitrary number of Platform.Bible extensions. It contains the bare minimum of what a multi-extension repo needs. Note that many of the files mentioned in [Summary](#summary) are not present in this template because they describe extension code which must be added to this template. For inspiration on what extensions in a multi-extension repo could look like, refer to any repo forked from this template. An example would be the [platform-bible-sample-extensions](https://github.com/paranext/platform-bible-sample-extensions).
+This Webpack project template is pre-configured to build an arbitrary number of Platform.Bible extensions. It contains only the essential components needed for a multi-extension repository. Note that many of the files mentioned in [Summary](#summary) are not present in this template because they describe extension code which must be added to this template. For inspiration on what extensions in a multi-extension repo could look like, refer to any repo forked from this template. A good example is [platform-bible-sample-extensions](https://github.com/paranext/platform-bible-sample-extensions).
 
 ### Customize repo details
 
@@ -21,7 +21,7 @@ To make the process of customizing from the template as smooth as possible, we r
 
 #### Replace placeholders
 
-When using your extension name, we recommend that you use [lowerCamelCase](https://developer.mozilla.org/en-US/docs/Glossary/Camel_case) in some contexts and [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case) in other contexts. We generally recommend lowerCamelCase when using the name in code (like making a new command on the PAPI, for example), and we recommend kebab-case when using the name in relation to the file system, the repository, `npm`, and the extension's `.d.ts` types module. The following instructions are written accordingly.
+For your extension name, we recommend that you use [lowerCamelCase](https://developer.mozilla.org/en-US/docs/Glossary/Camel_case) in some contexts and [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case) in other contexts. We generally recommend lowerCamelCase when using the name in code (like making a new command on the PAPI, for example), and we recommend kebab-case when using the name in relation to the file system, the repository, `npm`, and the extension's `.d.ts` types module. The following instructions are written accordingly.
 
 - At the top of this `README.md`:
 
