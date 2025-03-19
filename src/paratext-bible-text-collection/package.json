@@ -34,7 +34,7 @@
     "platform-bible-utils": "file:../../../paranext-core/lib/platform-bible-utils"
   },
   "devDependencies": {
-    "@biblionexus-foundation/platform-editor": "^0.7.2",
+    "@biblionexus-foundation/platform-editor": "^0.7.4",
     "@biblionexus-foundation/scripture-utilities": "^0.0.7",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
