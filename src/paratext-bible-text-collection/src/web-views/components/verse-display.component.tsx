@@ -2,14 +2,7 @@ import { useLocalizedStrings, useProjectData } from '@papi/frontend/react';
 import { UseWebViewStateHook } from '@papi/core';
 import { Canon, VerseRef } from '@sillsdev/scripture';
 
-import {
-  HighlightOff,
-  RestartAlt,
-  VerticalAlignBottom,
-  VerticalAlignTop,
-  ZoomIn,
-  ZoomOut,
-} from '@mui/icons-material';
+import { CircleX, RotateCcw, ArrowDownToLine, ArrowUpToLine, ZoomIn, ZoomOut } from 'lucide-react';
 import {
   Button,
   DropdownMenu,
@@ -118,7 +111,7 @@ function VerseDisplay({
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem onClick={handleCloseProject}>
-              <HighlightOff /> {localizedCloseText}
+              <CircleX /> {localizedCloseText}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
@@ -143,7 +136,7 @@ function VerseDisplay({
               }}
               disabled={fontSize === defaultFontSize}
             >
-              <RestartAlt /> {localizedZoomReset}
+              <RotateCcw /> {localizedZoomReset}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
@@ -154,7 +147,7 @@ function VerseDisplay({
               }}
               disabled={isFirstProject}
             >
-              <VerticalAlignTop /> {localizedMoveUp}
+              <ArrowUpToLine /> {localizedMoveUp}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={(event) => {
@@ -162,7 +155,7 @@ function VerseDisplay({
               }}
               disabled={isLastProject}
             >
-              <VerticalAlignBottom /> {localizedMoveDown}
+              <ArrowDownToLine /> {localizedMoveDown}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

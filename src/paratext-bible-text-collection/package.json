@@ -28,7 +28,10 @@
     "lint-fix:scripts": "npm run format && npm run lint:scripts"
   },
   "browserslist": [],
-  "peerDependencies": { "react": ">=18.3.1", "react-dom": ">=18.3.1" },
+  "peerDependencies": {
+    "react": ">=18.3.1",
+    "react-dom": ">=18.3.1"
+  },
   "dependencies": {
     "@sillsdev/scripture": "^2.0.2",
     "platform-bible-utils": "file:../../../paranext-core/lib/platform-bible-utils"
@@ -36,10 +39,6 @@
   "devDependencies": {
     "@biblionexus-foundation/platform-editor": "^0.7.4",
     "@biblionexus-foundation/scripture-utilities": "^0.0.7",
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.10",
-    "@mui/material": "^5.15.10",
     "@swc/core": "^1.10.18",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20.17.19",
@@ -93,5 +92,7 @@
     "webpack-merge": "^6.0.1",
     "zip-build": "^1.8.0"
   },
-  "volta": { "extends": "../../package.json" }
+  "volta": {
+    "extends": "../../package.json"
+  }
 }

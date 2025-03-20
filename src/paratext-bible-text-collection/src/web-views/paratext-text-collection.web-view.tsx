@@ -1,11 +1,10 @@
 import papi from '@papi/frontend';
 import { useDialogCallback, useLocalizedStrings } from '@papi/frontend/react';
 import { Fragment, useCallback, useEffect, useMemo } from 'react';
-import { Button, usePromise } from 'platform-bible-react';
+import { Button, Separator, usePromise } from 'platform-bible-react';
 import { deepEqual, ScriptureReference } from 'platform-bible-utils';
 import { VerseRef } from '@sillsdev/scripture';
 import { WebViewProps } from '@papi/core';
-import { Divider } from '@mui/material';
 import { Allotment } from 'allotment';
 import {
   ProjectInfo,
@@ -153,7 +152,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
                 isSelected={projectId === expandedProjectId}
                 useWebViewState={useWebViewState}
               />
-              {!isLastProject && <Divider />}
+              {!isLastProject && <Separator />}
             </Fragment>
           );
         })}
