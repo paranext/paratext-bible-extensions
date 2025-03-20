@@ -1,10 +1,10 @@
 declare module 'paratext-bible-word-list' {
-  import { ScriptureReference } from 'platform-bible-utils';
   import { DataProviderDataType, IDataProvider } from '@papi/core';
+  import { SerializedVerseRef } from '@sillsdev/scripture';
 
   export type WordListEntry = {
     word: string;
-    scrRefs: ScriptureReference[];
+    scrRefs: SerializedVerseRef[];
     scriptureSnippets: string[];
   };
 
@@ -16,7 +16,7 @@ declare module 'paratext-bible-word-list' {
 
   type WordListSelector = {
     projectId: string;
-    scrRef: ScriptureReference;
+    scrRef: SerializedVerseRef;
     scope: Scope;
   };
 

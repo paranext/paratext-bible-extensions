@@ -1,6 +1,6 @@
 import { Editorial, EditorOptions, EditorRef } from '@biblionexus-foundation/platform-editor';
 import { Usj, USJ_TYPE, USJ_VERSION } from '@biblionexus-foundation/scripture-utilities';
-import { Canon, SerializedVerseRef, VerseRef } from '@sillsdev/scripture';
+import { Canon, SerializedVerseRef } from '@sillsdev/scripture';
 import { useEffect, useMemo, useRef } from 'react';
 import { logger } from '@papi/frontend';
 import { useProjectData } from '@papi/frontend/react';
@@ -9,7 +9,7 @@ import { ProjectInfo } from '../../util';
 export type ChapterViewProps = {
   projectId: string;
   projectInfo: ProjectInfo | undefined;
-  verseRef: VerseRef;
+  verseRef: SerializedVerseRef;
 };
 
 const usjDefault: Usj = { type: USJ_TYPE, version: USJ_VERSION, content: [] };
@@ -22,7 +22,6 @@ export default function ChapterView({ projectId, projectInfo, verseRef }: Chapte
     verseRef,
     usjDefault,
   );
-  const verseLocation = useMemo<SerializedVerseRef>(() => verseRef.toJSON(), [verseRef]);
 
   useEffect(() => {
     if (usj) editorRef.current.setUsj(usj);
@@ -33,7 +32,7 @@ export default function ChapterView({ projectId, projectInfo, verseRef }: Chapte
       isReadonly: true,
       hasSpellCheck: false,
       textDirection:
-        projectInfo?.name === 'OHEBGRK' && Canon.isBookOT(verseRef.bookNum) ? 'rtl' : 'ltr',
+        projectInfo?.name === 'OHEBGRK' && Canon.isBookOT(verseRef.book) ? 'rtl' : 'ltr',
     }),
     [projectInfo, verseRef],
   );
@@ -43,7 +42,7 @@ export default function ChapterView({ projectId, projectInfo, verseRef }: Chapte
       <div className="position-title">
         <p>{projectInfo?.name ?? '...'}</p>
       </div>
-      <Editorial ref={editorRef} scrRef={verseLocation} options={options} logger={logger} />
+      <Editorial ref={editorRef} scrRef={verseRef} options={options} logger={logger} />
     </div>
   );
 }
