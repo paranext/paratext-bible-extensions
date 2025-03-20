@@ -9,7 +9,7 @@ import {
   WithNotifyUpdate,
 } from '@papi/core';
 
-import { SerializedVerseRef, VerseRef } from '@sillsdev/scripture';
+import { SerializedVerseRef } from '@sillsdev/scripture';
 import type { WordListDataTypes, WordListEntry, WordListSelector } from 'paratext-bible-word-list';
 import { formatReplacementString, compareScrRefs, UnsubscriberAsync } from 'platform-bible-utils';
 import wordListReactStyles from './word-list.web-view.scss?inline';
@@ -166,10 +166,9 @@ const wordListDataProviderEngine: IDataProviderEngine<WordListDataTypes> &
       projectId,
     );
     if (this.projectDataUnsubscriber) await this.projectDataUnsubscriber();
-    const verseRef = new VerseRef(scrRef.bookNum, scrRef.chapterNum, scrRef.verseNum);
-    const bookText = await projectDataProvider.getBookUSFM(verseRef);
+    const bookText = await projectDataProvider.getBookUSFM(scrRef);
     this.projectDataUnsubscriber = await projectDataProvider.subscribeBookUSFM(
-      verseRef,
+      scrRef,
       () => {
         this.notifyUpdate('WordList');
       },
