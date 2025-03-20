@@ -1,4 +1,4 @@
-import { VerseRef } from '@sillsdev/scripture';
+import { SerializedVerseRef } from '@sillsdev/scripture';
 import type { ProjectInterfaces } from 'papi-shared-types';
 
 export type ProjectInfo = { id: string; name: string };
@@ -14,7 +14,7 @@ export const REQUIRED_PROJECT_INTERFACES: ProjectInterfaces[] = [
 
 export function getTextCollectionTitle(
   projectNames: (string | undefined)[] | undefined,
-  verseRef: VerseRef,
+  verseRef: SerializedVerseRef,
 ) {
   if (!projectNames || projectNames.length === 0 || projectNames.includes(undefined) || !verseRef)
     return undefined;

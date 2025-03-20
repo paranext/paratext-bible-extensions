@@ -1,6 +1,6 @@
 import { useLocalizedStrings, useProjectData } from '@papi/frontend/react';
 import { UseWebViewStateHook } from '@papi/core';
-import { Canon, VerseRef } from '@sillsdev/scripture';
+import { Canon, SerializedVerseRef } from '@sillsdev/scripture';
 
 import {
   HighlightOff,
@@ -28,7 +28,7 @@ export type VerseDisplayProps = {
   projectInfo: ProjectInfo | undefined;
   selectedProjectId: string;
   selectProjectId: (projectId: string) => void;
-  verseRef: VerseRef;
+  verseRef: SerializedVerseRef;
   isFirstProject: boolean;
   isLastProject: boolean;
   onMoveUpDown: (directionUp: boolean, projectId: string) => void;
@@ -168,9 +168,7 @@ function VerseDisplay({
         </DropdownMenu>
       </div>
       <p
-        dir={
-          projectInfo?.name === 'OHEBGRK' && Canon.isBookOT(verseRef.bookNum) ? 'rtl' : undefined
-        }
+        dir={projectInfo?.name === 'OHEBGRK' && Canon.isBookOT(verseRef.book) ? 'rtl' : undefined}
         className="text"
         style={{ fontSize }}
       >

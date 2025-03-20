@@ -2,8 +2,7 @@ import papi from '@papi/frontend';
 import { useDialogCallback, useLocalizedStrings } from '@papi/frontend/react';
 import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { Button, usePromise } from 'platform-bible-react';
-import { deepEqual, ScriptureReference } from 'platform-bible-utils';
-import { VerseRef } from '@sillsdev/scripture';
+import { deepEqual } from 'platform-bible-utils';
 import { WebViewProps } from '@papi/core';
 import { Divider } from '@mui/material';
 import { Allotment } from 'allotment';
@@ -15,17 +14,6 @@ import {
 } from '../util';
 import VerseDisplay from './components/verse-display.component';
 import ChapterView from './components/chapter-view.component';
-
-/** Transforms a ScriptureReference into a VerseRef */
-const getResourceVerseRef = (scrRef: ScriptureReference) => {
-  let resourceVerseRef: VerseRef;
-  if (scrRef) {
-    resourceVerseRef = new VerseRef(scrRef.bookNum, scrRef.chapterNum, scrRef.verseNum);
-  } else {
-    resourceVerseRef = new VerseRef(1, 1, 1);
-  }
-  return resourceVerseRef;
-};
 
 globalThis.webViewComponent = function TextCollectionWebView({
   // Project ID of the project that is focused or undefined if no project selected
@@ -74,8 +62,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
   }, [projectIds, expandedProjectId, updateWebViewDefinition]);
 
   // Current verse reference
-  const [scrRef] = useWebViewScrollGroupScrRef();
-  const verseRef = useMemo(() => getResourceVerseRef(scrRef), [scrRef]);
+  const [verseRef] = useWebViewScrollGroupScrRef();
 
   // Keep the title up-to-date
   useEffect(() => {

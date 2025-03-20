@@ -9,14 +9,9 @@ import {
   WithNotifyUpdate,
 } from '@papi/core';
 
-import { VerseRef } from '@sillsdev/scripture';
+import { SerializedVerseRef } from '@sillsdev/scripture';
 import type { WordListDataTypes, WordListEntry, WordListSelector } from 'paratext-bible-word-list';
-import {
-  formatReplacementString,
-  ScriptureReference,
-  compareScrRefs,
-  UnsubscriberAsync,
-} from 'platform-bible-utils';
+import { formatReplacementString, compareScrRefs, UnsubscriberAsync } from 'platform-bible-utils';
 import wordListReactStyles from './word-list.web-view.scss?inline';
 import wordListReact from './word-list.web-view?inline';
 
@@ -80,25 +75,23 @@ function getScriptureSnippet(verseText: string, word: string, occurrence: number
   return snippet;
 }
 
-let prevProcessBookArgs: { bookText: string; scrRef: ScriptureReference; scope: Scope } = {
+let prevProcessBookArgs: { bookText: string; scrRef: SerializedVerseRef; scope: Scope } = {
   bookText: '',
-  scrRef: { bookNum: -1, chapterNum: -1, verseNum: -1 },
+  scrRef: { book: '', chapterNum: -1, verseNum: -1 },
   scope: Scope.Book,
 };
 
 let prevWordList: WordListEntry[] = [];
 
-function processBook(bookText: string, scrRef: ScriptureReference, scope: Scope) {
+function processBook(bookText: string, scrRef: SerializedVerseRef, scope: Scope) {
   if (
     bookText === prevProcessBookArgs.bookText &&
-    scrRef.bookNum === prevProcessBookArgs.scrRef.bookNum &&
+    scrRef.book === prevProcessBookArgs.scrRef.book &&
     scrRef.chapterNum === prevProcessBookArgs.scrRef.chapterNum &&
     scrRef.verseNum === prevProcessBookArgs.scrRef.verseNum &&
     scope === prevProcessBookArgs.scope
   )
     return prevWordList;
-
-  const { bookNum } = scrRef;
 
   const chapterTexts: string[] = bookText.split(/\\c\s\d+\s/);
   // Delete the first array element, which contains non-scripture-related content
@@ -126,8 +119,8 @@ function processBook(bookText: string, scrRef: ScriptureReference, scope: Scope)
 
       if (wordMatches) {
         wordMatches.forEach((word) => {
-          const newRef: ScriptureReference = {
-            bookNum,
+          const newRef: SerializedVerseRef = {
+            book: scrRef.book,
             chapterNum,
             verseNum,
           };
@@ -173,10 +166,9 @@ const wordListDataProviderEngine: IDataProviderEngine<WordListDataTypes> &
       projectId,
     );
     if (this.projectDataUnsubscriber) await this.projectDataUnsubscriber();
-    const verseRef = new VerseRef(scrRef.bookNum, scrRef.chapterNum, scrRef.verseNum);
-    const bookText = await projectDataProvider.getBookUSFM(verseRef);
+    const bookText = await projectDataProvider.getBookUSFM(scrRef);
     this.projectDataUnsubscriber = await projectDataProvider.subscribeBookUSFM(
-      verseRef,
+      scrRef,
       () => {
         this.notifyUpdate('WordList');
       },

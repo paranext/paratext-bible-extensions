@@ -1,15 +1,16 @@
 import { WebViewProps } from '@papi/core';
 import { useData, useLocalizedStrings } from '@papi/frontend/react';
+import { SerializedVerseRef } from '@sillsdev/scripture';
 import type { WordListEntry } from 'paratext-bible-word-list';
 import { ComboBox, Input, Label, Spinner, Switch } from 'platform-bible-react';
-import { isPlatformError, ScriptureReference } from 'platform-bible-utils';
+import { isPlatformError } from 'platform-bible-utils';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import WordCloud from './word-cloud.component';
 import WordContentViewer from './word-content-viewer.component';
 import WordTable from './word-table.component';
 
-const defaultScrRef: ScriptureReference = {
-  bookNum: 1,
+const defaultScrRef: SerializedVerseRef = {
+  book: 'GEN',
   chapterNum: 1,
   verseNum: 1,
 };
@@ -24,7 +25,7 @@ enum Scope {
 type DataSelectorType = {
   projectId: string;
   scope: Scope;
-  scrRef: ScriptureReference;
+  scrRef: SerializedVerseRef;
 };
 
 const defaultDataSelector: DataSelectorType = {
@@ -37,17 +38,17 @@ function newDataNeeded(
   dataSelector: DataSelectorType,
   projectId: string,
   scope: Scope,
-  scrRef: ScriptureReference,
+  scrRef: SerializedVerseRef,
 ): boolean {
   if (dataSelector.projectId !== projectId) return true;
   if (dataSelector.scope !== scope) return true;
   if (
-    (scope === Scope.Book && scrRef.bookNum !== dataSelector.scrRef.bookNum) ||
+    (scope === Scope.Book && scrRef.book !== dataSelector.scrRef.book) ||
     (scope === Scope.Chapter &&
-      (scrRef.bookNum !== dataSelector.scrRef.bookNum ||
+      (scrRef.book !== dataSelector.scrRef.book ||
         scrRef.chapterNum !== dataSelector.scrRef.chapterNum)) ||
     (scope === Scope.Verse &&
-      (scrRef.bookNum !== dataSelector.scrRef.bookNum ||
+      (scrRef.book !== dataSelector.scrRef.book ||
         scrRef.chapterNum !== dataSelector.scrRef.chapterNum ||
         scrRef.verseNum !== dataSelector.scrRef.verseNum))
   ) {
