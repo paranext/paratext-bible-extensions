@@ -6,7 +6,9 @@ Template for creating multiple Platform.Bible extensions in one repo
 
 ## Template Info
 
-This is a webpack project template pre-configured to build an arbitrary number of Platform.Bible extensions. It contains the bare minimum of what a multi-extension repo needs. Note that many of the files mentioned in [Summary](#summary) are not present in this template because they describe extension code which must be added to this template. For inspiration on what extensions in a multi-extension repo could look like, refer to any repo forked from this template. An example would be the [platform-bible-sample-extensions](https://github.com/paranext/platform-bible-sample-extensions).
+This Webpack project template is pre-configured to build an arbitrary number of Platform.Bible extensions. It contains only the essential components needed for a multi-extension repository. Note that many of the files mentioned in [Summary](#summary) are not present in this template because they describe extension code which must be added to this template. For inspiration on what extensions in a multi-extension repo could look like, refer to any repo forked from this template. A good example is [platform-bible-sample-extensions](https://github.com/paranext/platform-bible-sample-extensions).
+
+There is also a simple [template pre-configured to build a single Platform.Bible extension](https://github.com/paranext/paranext-extension-template).
 
 ### Customize repo details
 
@@ -21,7 +23,7 @@ To make the process of customizing from the template as smooth as possible, we r
 
 #### Replace placeholders
 
-When using your extension name, we recommend that you use [lowerCamelCase](https://developer.mozilla.org/en-US/docs/Glossary/Camel_case) in some contexts and [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case) in other contexts. We generally recommend lowerCamelCase when using the name in code (like making a new command on the PAPI, for example), and we recommend kebab-case when using the name in relation to the file system, the repository, `npm`, and the extension's `.d.ts` types module. The following instructions are written accordingly.
+For your extension name, we recommend that you use [lowerCamelCase](https://developer.mozilla.org/en-US/docs/Glossary/Camel_case) in some contexts and [kebab-case](https://developer.mozilla.org/en-US/docs/Glossary/Kebab_case) in other contexts. We generally recommend lowerCamelCase when using the name in code (like making a new command on the PAPI, for example), and we recommend kebab-case when using the name in relation to the file system, the repository, `npm`, and the extension's `.d.ts` types module. The following instructions are written accordingly.
 
 - At the top of this `README.md`:
 
@@ -52,7 +54,7 @@ Note: if you [update this repo and extensions from the templates](#to-update-thi
 
 ## Summary
 
-This is a webpack project configured to build Platform.Bible extensions. The general file structure is as follows:
+This is a Webpack project configured to build Platform.Bible extensions. The general file structure is as follows:
 
 - `src/` contains the source code for all extensions
   - Each sub-folder in `src/` with a `manifest.json` in it is an extension
@@ -76,7 +78,7 @@ This is a webpack project configured to build Platform.Bible extensions. The gen
 
 ### Install dependencies:
 
-1. Follow the instructions to install [`paranext-core`](https://github.com/paranext/paranext-core#developer-install).
+1. Follow the instructions to install [`paranext-core`](https://github.com/paranext/paranext-core#developer-install). We recommend you clone `paranext-core` in the same parent directory in which you cloned this repository so you do not have to [reconfigure paths](#configure-paths-to-paranext-core-repo) to `paranext-core`.
 2. In this repo, run `npm install` to install local and published dependencies
 
 Note: running `npm install` automatically adds remotes that help with [updating from the templates](#to-update-this-repo-and-extensions-from-the-templates).
@@ -98,10 +100,7 @@ git remote add paranext-extension-template https://github.com/paranext/paranext-
 
 ### Configure paths to `paranext-core` repo
 
-In order to interact with `paranext-core`, you must point `package.json` to your installed `paranext-core` repository:
-
-1. Follow the instructions to install [`paranext-core`](https://github.com/paranext/paranext-core#developer-install). We recommend you clone `paranext-core` in the same parent directory in which you cloned this repository so you do not have to reconfigure paths to `paranext-core`.
-2. If you cloned `paranext-core` anywhere other than in the same parent directory in which you cloned this repository, update the paths to `paranext-core` in this repository's `package.json` to point to the correct `paranext-core` directory.
+If you cloned `paranext-core` anywhere other than in the same parent directory in which you cloned this repository, update the paths to `paranext-core` in this repository's `package.json` to point to the correct `paranext-core` directory.
 
 ## To run
 
