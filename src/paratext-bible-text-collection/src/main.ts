@@ -6,7 +6,6 @@ import type {
   SavedWebViewDefinition,
   WebViewDefinition,
 } from '@papi/core';
-import { VerseRef } from '@sillsdev/scripture';
 import textCollectionReact from './web-views/paratext-text-collection.web-view?inline';
 import textCollectionReactStyles from './web-views/paratext-text-collection.web-view.scss?inline';
 import {
@@ -62,7 +61,7 @@ const textCollectionWebViewProvider: IWebViewProvider = {
 
     return {
       title:
-        getTextCollectionTitle(projectNames, new VerseRef(1, 1, 1)) ??
+        getTextCollectionTitle(projectNames, { book: 'GEN', chapterNum: 1, verseNum: 1 }) ??
         '%textCollection_defaultTitle%',
       tooltip: getTextCollectionTooltip(localizedTextCollection, projectNames),
       ...savedWebView,
