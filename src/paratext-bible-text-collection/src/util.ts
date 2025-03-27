@@ -19,7 +19,7 @@ export function getTextCollectionTitle(
   if (!projectNames || projectNames.length === 0 || projectNames.includes(undefined) || !verseRef)
     return undefined;
 
-  return `${projectNames.join(', ')} (${verseRef.toString()})`;
+  return `${projectNames.join(', ')} (${verseRef.book} ${verseRef.chapterNum}:${verseRef.verseNum})`;
 }
 
 export function getTextCollectionTooltip(
