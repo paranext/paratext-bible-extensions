@@ -39,6 +39,7 @@ function getDesiredOccurrence(verseText: string, word: string, occurrence: numbe
     occurrenceIndex += 1;
     match = regex.exec(verseText.toLowerCase());
   }
+
   return -1;
 }
 
@@ -114,28 +115,32 @@ function processBook(bookText: string, scrRef: SerializedVerseRef, scope: Scope)
         return;
       }
 
-      const wordMatches: RegExpMatchArray | null | undefined =
+      const wordsInVerse: RegExpMatchArray | null | undefined =
         verseText?.match(/(?<!\\)\b[a-zA-Z’]+\b/g);
 
-      if (wordMatches) {
-        wordMatches.forEach((word) => {
-          const newRef: SerializedVerseRef = {
+      if (wordsInVerse) {
+        wordsInVerse.forEach((word) => {
+          const currentScrRef: SerializedVerseRef = {
             book: scrRef.book,
             chapterNum,
             verseNum,
           };
-          const existingEntry = wordList.find((entry) => entry.word === word.toLocaleLowerCase());
-          if (existingEntry) {
-            existingEntry.scrRefs.push(newRef);
-            const occurrence = existingEntry.scrRefs.reduce(
-              (matches, ref) => (compareScrRefs(ref, newRef) ? matches + 1 : matches),
+          const existingWordListEntry = wordList.find(
+            (entry) => entry.word === word.toLocaleLowerCase(),
+          );
+          if (existingWordListEntry) {
+            existingWordListEntry.scrRefs.push(currentScrRef);
+            const occurrenceInVerse = existingWordListEntry.scrRefs.reduce(
+              (matches, ref) => (compareScrRefs(ref, currentScrRef) === 0 ? matches + 1 : matches),
               0,
             );
-            existingEntry.scriptureSnippets.push(getScriptureSnippet(verseText, word, occurrence));
+            existingWordListEntry.scriptureSnippets.push(
+              getScriptureSnippet(verseText, word, occurrenceInVerse),
+            );
           } else {
             const newEntry: WordListEntry = {
               word: word.toLocaleLowerCase(),
-              scrRefs: [newRef],
+              scrRefs: [currentScrRef],
               scriptureSnippets: [getScriptureSnippet(verseText, word)],
             };
             wordList.push(newEntry);

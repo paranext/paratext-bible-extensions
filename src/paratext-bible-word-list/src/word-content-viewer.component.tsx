@@ -16,9 +16,7 @@ type WordData = {
 };
 
 function generateTableData(selectedWord: WordListEntry) {
-  const bookName: string = Canon.bookIdToEnglishName(
-    Canon.bookNumberToId(selectedWord.scrRefs[0].bookNum),
-  );
+  const bookName: string = Canon.bookIdToEnglishName(selectedWord.scrRefs[0].book);
 
   const newWordData: WordData[] = [];
   for (let id = 0; id < selectedWord.scrRefs.length; id++) {
@@ -50,7 +48,7 @@ export default function WordContentViewer({ selectedWord }: { selectedWord: Word
       </TableHeader>
       <TableBody>
         {wordData.map((result) => (
-          <TableRow>
+          <TableRow key={`${result.reference}-${result.text}`}>
             <TableCell>{result.reference}</TableCell>
             <TableCell>{result.text}</TableCell>
           </TableRow>
