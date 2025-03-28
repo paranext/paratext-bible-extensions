@@ -245,6 +245,7 @@ const wordListWebViewProvider: IWebViewProvider = {
 
     return {
       title: projectName ? localizedTitleWithProject : localizedTitle,
+      shouldShowToolbar: true,
       ...savedWebView,
       content: wordListReact,
       styles: wordListReactStyles,

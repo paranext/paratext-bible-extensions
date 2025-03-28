@@ -64,6 +64,7 @@ const textCollectionWebViewProvider: IWebViewProvider = {
         getTextCollectionTitle(projectNames, { book: 'GEN', chapterNum: 1, verseNum: 1 }) ??
         '%textCollection_defaultTitle%',
       tooltip: getTextCollectionTooltip(localizedTextCollection, projectNames),
+      shouldShowToolbar: true,
       ...savedWebView,
       iconUrl: 'papi-extension://paratext-bible-text-collection/assets/Group24.svg',
       content: textCollectionReact,
