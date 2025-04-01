@@ -2,7 +2,7 @@
   "metadata": {},
   "localizedStrings": {
     "en": {
-      "%mainMenu_openWordList%": "Open Word List",
+      "%mainMenu_openWordList%": "Open Word List...",
       "%wordList_cloudView_label%": "Cloud",
       "%wordList_filter_defaultText%": "Word filter",
       "%wordList_fullWordCount_titleFormat%": "Words ({fullWordCount}) {sortingDirectionIcon}",
@@ -16,7 +16,7 @@
       "%wordList_wordCount_format%": "Count {sortingDirectionIcon}"
     },
     "es": {
-      "%mainMenu_openWordList%": "Abrir Lista de Palabras",
+      "%mainMenu_openWordList%": "Abrir Lista de Palabras...",
       "%wordList_cloudView_label%": "Nube",
       "%wordList_filter_defaultText%": "Filtro de palabra",
       "%wordList_fullWordCount_titleFormat%": "Palabras ({fullWordCount}) {sortingDirectionIcon}",
