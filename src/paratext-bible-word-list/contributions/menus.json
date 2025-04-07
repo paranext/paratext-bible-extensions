@@ -2,20 +2,20 @@
   "mainMenu": {
     "columns": {},
     "groups": {},
-    "items": [
-      {
-        "label": "%mainMenu_openWordList%",
-        "localizeNotes": "Application main menu > Project > Open Word List",
-        "group": "platform.projectResources",
-        "order": -99.8,
-        "command": "paratextBibleWordList.open"
-      }
-    ]
+    "items": []
   },
   "defaultWebViewTopMenu": {
     "columns": {},
     "groups": {},
-    "items": []
+    "items": [
+      {
+        "label": "%mainMenu_openWordlist%",
+        "localizeNotes": "Web view main menu > Project > Open Word List. Wordlist is literally a list of all words in the project, a word list. It is written as “Wordlist” to make it identifiable in Help articles and documentation.",
+        "group": "platform.projectTop",
+        "order": 5,
+        "command": "paratextBibleWordList.open"
+      }
+    ]
   },
   "defaultWebViewContextMenu": {
     "groups": {},

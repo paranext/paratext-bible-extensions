@@ -4,8 +4,8 @@
   "supportUrl": "https://github.com/paranext/paratext-bible-extensions/issues",
   "localizedDisplayInfo": {
     "en": {
-      "displayName": "Paratext Word List",
-      "shortSummary": "Word list extension",
+      "displayName": "Paratext Wordlist",
+      "shortSummary": "Wordlist extension",
       "description": "assets/descriptions/description-en.md"
     }
   }
