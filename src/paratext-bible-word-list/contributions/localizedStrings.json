@@ -1,7 +1,12 @@
 {
-  "metadata": {},
+  "metadata": {
+    "%mainMenu_openWordlist%": {
+      "fallbackKey": "%mainMenu_openWordList%"
+    }
+  },
   "localizedStrings": {
     "en": {
+      "%mainMenu_openWordlist%": "Open Wordlist...",
       "%mainMenu_openWordList%": "Open Word List...",
       "%wordList_cloudView_label%": "Cloud",
       "%wordList_filter_defaultText%": "Word filter",

@@ -262,27 +262,19 @@ export async function activate(context: ExecutionActivationContext) {
     wordListDataProviderEngine,
   );
 
-  const wordListWebViewProviderPromise = papi.webViewProviders.register(
+  const wordListWebViewProviderPromise = papi.webViewProviders.registerWebViewProvider(
     WORD_LIST_WEB_VIEW_TYPE,
     wordListWebViewProvider,
   );
 
   context.registrations.add(
-    await papi.commands.registerCommand('paratextBibleWordList.open', async (projectId) => {
-      let projectIdForWebView = projectId;
+    await papi.commands.registerCommand('paratextBibleWordList.open', async (webViewId) => {
+      let projectId: string | undefined;
 
-      // If projectIds weren't passed in, get from dialog
-      if (!projectIdForWebView) {
-        const userProjectIds = await papi.dialogs.showDialog('platform.selectProject', {
-          title: '%wordList_openListForProject_title%',
-          prompt: '%wordList_openListForProject_prompt%',
-          includeProjectInterfaces: 'platformScripture.USFM_Book',
-        });
-        if (userProjectIds) projectIdForWebView = userProjectIds;
+      if (webViewId) {
+        const webViewDefinition = await papi.webViews.getOpenWebViewDefinition(webViewId);
+        projectId = webViewDefinition?.projectId;
       }
-
-      // If the user didn't select a project, return undefined and don't show the word list
-      if (!projectIdForWebView) return undefined;
 
       return papi.webViews.getWebView(
         WORD_LIST_WEB_VIEW_TYPE,
@@ -290,7 +282,7 @@ export async function activate(context: ExecutionActivationContext) {
         // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
         // eslint-disable-next-line no-type-assertion/no-type-assertion
         {
-          projectId: projectIdForWebView,
+          projectId,
         } as GetWebViewOptions,
       );
     }),

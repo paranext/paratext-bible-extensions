@@ -1,6 +1,6 @@
 # paratext-bible-word-list
 
-Paratext.Bible Word List extension for Platform.Bible
+Paratext.Bible Wordlist extension for Platform.Bible
 
 <!-- Opening comment tag for Template Info Section. Ignore this for now. More info in [Hide Template Info](#hide-template-info).
 
