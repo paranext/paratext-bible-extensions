@@ -26,7 +26,8 @@
     "lint-fix:scripts": "npm run format && npm run lint:scripts",
     "postinstall": "tsx ./lib/add-remotes.ts",
     "create-extension": "tsx ./lib/create-extension.ts",
-    "update-from-templates": "tsx ./lib/update-from-templates.ts"
+    "update-from-templates": "tsx ./lib/update-from-templates.ts",
+    "bump-versions": "tsx ./lib/bump-versions.ts"
   },
   "browserslist": [],
   "peerDependencies": {
