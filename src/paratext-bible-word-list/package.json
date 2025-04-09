@@ -1,7 +1,7 @@
 {
   "name": "paratext-bible-word-list",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.2.0-alpha.0",
   "main": "src/main.js",
   "types": "src/types/paratext-bible-word-list.d.ts",
   "author": "Paranext",
@@ -29,7 +29,10 @@
     "bump-versions": "ts-node ./lib/bump-versions.ts"
   },
   "browserslist": [],
-  "peerDependencies": { "react": ">=18.3.1", "react-dom": ">=18.3.1" },
+  "peerDependencies": {
+    "react": ">=18.3.1",
+    "react-dom": ">=18.3.1"
+  },
   "dependencies": {
     "@sillsdev/scripture": "^2.0.2",
     "@visx/responsive": "^3.3.0",
@@ -91,5 +94,7 @@
     "webpack-merge": "^6.0.1",
     "zip-build": "^1.8.0"
   },
-  "volta": { "extends": "../../package.json" }
+  "volta": {
+    "extends": "../../package.json"
+  }
 }
