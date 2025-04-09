@@ -33,3 +33,5 @@ temp-build
 package-lock.json
 
 # #endregion
+
+.github/CODEOWNERS
