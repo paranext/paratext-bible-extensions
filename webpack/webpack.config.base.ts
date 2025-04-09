@@ -1,20 +1,9 @@
 import path from 'path';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import webpack from 'webpack';
-import { getExtensionFolderNamesSync, LIBRARY_TYPE } from './webpack.util';
+import { LIBRARY_TYPE } from './webpack.util';
 
-// Exit if there are no extensions yet
-const areExtensionsPresent = getExtensionFolderNamesSync().length > 0;
-if (!areExtensionsPresent) {
-  // This is a command-line utility for which it is fine to print to the console
-  // eslint-disable-next-line no-console
-  console.log(
-    'No extensions found! Please run `npm run create-extension -- <extension-name>` (kebab-case) to create an extension. See README.md for more information.',
-  );
-  process.exit(0);
-}
-
-// #region shared with https://github.com/paranext/paranext-extension-template/blob/main/webpack/webpack.config.base.ts
+// #region shared with https://github.com/paranext/paranext-multi-extension-template/blob/main/webpack/webpack.config.base.ts
 
 const isDev = process.env.NODE_ENV !== 'production';
 const shouldGenerateSourceMaps = isDev || process.env.DEBUG_PROD;

@@ -26,8 +26,11 @@
       "node_modules/@types",
       // Include papi-dts type declarations (for papi.d.ts)
       "../paranext-core/lib",
-      // Include these bundled extensions' type declarations
-      "./src",
+      // Include core extensions' type declarations
+      "../paranext-core/extensions/src",
+      // Include this extension's type declarations. It's in this location so there aren't any
+      // unexpected files there for typeRoots to include
+      "src/types",
 
       /**
        * Add extension repos' `src/types` folders here if you want to use local development type
@@ -38,7 +41,7 @@
        * the local development type declarations will always be up-to-date instead of only when
        * Platform.Bible is running in development.
        *
-       * @example Adding `"../paratext-bible-word-list/src/types",` includes the local version
+       * @example Adding `"../paranext-extension-word-list/src/types",` includes the local version
        * of the Word List extension's type declarations. Then, your extension can use types from the
        * local build of the Word List extension.
        */

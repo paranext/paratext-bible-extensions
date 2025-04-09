@@ -1,4 +1,4 @@
-// #region shared with https://github.com/paranext/paranext-extension-template/blob/main/tailwind.config.ts
+// #region shared with https://github.com/paranext/paranext-multi-extension-template/blob/main/tailwind.config.ts
 
 // #region shared with https://github.com/paranext/paranext-core/blob/main/lib/platform-bible-react/tailwind.config.ts
 
@@ -7,7 +7,7 @@ import typography from '@tailwindcss/typography';
 import tailwindCssAnimate from 'tailwindcss-animate';
 
 const config: Config = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}', '!./**/node_modules/**/*'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   // Prefix on all tailwind classes so they don't clash with built-in classes
   // short for tailwind - we hope to have the same prefix as users of this library so the cn
   // function that uses tailwind-merge can properly overwrite related tailwind classes
