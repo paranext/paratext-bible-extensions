@@ -54,7 +54,9 @@ module.exports = {
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': [
       'error',
-      { allow: ['arrowFunctions', 'functions', 'methods'] },
+      {
+        allow: ['arrowFunctions', 'functions', 'methods'],
+      },
     ],
     '@typescript-eslint/no-explicit-any': 'error',
     'no-redeclare': 'off',
@@ -85,7 +87,12 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     'import/no-anonymous-default-export': ['error', { allowCallExpression: false }],
     indent: 'off',
-    'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        assert: 'either',
+      },
+    ],
     // Should use our logger anytime you want logs that persist. Otherwise use console only in testing
     'no-console': 'warn',
     'no-null/no-null': 2,
@@ -106,14 +113,17 @@ module.exports = {
 
     // #endregion
   },
-  globals: { globalThis: 'readonly' },
+  globals: {
+    globalThis: 'readonly',
+  },
   overrides: [
     {
       // Allow this file to have overrides to rules from paranext-core
       files: ['.eslintrc.*js'],
-      rules: { 'no-dupe-keys': 'off' },
+      rules: {
+        'no-dupe-keys': 'off',
+      },
     },
-    { files: ['*.js'], rules: { strict: 'off' } },
     {
       files: ['*.js'],
       rules: {
@@ -144,8 +154,14 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'no-type-assertion', 'no-null'],
   settings: {
-    'import/resolver': { typescript: { alwaysTryTypes: true } },
-    'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+      },
+    },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
   },
 };
 
