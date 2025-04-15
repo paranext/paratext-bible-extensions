@@ -2,6 +2,12 @@
   "metadata": {
     "%mainMenu_openWordlist%": {
       "fallbackKey": "%mainMenu_openWordList%"
+    },
+    "%wordlist_title_format%": {
+      "fallbackKey": "%wordList_title_format%"
+    },
+    "%wordlist_titleWithProjectName_format%": {
+      "fallbackKey": "%wordList_titleWithProjectName_format%"
     }
   },
   "localizedStrings": {
@@ -15,7 +21,9 @@
       "%wordList_openListForProject_title%": "Open Word List",
       "%wordList_partialWordCount_titleFormat%": "Words ({wordListLength} of {fullWordCount}) {sortingDirectionIcon}",
       "%wordList_tableView_label%": "Table",
+      "%wordlist_title_format%": "Wordlist {projectName}",
       "%wordList_title_format%": "Word List {projectName}",
+      "%wordlist_titleWithProjectName_format%": "Wordlist for project {projectName}",
       "%wordList_titleWithProjectName_format%": "Word List for project {projectName}",
       "%wordList_view_label%": "view",
       "%wordList_wordCount_format%": "Count {sortingDirectionIcon}"
