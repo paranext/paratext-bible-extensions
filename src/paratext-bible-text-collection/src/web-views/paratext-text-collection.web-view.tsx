@@ -49,7 +49,10 @@ globalThis.webViewComponent = function TextCollectionWebView({
 
         const name = await pdp.getSetting('platform.name');
 
-        return { id: projectId, name };
+        // Using || to make sure we get default if it is an empty string or if it is undefined
+        const textDirection = (await pdp.getSetting('platform.textDirection')) || 'ltr';
+
+        return { id: projectId, name, textDirection };
       });
       return Promise.all(infoPromises);
     }, [projectIds]),

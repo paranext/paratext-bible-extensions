@@ -19,9 +19,12 @@ import {
   DropdownMenuTrigger,
 } from 'platform-bible-react';
 import { MouseEvent, useMemo } from 'react';
+import { getErrorMessage, isPlatformError } from 'platform-bible-utils';
+import { logger } from '@papi/frontend';
 import { ProjectInfo } from '../../util';
 
 const defaultFontSize: number = 16;
+const defaultVersePlainText = '';
 
 export type VerseDisplayProps = {
   projectId: string;
@@ -50,10 +53,19 @@ function VerseDisplay({
   isSelected,
   useWebViewState,
 }: VerseDisplayProps) {
-  const [versePlainText] = useProjectData(
+  const [versePlainTextPossiblyError] = useProjectData(
     'platformScripture.PlainText_Verse',
     projectId,
-  ).VersePlainText(verseRef, '');
+  ).VersePlainText(verseRef, defaultVersePlainText);
+
+  const versePlainText = useMemo(() => {
+    if (isPlatformError(versePlainTextPossiblyError)) {
+      logger.warn(`Error getting project name: ${getErrorMessage(versePlainTextPossiblyError)}`);
+      return defaultVersePlainText;
+    }
+    return versePlainTextPossiblyError;
+  }, [versePlainTextPossiblyError]);
+
   const ellipsisKey = '%textCollection_verseDisplay_projectNameMissing%';
   const closeTextKey = '%textCollection_verseDisplay_closeText%';
   const zoomInKey = '%textCollection_verseDisplay_zoomIn%';
@@ -103,6 +115,15 @@ function VerseDisplay({
     event.preventDefault();
     selectProjectId(selectedProjectId !== projectId || selectedProjectId === '' ? projectId : '');
   };
+
+  const textDirectionEffective = useMemo(() => {
+    // OHEBGRK is a special case where we want to show the OT in RTL but the NT in LTR
+    if (projectInfo?.name === 'OHEBGRK')
+      if (Canon.isBookOT(verseRef.book)) return 'rtl';
+      else return 'ltr';
+
+    return projectInfo?.textDirection;
+  }, [projectInfo, verseRef]);
 
   return (
     <div
@@ -167,11 +188,7 @@ function VerseDisplay({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <p
-        dir={projectInfo?.name === 'OHEBGRK' && Canon.isBookOT(verseRef.book) ? 'rtl' : undefined}
-        className="text"
-        style={{ fontSize }}
-      >
+      <p dir={textDirectionEffective} className="text" style={{ fontSize }}>
         {versePlainText}
       </p>
     </div>
