@@ -1,7 +1,7 @@
 import { SerializedVerseRef } from '@sillsdev/scripture';
 import type { ProjectInterfaces } from 'papi-shared-types';
 
-export type ProjectInfo = { id: string; name: string };
+export type ProjectInfo = { id: string; name: string; textDirection: 'ltr' | 'rtl' };
 
 /**
  * `projectInterface`s the text collection uses. All projects the text collection uses must support
