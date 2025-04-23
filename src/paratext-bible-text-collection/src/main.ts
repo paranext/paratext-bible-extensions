@@ -91,31 +91,54 @@ export async function activate(context: ExecutionActivationContext) {
   );
 
   context.registrations.add(
-    await papi.commands.registerCommand('paratextBibleTextCollection.open', async (projectIds) => {
-      let projectIdsForWebView = projectIds;
+    await papi.commands.registerCommand(
+      'paratextBibleTextCollection.open',
+      async (projectIds) => {
+        let projectIdsForWebView = projectIds;
 
-      // If projectIds weren't passed in, get from dialog
-      if (!projectIdsForWebView) {
-        const userProjectIds = await papi.dialogs.showDialog('platform.selectMultipleProjects', {
-          title: '%textCollection_dialog_openTextCollection_title%',
-          prompt: '%textCollection_dialog_selectProjectsToOpen_prompt%',
-          // Wrap array of required `projectInterface`s in another array to make these required
-          // `projectInterface`s AND together, not OR, so the only projects that show up are ones
-          // that support all required `projectInterface`s
-          includeProjectInterfaces: [REQUIRED_PROJECT_INTERFACES],
-        });
-        if (userProjectIds) projectIdsForWebView = userProjectIds;
-      }
+        // If projectIds weren't passed in, get from dialog
+        if (!projectIdsForWebView) {
+          const userProjectIds = await papi.dialogs.showDialog('platform.selectMultipleProjects', {
+            title: '%textCollection_dialog_openTextCollection_title%',
+            prompt: '%textCollection_dialog_selectProjectsToOpen_prompt%',
+            // Wrap array of required `projectInterface`s in another array to make these required
+            // `projectInterface`s AND together, not OR, so the only projects that show up are ones
+            // that support all required `projectInterface`s
+            includeProjectInterfaces: [REQUIRED_PROJECT_INTERFACES],
+          });
+          if (userProjectIds) projectIdsForWebView = userProjectIds;
+        }
 
-      // If the user didn't select a project, return undefined and don't show the text collection
-      if (!projectIdsForWebView) return undefined;
+        // If the user didn't select a project, return undefined and don't show the text collection
+        if (!projectIdsForWebView) return undefined;
 
-      // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
-      // eslint-disable-next-line no-type-assertion/no-type-assertion
-      return papi.webViews.getWebView(TEXT_COLLECTION_WEB_VIEW_TYPE, undefined, {
-        projectIds: projectIdsForWebView,
-      } as GetWebViewOptions);
-    }),
+        // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
+        // eslint-disable-next-line no-type-assertion/no-type-assertion
+        return papi.webViews.openWebView(TEXT_COLLECTION_WEB_VIEW_TYPE, undefined, {
+          projectIds: projectIdsForWebView,
+        } as GetWebViewOptions);
+      },
+      {
+        method: {
+          description: 'Opens the text collection for the specified projects.',
+          params: [
+            {
+              name: 'projectIds',
+              schema: { type: 'array', items: { type: 'string' } },
+              description: 'IDs of the projects to open',
+            },
+          ],
+          result: {
+            name: 'webViewId',
+            schema: { type: 'object' },
+            description: 'The web view definition or undefined if no projects were selected.',
+          },
+        },
+      },
+      {
+        timeoutMilliseconds: 0,
+      },
+    ),
   );
 
   // Await the web view provider promise at the end so we don't hold everything else up

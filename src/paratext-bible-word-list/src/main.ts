@@ -268,24 +268,48 @@ export async function activate(context: ExecutionActivationContext) {
   );
 
   context.registrations.add(
-    await papi.commands.registerCommand('paratextBibleWordList.open', async (webViewId) => {
-      let projectId: string | undefined;
+    await papi.commands.registerCommand(
+      'paratextBibleWordList.open',
+      async (webViewId) => {
+        let projectId: string | undefined;
 
-      if (webViewId) {
-        const webViewDefinition = await papi.webViews.getOpenWebViewDefinition(webViewId);
-        projectId = webViewDefinition?.projectId;
-      }
+        if (webViewId) {
+          const webViewDefinition = await papi.webViews.getOpenWebViewDefinition(webViewId);
+          projectId = webViewDefinition?.projectId;
+        }
 
-      return papi.webViews.getWebView(
-        WORD_LIST_WEB_VIEW_TYPE,
-        { type: 'float', floatSize: { width: 775, height: 815 } },
-        // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
-        // eslint-disable-next-line no-type-assertion/no-type-assertion
-        {
-          projectId,
-        } as GetWebViewOptions,
-      );
-    }),
+        return papi.webViews.openWebView(
+          WORD_LIST_WEB_VIEW_TYPE,
+          { type: 'float', floatSize: { width: 775, height: 815 } },
+          // Type assert because GetWebViewOptions is not yet typed to be generic and allow extra inputs
+          // eslint-disable-next-line no-type-assertion/no-type-assertion
+          {
+            projectId,
+          } as GetWebViewOptions,
+        );
+      },
+      {
+        method: {
+          description: 'Opens the word list for the specified project',
+          params: [
+            {
+              name: 'webViewId',
+              schema: { type: 'string' },
+              description: 'ID of a web view associated with the project to examine',
+              required: false,
+            },
+          ],
+          result: {
+            name: 'webViewId',
+            schema: { type: 'string' },
+            description: 'ID of the web view that was opened or null if no project was selected',
+          },
+        },
+      },
+      {
+        timeoutMilliseconds: 0,
+      },
+    ),
   );
 
   context.registrations.add(
