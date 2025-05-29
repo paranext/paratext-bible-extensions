@@ -219,6 +219,24 @@ Then follow [the instructions for customizing the new extension](https://github.
 
 **Note:** The merge/squash commits created when creating a new extension are important; Git uses them to compare the files for future updates. If you edit this repo's Git history, please preserve these commits (do not squash them, for example) to avoid duplicated merge conflicts in the future.
 
+### Renaming an extension
+
+Renaming an extension involves more than just changing its folder name. Tools that track extension updates rely on the folder name to detect changes, so renaming must be done carefully to avoid duplicated diffs or future merge conflicts.
+
+To safely rename an extension:
+
+1. Run the `create-extension` script with the new name to create a new folder:
+   ```bash
+   npm run create-extension -- <new-extension-name>
+   ```
+2. Move the contents of the old extension into the new folder and delete the old folder. (If it's not already under source control, it would probably be wise to make a backup until you have confirmed that the rename was successful.)
+
+3. Update internal identifiers and references to match the new name (e.g., folder names, class names, package names, strings inside files).
+
+4. Test and commit the changes.
+
+This process ensures that history tracking and update comparisons continue to work correctly.
+
 <details>
     <summary>[Optional] Creating a new extension manually</summary>
 
