@@ -1,19 +1,18 @@
+import { WebViewProps } from '@papi/core';
 import papi from '@papi/frontend';
 import { useDialogCallback, useLocalizedStrings } from '@papi/frontend/react';
-import { Fragment, useCallback, useEffect, useMemo } from 'react';
-import { Button, usePromise } from 'platform-bible-react';
-import { deepEqual } from 'platform-bible-utils';
-import { WebViewProps } from '@papi/core';
-import { Divider } from '@mui/material';
 import { Allotment } from 'allotment';
+import { Button, Separator, usePromise } from 'platform-bible-react';
+import { deepEqual } from 'platform-bible-utils';
+import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import {
   ProjectInfo,
   REQUIRED_PROJECT_INTERFACES,
   getTextCollectionTitle,
   getTextCollectionTooltip,
 } from '../util';
-import VerseDisplay from './components/verse-display.component';
 import ChapterView from './components/chapter-view.component';
+import VerseDisplay from './components/verse-display.component';
 
 globalThis.webViewComponent = function TextCollectionWebView({
   // Project ID of the project that is focused or undefined if no project selected
@@ -143,7 +142,7 @@ globalThis.webViewComponent = function TextCollectionWebView({
                 isSelected={projectId === expandedProjectId}
                 useWebViewState={useWebViewState}
               />
-              {!isLastProject && <Divider />}
+              {!isLastProject && <Separator />}
             </Fragment>
           );
         })}

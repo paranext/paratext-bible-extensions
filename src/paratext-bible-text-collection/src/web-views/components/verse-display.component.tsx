@@ -1,15 +1,8 @@
-import { useLocalizedStrings, useProjectData } from '@papi/frontend/react';
 import { UseWebViewStateHook } from '@papi/core';
+import { logger } from '@papi/frontend';
+import { useLocalizedStrings, useProjectData } from '@papi/frontend/react';
 import { Canon, SerializedVerseRef } from '@sillsdev/scripture';
-
-import {
-  HighlightOff,
-  RestartAlt,
-  VerticalAlignBottom,
-  VerticalAlignTop,
-  ZoomIn,
-  ZoomOut,
-} from '@mui/icons-material';
+import { ArrowDownToLine, ArrowUpToLine, CircleX, RotateCcw, ZoomIn, ZoomOut } from 'lucide-react';
 import {
   Button,
   DropdownMenu,
@@ -18,9 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from 'platform-bible-react';
-import { MouseEvent, useMemo } from 'react';
 import { getErrorMessage, isPlatformError } from 'platform-bible-utils';
-import { logger } from '@papi/frontend';
+import { MouseEvent, useMemo } from 'react';
 import { ProjectInfo } from '../../util';
 
 const defaultFontSize: number = 16;
@@ -139,7 +131,7 @@ function VerseDisplay({
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem onClick={handleCloseProject}>
-              <HighlightOff /> {localizedCloseText}
+              <CircleX /> {localizedCloseText}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
@@ -164,7 +156,7 @@ function VerseDisplay({
               }}
               disabled={fontSize === defaultFontSize}
             >
-              <RestartAlt /> {localizedZoomReset}
+              <RotateCcw /> {localizedZoomReset}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
@@ -175,7 +167,7 @@ function VerseDisplay({
               }}
               disabled={isFirstProject}
             >
-              <VerticalAlignTop /> {localizedMoveUp}
+              <ArrowUpToLine /> {localizedMoveUp}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={(event) => {
@@ -183,7 +175,7 @@ function VerseDisplay({
               }}
               disabled={isLastProject}
             >
-              <VerticalAlignBottom /> {localizedMoveDown}
+              <ArrowDownToLine /> {localizedMoveDown}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
