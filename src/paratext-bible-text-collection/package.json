@@ -42,8 +42,6 @@
     "@biblionexus-foundation/scripture-utilities": "^0.0.7",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.10",
-    "@mui/material": "^5.15.10",
     "@swc/core": "^1.10.18",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20.17.19",
