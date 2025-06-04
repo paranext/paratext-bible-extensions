@@ -24,8 +24,12 @@ enum Scope {
   Verse = 'Verse',
 }
 
+function stringToRegExpString(literal: string) {
+  return literal.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
 function getDesiredOccurrence(verseText: string, word: string, occurrence: number): number {
-  const regex = new RegExp(`\\b${word.toLowerCase()}\\b`, 'ig');
+  const regex = new RegExp(`\\b${stringToRegExpString(word.toLowerCase())}\\b`, 'ig');
 
   let match = regex.exec(verseText.toLowerCase());
   let occurrenceIndex = 1;
@@ -115,11 +119,13 @@ function processBook(bookText: string, scrRef: SerializedVerseRef, scope: Scope)
         return;
       }
 
-      const wordsInVerse: RegExpMatchArray | null | undefined =
-        verseText?.match(/(?<!\\)\b[a-zA-Z’]+\b/g);
+      const wordCharacterRegExp = /[\p{L}\p{N}\p{Cn}\p{Co}]/;
+      const wordMedialRegExp = /[\p{P}\p{Mc}]/;
+      const wordRegex = new RegExp(`\\\\?${wordCharacterRegExp.source}+(${wordMedialRegExp.source}+${wordCharacterRegExp.source}+)*`, 'gu');
+      for (const match of verseText?.matchAll(wordRegex)) {
+        const word = match[0];
+        if (!word.startsWith('\\')) {
 
-      if (wordsInVerse) {
-        wordsInVerse.forEach((word) => {
           const currentScrRef: SerializedVerseRef = {
             book: scrRef.book,
             chapterNum,
@@ -145,7 +151,8 @@ function processBook(bookText: string, scrRef: SerializedVerseRef, scope: Scope)
             };
             wordList.push(newEntry);
           }
-        });
+        }
+        // );
       }
     });
   });
