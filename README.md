@@ -171,9 +171,9 @@ These steps will walk you through releasing a version on GitHub and bumping the 
    ```bash
    npm run package
    # Create a new pre-release in GitHub on tag `v<version>`
-   # Copy `.github/assets/release-body.md` into the GitHub branch
-   # Generate changelog
-   # Attach contents of `release` folder
+   # Copy `.github/assets/release-body.md` into the release body
+   # Press the "Generate release notes" button in the release creation page to generate a changelog
+   # Attach contents of `release` folder to the release
    ```
 
    Then bump versions by running the following:
@@ -209,7 +209,7 @@ Module build failed (from ./node_modules/swc-loader/src/index.js):
 Error: Failed to load native binding
 ```
 
-You may have a different effective version of `@swc/core` than `paranext-core` does. Please make sure the version of `@swc/core` in your `package-lock.json` is the same as its version in [`paranext-core/package-lock.json`](https://github.com/paranext/paranext-core/blob/main/package-lock.json). If they are not the same, please fix them to be the same by running `npm i -D @swc/core <version>` where the version is the version of `@swc/core` installed in `paranext-core/package-lock.json` (if you would like to set the version of `@swc/core` back to what it was before in `package.json` to stay synced with the extension template, change it back manually in `package.json` and then run `npm i`). If they are already the same, you may need to try regenerating your `package-lock.json` file by deleting it and running `npm i`.
+You may have a different effective version of `@swc/core` than `paranext-core` does. Please make sure the version of `@swc/core` in your `package-lock.json` is the same as its version in [`paranext-core/package-lock.json`](https://github.com/paranext/paranext-core/blob/main/package-lock.json). If they are not the same, please fix them to be the same by running `npm i -D @swc/core@<version>` where the version is the version of `@swc/core` installed in `paranext-core/package-lock.json` (if you would like to set the version of `@swc/core` back to what it was before in `package.json` to stay synced with the extension template, change it back manually in `package.json` and then run `npm i`). If they are already the same, you may need to try regenerating your `package-lock.json` file by deleting it and running `npm i`.
 
 ## To update this extension from the template
 
