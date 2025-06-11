@@ -81,7 +81,7 @@ This is a Webpack project configured to build Platform.Bible extensions. The gen
 
 ## To install
 
-### Install dependencies:
+### Install dependencies
 
 1. Follow the instructions to install [`paranext-core`](https://github.com/paranext/paranext-core#developer-install). We recommend you clone `paranext-core` in the same parent directory in which you cloned this repository so you do not have to [reconfigure paths](#configure-paths-to-paranext-core-repo) to `paranext-core`.
 2. In this repo, run `npm install` to install local and published dependencies
@@ -155,7 +155,7 @@ These steps will walk you through releasing a version on GitHub and bumping the 
     <details>
         <summary>[Optional] Create a new pre-release and bump versions branch manually </summary>
 
-   #### Manually create a new pre-release and bump versions branch
+   ### Manually create a new pre-release and bump versions branch
 
    Alternatively, you can create a new pre-release manually:
 
@@ -197,7 +197,7 @@ Following are some problems you may encounter while publishing and steps to solv
 
 If you see the following error in the GitHub Actions workflow logs while packaging:
 
-```
+```bash
 Module build failed (from ./node_modules/swc-loader/src/index.js):
 Error: Failed to load native binding
 ```
@@ -223,7 +223,7 @@ Then follow [the instructions for customizing the new extension](https://github.
 <details>
     <summary>[Optional] Creating a new extension manually</summary>
 
-#### Manually create a new extension
+### Manually create a new extension
 
 Alternatively, you can create a new extension manually:
 
