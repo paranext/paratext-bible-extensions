@@ -162,9 +162,9 @@ These steps will walk you through releasing a version on GitHub and bumping the 
    ```bash
    npm run package
    # Create a new pre-release in GitHub on tag `v<version>`
-   # Copy `.github/assets/release-body.md` into the GitHub branch
-   # Generate changelog
-   # Attach contents of `release` folder
+   # Copy `.github/assets/release-body.md` into the release body
+   # Press the "Generate release notes" button in the release creation page to generate a changelog
+   # Attach contents of `release` folder to the release
    ```
 
    Then bump versions by running the following:
@@ -202,7 +202,7 @@ Module build failed (from ./node_modules/swc-loader/src/index.js):
 Error: Failed to load native binding
 ```
 
-You may have a different effective version of `@swc/core` than `paranext-core` does. Please make sure the version of `@swc/core` in your `package-lock.json` is the same as its version in [`paranext-core/package-lock.json`](https://github.com/paranext/paranext-core/blob/main/package-lock.json). If they are not the same, please fix them to be the same by running `npm i -D @swc/core <version>` where the version is the version of `@swc/core` installed in `paranext-core/package-lock.json` (if you would like to set the version of `@swc/core` back to what it was before in `package.json` to stay synced with the extension template, change it back manually in `package.json` and then run `npm i`). If they are already the same, you may need to try regenerating your `package-lock.json` file by deleting it and running `npm i`.
+You may have a different effective version of `@swc/core` than `paranext-core` does. Please make sure the version of `@swc/core` in your `package-lock.json` is the same as its version in [`paranext-core/package-lock.json`](https://github.com/paranext/paranext-core/blob/main/package-lock.json). If they are not the same, please fix them to be the same by running `npm i -D @swc/core@<version>` where the version is the version of `@swc/core` installed in `paranext-core/package-lock.json` (if you would like to set the version of `@swc/core` back to what it was before in `package.json` to stay synced with the extension template, change it back manually in `package.json` and then run `npm i`). If they are already the same, you may need to try regenerating your `package-lock.json` file by deleting it and running `npm i`.
 
 ## To create a new extension in this repo
 
@@ -214,8 +214,9 @@ npm run create-extension -- <extension-name>
 
 Then follow [the instructions for customizing the new extension](https://github.com/paranext/paranext-extension-template#customize-extension-details) with a few modifications:
 
-- Follow the instructions for replacing placeholders inside the `src/<extension-name>` folder, not at this repo root, except in specific situations:
-  - Instead of editing the `.github/assets/release-body.md` inside the extension, add information about the new extension in `.github/assets/release-body.md` at this repo root.
+- All of the places where it says to replace the extension name in [Replace Placeholders](https://github.com/paranext/paranext-extension-template#replace-placeholders) have been automated,
+  the other instructions there should apply inside the `src/<extension-name>` folder, not at this repo root.
+- Instead of editing the `.github/assets/release-body.md` inside the extension, add information about the new extension in `.github/assets/release-body.md` at this repo root.
 
 **Note:** The merge/squash commits created when creating a new extension are important; Git uses them to compare the files for future updates. If you edit this repo's Git history, please preserve these commits (do not squash them, for example) to avoid duplicated merge conflicts in the future.
 
@@ -238,10 +239,35 @@ the file paths pointing to `paranext-core`:
 - Find: `([^/])\.\.\/paranext-core`
 - Replace with: `$1../../../paranext-core`
 
-You can ignore occurrences from many files. Please see [`./lib/git.util.ts`](./lib/git.util.ts) -> `formatExtensionFolder` for more
-information.
+You can ignore occurrences from many files. Please see [`./lib/git.util.ts`](./lib/git.util.ts) -> `formatExtensionFolder` for more information.
+
+Because these steps are not automated you need to follow all the instructions in [Replace Placeholders](https://github.com/paranext/paranext-extension-template#replace-placeholders)
 
 </details>
+
+### Renaming an extension
+
+Renaming an extension involves more than just changing its folder name. Tools that track extension updates rely on the folder name to detect changes, so renaming must be done carefully to avoid duplicated diffs or future merge conflicts.
+
+**Note:** Unfortunately, this process effectively erases the history on all the files in this extension since they are being deleted and created anew from the perspective of the Git history.
+
+To safely rename an extension:
+
+1. [Update from the template](#to-update-this-repo-and-extensions-from-the-templates) to ensure the extension to be renamed has all latest changes (makes sure you don't revert any updates the template has received since you last updated the extension when you are copying the contents of the extension)
+
+2. Run the [`create-extension` script](#to-create-a-new-extension-in-this-repo) with the new name to create a new folder:
+   ```bash
+   npm run create-extension -- <new-extension-name>
+   ```
+3. Move the contents of the old extension into the new folder and delete the old folder. (If it's not already under source control, it would probably be wise to make a backup until you have confirmed that the rename was successful.)
+
+4. Update internal identifiers and references to match the new name (e.g., folder names, class names, package names, strings inside files).
+
+5. Test and commit the changes.
+
+This process ensures that template update comparisons continue to work correctly.
+
+**Note:** The merge/squash commits created when renaming an extension are important; Git uses them to compare the files for future updates. If you edit this repo's Git history, please preserve these commits (do not squash them, for example) to avoid duplicated merge conflicts in the future.
 
 ## To update this repo and extensions from the templates
 
