@@ -94,7 +94,7 @@ globalThis.webViewComponent = function WordListWebView({
   }, [dataSelector, projectId, scope, scrRef]);
 
   useEffect(() => {
-    if (isPlatformError(wordList) || (wordList && wordList.length > 0)) {
+    if (isPlatformError(wordList) || (wordList && Array.isArray(wordList))) {
       setLoading(false);
     }
   }, [wordList]);
