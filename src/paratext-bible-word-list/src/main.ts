@@ -24,8 +24,19 @@ enum Scope {
   Verse = 'Verse',
 }
 
+/**
+ * Convert the given string literal to a regular expression that matches exactly that string. To be
+ * used until `RegExp.escape()` can be used instead.
+ */
+function stringToRegExpString(literal: string): string {
+  // source: https://stackoverflow.com/a/6318729
+  // This puts a backslash before every character that is special in a JavaScript regular
+  // expression.
+  return literal.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
+
 function getDesiredOccurrence(verseText: string, word: string, occurrence: number): number {
-  const regex = new RegExp(`\\b${word.toLowerCase()}\\b`, 'ig');
+  const regex = new RegExp(`\\b${stringToRegExpString(word.toLowerCase())}\\b`, 'ig');
 
   let match = regex.exec(verseText.toLowerCase());
   let occurrenceIndex = 1;
@@ -114,12 +125,46 @@ function processBook(bookText: string, scrRef: SerializedVerseRef, scope: Scope)
       if (scope === Scope.Verse && scrRef.verseNum !== verseNum) {
         return;
       }
+      // Hopefully in the spirit of Paratext 9 (Paratext.Data.CharacterCategorizer),
+      // we define a word as anything consisting of Unicode letter (L), number (N),
+      // non-assigned (Cn), or private use (Cs) characters,
+      // separated by 'medial' punctuation (P, except backslash `\`)
+      // and spacing combining (Mc) characters.
+      //
+      // _Known issue._  For now this excludes words that start with punctuation
+      // (like the first word, or perhaps word fragment? in the Dutch "'s ochtends", which uses U+0027)
+      // so that we don't accidentally make, e.g., "end." into a word.
+      // It feels like language dependent rules would be necessary do to this Right;
+      // and perhaps the Unicode standard already has some tools for this.
 
-      const wordsInVerse: RegExpMatchArray | null | undefined =
-        verseText?.match(/(?<!\\)\b[a-zA-Z’]+\b/g);
+      const wordCharacterRegExp = /[\p{L}\p{N}\p{Cn}\p{Co}]/; // matches a single character, is a single regexp entity
+      const wordMedialRegExp = /(?:(?!\\)[\p{P}\p{Mc}])/; // matches a single character, never backslash (`\`), is a single regexp entity
 
-      if (wordsInVerse) {
-        wordsInVerse.forEach((word) => {
+      // The markers in a verse, which are all ignored:
+      // - First 'auxiliary' text spans not containing the text itself
+      //   (`\f...\f*`, and same for `\fe`, `\x`, `\va`, `\vp`, `\add`, `\addpn`);
+      // - then any other marker
+      //   (`\`, optional `+`s, letters, optional digits, optional `*`),
+      //   like for example `\+wj*`.
+      // So for spans like `\wj...\wj*`, the text inside the span is kept, as it must be.
+      //
+      // TODO: Check the USFM specification for more marker spans that should be completely skipped.
+      // TODO: Handle USFM 3.0 attributes, like inside of `\w...\w*`.
+      //
+      // Every match of this regexp starts with a backslash (`\`).
+
+      const markerRegExp =
+        /(?:\\(?<open>\+*(?:f|fe|x|va|vp|add|addpn))\b.*?\\\k<open>\*|\\\+*[a-z]+\d*\*?)/;
+
+      // combine all of the above regular expressions into a single one
+      const wordRegExp = new RegExp(
+        `${markerRegExp.source}|${wordCharacterRegExp.source}+(${wordMedialRegExp.source}+${wordCharacterRegExp.source}+)*`,
+        'gsu', // 'g' for matchAll(), 's' because a verse can spend multiple lines, 'u' for Unicode (TODO: use `v` instead?)
+      );
+      for (const match of verseText?.matchAll(wordRegExp)) {
+        const word = match[0];
+        if (!word.startsWith('\\')) {
+
           const currentScrRef: SerializedVerseRef = {
             book: scrRef.book,
             chapterNum,
@@ -145,7 +190,7 @@ function processBook(bookText: string, scrRef: SerializedVerseRef, scope: Scope)
             };
             wordList.push(newEntry);
           }
-        });
+        }
       }
     });
   });
