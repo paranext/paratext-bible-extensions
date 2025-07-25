@@ -341,7 +341,7 @@ Adding this import to your WebView's styles enables Tailwind CSS in the WebView.
 - [Tailwind's preflight](https://tailwindcss.com/docs/preflight) is enabled by default, meaning some default HTML tag styles are significantly modified. You can [disable it](https://tailwindcss.com/docs/preflight#disabling-preflight) or [restrict its scope](https://www.npmjs.com/package/tailwindcss-scoped-preflight) if desired. However, the preferred approach is generally to use [`@tailwindcss/typography`](https://github.com/tailwindlabs/tailwindcss-typography), included in this project's Tailwind configuration by default, when displaying flowing content.
 - You can apply theme colors using Tailwind classes corresponding to the CSS property and theme color variable name like `tw-bg-primary`.
 
-Please see the wiki's [Tailwind CSS in Web Views](https://github.com/paranext/paranext-extension-template/wiki/Extension-Anatomy#web-view-component) page for more information about using Tailwind in your web view.
+Please see the wiki's [Tailwind CSS in WebViews](https://github.com/paranext/paranext-extension-template/wiki/Extension-Anatomy#webview-component) page for more information about using Tailwind in your WebView.
 
 ### Special imports
 
