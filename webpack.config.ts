@@ -1,4 +1,4 @@
-// #region sort-of shared with https://github.com/paranext/paranext-extension-template/blob/main/webpack.config.ts
+// #region shared with https://github.com/paranext/paranext-extension-template/blob/main/webpack.config.ts
 
 import webpack from 'webpack';
 import configWebView from './webpack/webpack.config.web-view';
