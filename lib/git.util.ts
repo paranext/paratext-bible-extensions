@@ -132,6 +132,8 @@ export async function checkForWorkingChanges(quiet = false) {
   return false;
 }
 
+// #endregion
+
 /**
  * Fetch latest from SINGLE_TEMPLATE_REMOTE_NAME
  *
