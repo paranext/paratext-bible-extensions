@@ -319,9 +319,12 @@ export async function formatExtensionFolder(extensionFolderPath: string) {
     const modifiedTitle = titleSection.map((line) =>
       line.replace(/paranext-extension-template/g, extensionName),
     );
-    const modifiedSummary = summarySection.map((line) =>
-      line.replace(/paranext-extension-template/g, extensionName),
-    );
+    const modifiedSummary = summarySection.map((line) => {
+      if (line.includes('https://github.com/paranext/paranext-extension-template/wiki'))
+        return line;
+
+      return line.replace(/paranext-extension-template/g, extensionName);
+    });
 
     // Reconstruct the README
     const finalLines = [...modifiedTitle, ...betweenTitleAndSummary, ...modifiedSummary, ...after];
