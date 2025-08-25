@@ -15,6 +15,8 @@ import { formatReplacementString, compareScrRefs, UnsubscriberAsync } from 'plat
 import wordListReactStyles from './word-list.web-view.scss?inline';
 import wordListReact from './word-list.web-view?inline';
 
+type WordListDictionary = Record<string, Omit<WordListEntry, 'word'>>;
+
 const { logger } = papi;
 
 // TODO Import from types file
@@ -95,7 +97,11 @@ let prevProcessBookArgs: { bookText: string; scrRef: SerializedVerseRef; scope: 
 
 let prevWordList: WordListEntry[] = [];
 
-function processBook(bookText: string, scrRef: SerializedVerseRef, scope: Scope) {
+async function processBook(
+  bookText: string,
+  scrRef: SerializedVerseRef,
+  scope: Scope,
+): Promise<WordListEntry[]> {
   if (
     bookText === prevProcessBookArgs.bookText &&
     scrRef.book === prevProcessBookArgs.scrRef.book &&
@@ -109,94 +115,161 @@ function processBook(bookText: string, scrRef: SerializedVerseRef, scope: Scope)
   // Delete the first array element, which contains non-scripture-related content
   chapterTexts.shift();
 
-  const wordList: WordListEntry[] = [];
-  chapterTexts.forEach((chapterText, chapterId) => {
-    const chapterNum = chapterId + 1;
-    if (scope !== Scope.Book && scrRef.chapterNum !== chapterNum) {
-      return;
-    }
+  const chapterResults = await Promise.all(
+    chapterTexts.map((chapterText, chapterId) =>
+      processChapter(chapterText, chapterId, scrRef, scope),
+    ),
+  );
 
-    const verseTexts: string[] = chapterText.split(/\\v\s\d+\s/);
-    // Delete the first array element, which contains non-scripture-related content
-    verseTexts.shift();
-
-    verseTexts.forEach((verseText, verseId) => {
-      const verseNum = verseId + 1;
-      if (scope === Scope.Verse && scrRef.verseNum !== verseNum) {
-        return;
-      }
-      // Hopefully in the spirit of Paratext 9 (Paratext.Data.CharacterCategorizer),
-      // we define a word as anything consisting of Unicode letter (L), number (N),
-      // non-assigned (Cn), or private use (Cs) characters,
-      // separated by 'medial' punctuation (P, except backslash `\`)
-      // and spacing combining (Mc) characters.
-      //
-      // _Known issue._  For now this excludes words that start with punctuation
-      // (like the first word, or perhaps word fragment? in the Dutch "'s ochtends", which uses U+0027)
-      // so that we don't accidentally make, e.g., "end." into a word.
-      // It feels like language dependent rules would be necessary do to this Right;
-      // and perhaps the Unicode standard already has some tools for this.
-
-      const wordCharacterRegExp = /[\p{L}\p{N}\p{Cn}\p{Co}]/; // matches a single character, is a single regexp entity
-      const wordMedialRegExp = /(?:(?!\\)[\p{P}\p{Mc}])/; // matches a single character, never backslash (`\`), is a single regexp entity
-
-      // The markers in a verse, which are all ignored:
-      // - First 'auxiliary' text spans not containing the text itself
-      //   (`\f...\f*`, and same for `\fe`, `\x`, `\va`, `\vp`, `\add`, `\addpn`);
-      // - then any other marker
-      //   (`\`, optional `+`s, letters, optional digits, optional `*`),
-      //   like for example `\+wj*`.
-      // So for spans like `\wj...\wj*`, the text inside the span is kept, as it must be.
-      //
-      // TODO: Check the USFM specification for more marker spans that should be completely skipped.
-      // TODO: Handle USFM 3.0 attributes, like inside of `\w...\w*`.
-      //
-      // Every match of this regexp starts with a backslash (`\`).
-
-      const markerRegExp =
-        /(?:\\(?<open>\+*(?:f|fe|x|va|vp|add|addpn))\b.*?\\\k<open>\*|\\\+*[a-z]+\d*\*?)/;
-
-      // combine all of the above regular expressions into a single one
-      const wordRegExp = new RegExp(
-        `${markerRegExp.source}|${wordCharacterRegExp.source}+(${wordMedialRegExp.source}+${wordCharacterRegExp.source}+)*`,
-        'gsu', // 'g' for matchAll(), 's' because a verse can spend multiple lines, 'u' for Unicode (TODO: use `v` instead?)
-      );
-      for (const match of verseText?.matchAll(wordRegExp)) {
-        const word = match[0];
-        if (!word.startsWith('\\')) {
-
-          const currentScrRef: SerializedVerseRef = {
-            book: scrRef.book,
-            chapterNum,
-            verseNum,
-          };
-          const existingWordListEntry = wordList.find(
-            (entry) => entry.word === word.toLocaleLowerCase(),
-          );
-          if (existingWordListEntry) {
-            existingWordListEntry.scrRefs.push(currentScrRef);
-            const occurrenceInVerse = existingWordListEntry.scrRefs.reduce(
-              (matches, ref) => (compareScrRefs(ref, currentScrRef) === 0 ? matches + 1 : matches),
-              0,
-            );
-            existingWordListEntry.scriptureSnippets.push(
-              getScriptureSnippet(verseText, word, occurrenceInVerse),
-            );
-          } else {
-            const newEntry: WordListEntry = {
-              word: word.toLocaleLowerCase(),
-              scrRefs: [currentScrRef],
-              scriptureSnippets: [getScriptureSnippet(verseText, word)],
-            };
-            wordList.push(newEntry);
-          }
-        }
+  // Merge all chapter results into a single dictionary
+  const wordDictionary: WordListDictionary = {};
+  Object.entries(chapterResults).forEach(([, chapterWordList]) => {
+    Object.entries(chapterWordList).forEach(([word, chapterEntry]) => {
+      const existingEntry = wordDictionary[word];
+      if (existingEntry) {
+        existingEntry.scrRefs.push(...chapterEntry.scrRefs);
+        existingEntry.scriptureSnippets.push(...chapterEntry.scriptureSnippets);
+      } else {
+        wordDictionary[word] = chapterEntry;
       }
     });
   });
+
+  // Convert the dictionary into a word list (array), using the dictionary key as the word
+  const wordList: WordListEntry[] = Object.entries(wordDictionary)
+    .map(([word, entry]) => ({
+      word,
+      ...entry,
+    }))
+    .sort((a, b) => {
+      const isANumeric = /^\d/u.test(a.word);
+      const isBNumeric = /^\d/u.test(b.word);
+
+      if (isANumeric && !isBNumeric) return 1; // Numbers come after letters
+      if (!isANumeric && isBNumeric) return -1; // Letters come before numbers
+
+      return a.word.localeCompare(b.word); // Default alphabetical sorting
+    });
+
   prevProcessBookArgs = { bookText, scrRef, scope };
   prevWordList = wordList;
   return wordList;
+}
+
+async function processChapter(
+  chapterText: string,
+  chapterId: number,
+  scrRef: SerializedVerseRef,
+  scope: Scope,
+): Promise<WordListDictionary> {
+  const chapterNum = chapterId + 1;
+  if (scope !== Scope.Book && scrRef.chapterNum !== chapterNum) return {};
+
+  const verseTexts: string[] = chapterText.split(/\\v\s\d+\s/);
+  const chapterWords: WordListDictionary = {};
+  const verseResults = await Promise.all(
+    verseTexts.map((verseText, verseId) =>
+      processVerse(verseText, verseId, scrRef, scope, chapterNum),
+    ),
+  );
+
+  // Merge verse results into chapter word list
+  Object.entries(verseResults).forEach(([, verseWordList]) => {
+    Object.entries(verseWordList).forEach(([word, verseEntry]) => {
+      const existingEntry = chapterWords[word];
+      if (existingEntry) {
+        existingEntry.scrRefs.push(...verseEntry.scrRefs);
+        existingEntry.scriptureSnippets.push(...verseEntry.scriptureSnippets);
+      } else {
+        chapterWords[word] = {
+          scrRefs: [...verseEntry.scrRefs],
+          scriptureSnippets: [...verseEntry.scriptureSnippets],
+        };
+      }
+    });
+  });
+
+  return chapterWords;
+}
+
+async function processVerse(
+  verseText: string,
+  verseNum: number,
+  scrRef: SerializedVerseRef,
+  scope: Scope,
+  currentChapter: number,
+): Promise<WordListDictionary> {
+  if (scope === Scope.Verse && scrRef.verseNum !== verseNum) return {};
+
+  // Allow other tasks to run by yielding control
+  await new Promise((resolve) => {
+    setTimeout(resolve, 0);
+  });
+
+  // Hopefully in the spirit of Paratext 9 (Paratext.Data.CharacterCategorizer),
+  // we define a word as anything consisting of Unicode letter (L), number (N),
+  // non-assigned (Cn), or private use (Cs) characters,
+  // separated by 'medial' punctuation (P, except backslash `\`)
+  // and spacing combining (Mc) characters.
+  //
+  // _Known issue._  For now this excludes words that start with punctuation
+  // (like the first word, or perhaps word fragment? in the Dutch "'s ochtends", which uses U+0027)
+  // so that we don't accidentally make, e.g., "end." into a word.
+  // It feels like language dependent rules would be necessary do to this Right;
+  // and perhaps the Unicode standard already has some tools for this.
+
+  const wordCharacterRegExp = /[\p{L}\p{N}\p{Cn}\p{Co}]/u; // matches a single character, is a single regexp entity
+  const wordMedialRegExp = /(?:(?!\\)[\p{P}\p{Mc}])/u; // matches a single character, never backslash (`\`), is a single regexp entity
+
+  // The markers in a verse, which are all ignored:
+  // - First 'auxiliary' text spans not containing the text itself
+  //   (`\f...\f*`, and same for `\fe`, `\x`, `\va`, `\vp`, `\add`, `\addpn`);
+  // - then any other marker
+  //   (`\`, optional `+`s, letters, optional digits, optional `*`),
+  //   like for example `\+wj*`.
+  // So for spans like `\wj...\wj*`, the text inside the span is kept, as it must be.
+  //
+  // TODO: Check the USFM specification for more marker spans that should be completely skipped.
+  // TODO: Handle USFM 3.0 attributes, like inside of `\w...\w*`.
+  //
+  // Every match of this regexp starts with a backslash (`\`).
+
+  const markerRegExp =
+    /(?:\\(?<open>\+*(?:f|fe|x|va|vp|add|addpn))\b.*?\\\k<open>\*|\\\+*[a-z]+\d*\*?)/;
+
+  // combine all of the above regular expressions into a single one
+  const wordRegExp = new RegExp(
+    `${markerRegExp.source}|${wordCharacterRegExp.source}+(${wordMedialRegExp.source}+${wordCharacterRegExp.source}+)*`,
+    'gsu', // 'g' for matchAll(), 's' because a verse can spend multiple lines, 'u' for Unicode (TODO: use `v` instead?)
+  );
+
+  const wordMatches = verseText?.matchAll(wordRegExp);
+  if (!wordMatches) return {};
+
+  const currentScrRef = { book: scrRef.book, chapterNum: currentChapter, verseNum };
+  const verseWordList: WordListDictionary = {};
+  Array.from(wordMatches).forEach((match) => {
+    const word = match[0];
+    if (word.startsWith('\\')) return;
+    const lowerCaseWord = word.toLocaleLowerCase();
+    const existingWordListEntry = verseWordList[lowerCaseWord];
+    if (existingWordListEntry) {
+      existingWordListEntry.scrRefs.push(currentScrRef);
+      const occurrenceInVerse = existingWordListEntry.scrRefs.reduce(
+        (matches, ref) => (compareScrRefs(ref, currentScrRef) === 0 ? matches + 1 : matches),
+        0,
+      );
+      existingWordListEntry.scriptureSnippets.push(
+        getScriptureSnippet(verseText, word, occurrenceInVerse),
+      );
+    } else {
+      verseWordList[lowerCaseWord] = {
+        scrRefs: [currentScrRef],
+        scriptureSnippets: [getScriptureSnippet(verseText, word)],
+      };
+    }
+  });
+  return verseWordList;
 }
 
 const wordListDataProviderEngine: IDataProviderEngine<WordListDataTypes> &
@@ -225,7 +298,7 @@ const wordListDataProviderEngine: IDataProviderEngine<WordListDataTypes> &
       { retrieveDataImmediately: false },
     );
     if (!bookText) return undefined;
-    this.wordList = processBook(bookText, scrRef, scope);
+    this.wordList = await processBook(bookText, scrRef, scope);
     return this.wordList;
   },
 
