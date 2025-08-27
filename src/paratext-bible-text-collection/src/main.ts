@@ -14,7 +14,7 @@ import {
   REQUIRED_PROJECT_INTERFACES,
 } from './util';
 
-logger.info('Text collection extension is importing!');
+logger.debug('Text collection extension is importing!');
 
 const TEXT_COLLECTION_WEB_VIEW_TYPE = 'paratextBibleTextCollection.react';
 
@@ -83,7 +83,7 @@ const textCollectionWebViewProvider: IWebViewProvider = {
 };
 
 export async function activate(context: ExecutionActivationContext) {
-  logger.info('Text collection extension is activating!');
+  logger.debug('Text collection extension is activating!');
 
   const textCollectionWebViewProviderPromise = papi.webViewProviders.register(
     TEXT_COLLECTION_WEB_VIEW_TYPE,
@@ -144,10 +144,10 @@ export async function activate(context: ExecutionActivationContext) {
   // Await the web view provider promise at the end so we don't hold everything else up
   context.registrations.add(await textCollectionWebViewProviderPromise);
 
-  logger.info('Text collection extension is finished activating!');
+  logger.debug('Text collection extension is finished activating!');
 }
 
 export async function deactivate() {
-  logger.info('Text collection extension is deactivating!');
+  logger.debug('Text collection extension is deactivating!');
   return true;
 }

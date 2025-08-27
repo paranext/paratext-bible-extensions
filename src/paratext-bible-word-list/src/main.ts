@@ -373,7 +373,7 @@ const wordListWebViewProvider: IWebViewProvider = {
 };
 
 export async function activate(context: ExecutionActivationContext) {
-  logger.info('Word List extension is activating!');
+  logger.debug('Word List extension is activating!');
 
   const WordListDataProviderPromise = papi.dataProviders.registerEngine(
     'wordList',
@@ -432,10 +432,10 @@ export async function activate(context: ExecutionActivationContext) {
     await WordListDataProviderPromise,
   );
 
-  logger.info('Word List extension is finished activating!');
+  logger.debug('Word List extension is finished activating!');
 }
 
 export async function deactivate() {
-  logger.info('Word List extension is deactivating!');
+  logger.debug('Word List extension is deactivating!');
   return true;
 }
