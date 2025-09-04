@@ -78,7 +78,7 @@ globalThis.webViewComponent = function WordListWebView({
         scrRef: dataSelector.scrRef,
       };
     }, [dataSelector]),
-    [],
+    undefined,
   );
 
   useEffect(() => {

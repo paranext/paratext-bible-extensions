@@ -297,7 +297,7 @@ const wordListDataProviderEngine: IDataProviderEngine<WordListDataTypes> &
       },
       { retrieveDataImmediately: false },
     );
-    if (!bookText) return undefined;
+    if (!bookText) return [];
     this.wordList = await processBook(bookText, scrRef, scope);
     return this.wordList;
   },
