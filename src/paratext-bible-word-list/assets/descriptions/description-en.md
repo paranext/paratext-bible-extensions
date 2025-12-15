@@ -1,1 +1,1 @@
-Wordlist extension for Paratext 10 Studio extension suite.
+The Wordlist extension for Paratext 10 Studio provides tools for reviewing and managing the spelling status of words in your project. It helps identify words that are likely to be spelled correctly and those that may be misspelled.

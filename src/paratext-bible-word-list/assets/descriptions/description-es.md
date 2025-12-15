@@ -1,0 +1,1 @@
+La extensión Lista de Palabras para Paratext 10 Studio proporciona herramientas para revisar y gestionar el estado ortográfico de las palabras en su proyecto. Permite identificar cuáles palabras están probablemente correctas y cuáles contienen errores ortográficos.
