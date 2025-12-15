@@ -5,8 +5,13 @@
   "localizedDisplayInfo": {
     "en": {
       "displayName": "Paratext Wordlist",
-      "shortSummary": "Wordlist extension",
+      "shortSummary": "Word spelling review and management",
       "description": "assets/descriptions/description-en.md"
+    },
+    "es": {
+      "displayName": "Paratext Lista de Palabras",
+      "shortSummary": "Revisión y gestión ortográfica de palabras",
+      "description": "assets/descriptions/description-es.md"
     }
   }
 }

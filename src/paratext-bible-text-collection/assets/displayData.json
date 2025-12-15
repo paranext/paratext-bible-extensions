@@ -5,8 +5,13 @@
   "localizedDisplayInfo": {
     "en": {
       "displayName": "Paratext Text Collection",
-      "shortSummary": "Text collection extension",
+      "shortSummary": "Verse comparison across multiple texts",
       "description": "assets/descriptions/description-en.md"
+    },
+    "es": {
+      "displayName": "Paratext Colección de Textos",
+      "shortSummary": "Comparación de versículos en varios textos",
+      "description": "assets/descriptions/description-es.md"
     }
   }
 }
