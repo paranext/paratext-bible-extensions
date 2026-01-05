@@ -55,7 +55,7 @@ export default function ChapterView({ projectId, projectInfo, verseRef }: Chapte
   );
 
   return (
-    <div className="full-chapter-view">
+    <div className="full-chapter-view scripture-font">
       <div className="position-title">
         <p>{projectInfo?.name ?? '...'}</p>
       </div>
