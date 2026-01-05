@@ -180,7 +180,7 @@ function VerseDisplay({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <p dir={textDirectionEffective} className="text" style={{ fontSize }}>
+      <p dir={textDirectionEffective} className="text scripture-font" style={{ fontSize }}>
         {versePlainText}
       </p>
     </div>
