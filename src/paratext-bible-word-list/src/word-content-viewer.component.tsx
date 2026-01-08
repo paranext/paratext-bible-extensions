@@ -50,7 +50,7 @@ export default function WordContentViewer({ selectedWord }: { selectedWord: Word
         {wordData.map((result) => (
           <TableRow key={`${result.reference}-${result.text}`}>
             <TableCell>{result.reference}</TableCell>
-            <TableCell>{result.text}</TableCell>
+            <TableCell className="scripture-font">{result.text}</TableCell>
           </TableRow>
         ))}
       </TableBody>
