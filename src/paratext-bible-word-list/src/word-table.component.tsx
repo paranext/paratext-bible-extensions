@@ -69,7 +69,10 @@ export default function WordTable({ wordList, fullWordCount, onWordClick }: Word
   };
 
   const [localizedStrings] = useLocalizedStrings(
-    useMemo(() => [countFormatKey, fullCountFormatKey, partialCountFormatKey], []),
+    useMemo(
+      () => [countFormatKey, fullCountFormatKey, partialCountFormatKey, '%wordList_no_results%'],
+      [],
+    ),
   );
 
   const localizedCountFormat = localizedStrings[countFormatKey];
@@ -95,6 +98,7 @@ export default function WordTable({ wordList, fullWordCount, onWordClick }: Word
       columns={columns(wordColumnTitleFormat, localizedCountFormat)}
       data={wordData}
       onRowClickHandler={onCellClick}
+      noResultsMessage={localizedStrings['%wordList_no_results%']}
     />
   );
 }

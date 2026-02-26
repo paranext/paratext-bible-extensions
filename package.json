@@ -28,7 +28,9 @@
     "postinstall": "ts-node ./lib/add-remotes.ts",
     "create-extension": "tsx ./lib/create-extension.ts",
     "update-from-templates": "tsx ./lib/update-from-templates.ts",
-    "bump-versions": "tsx ./lib/bump-versions.ts"
+    "bump-versions": "tsx ./lib/bump-versions.ts",
+    "test": "vitest --passWithNoTests",
+    "typecheck": "tsc -p ./tsconfig.json"
   },
   "browserslist": [],
   "peerDependencies": {
@@ -44,7 +46,7 @@
     "@emotion/styled": "^11.11.0",
     "@swc/core": "1.13.3",
     "@tailwindcss/typography": "^0.5.16",
-    "@types/node": "^20.16.11",
+    "@types/node": "^22.16.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@types/webpack": "^5.28.5",
@@ -73,7 +75,7 @@
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "glob": "^10.5.0",
+    "glob": "^13.0.0",
     "lucide-react": "^0.475.0",
     "papi-dts": "file:../paranext-core/lib/papi-dts",
     "platform-bible-react": "file:../paranext-core/lib/platform-bible-react",
@@ -95,7 +97,8 @@
     "tsconfig-paths": "^4.2.0",
     "tsconfig-paths-webpack-plugin": "^4.2.0",
     "tsx": "^4.19.3",
-    "typescript": "^5.4.5",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
     "webpack": "^5.105.2",
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^6.0.1",

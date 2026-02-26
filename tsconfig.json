@@ -26,6 +26,8 @@
       "node_modules/@types",
       // Include papi-dts type declarations (for papi.d.ts)
       "../paranext-core/lib",
+      // Include core extensions' type declarations
+      "../paranext-core/extensions/src",
       // Include these bundled extensions' type declarations
       "./src",
 
@@ -53,13 +55,28 @@
     "sourceMap": true,
     // We need a baseurl for webpack's tsconfig path aliases plugin
     "baseUrl": "./",
+    // Redirect all 'react' and 'react/*' module imports to the local node_modules copy. Without
+    // this, TypeScript loads a second copy of @types/react from ../paranext-core/node_modules when
+    // processing packages from `paranext-core`, which causes TS2300 (duplicate identifier) errors.
+    // This means `@types/react` needs to be at the same version between this repo and `paranext-core`
+    "paths": {
+      "react": ["node_modules/@types/react/index"],
+      "react/*": ["node_modules/@types/react/*"]
+    },
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules",
+    // Exclude extension-level webpack-env.d.ts copies to avoid TS2300 duplicate identifier errors
+    // The higher src/webpack-env.d.ts provides ?inline/?raw/etc. type declarations.
+    "src/*/**/webpack-env.d.ts",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ],
   "ts-node": {
     // This allows us to use path aliases in ts-node
     "require": ["tsconfig-paths/register"],
