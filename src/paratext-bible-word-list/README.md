@@ -4,7 +4,7 @@
 
 The Wordlist extension for Paratext 10 Studio provides tools for reviewing and managing the spelling status of words in project text, including Study Bible content. It helps identify words that are likely to be spelled correctly and those that may be misspelled.
 
-The Wordlist allows users to approve common or frequent words as correct, review individual words, and manage spelling. This can speed up the spelling review process and ensure consistency.
+The Wordlist allows users to review individual words and the places in the text where they are used. This can help with the spelling review process and ensure consistency.
 
 <!-- Opening comment tag for Template Info Section. Ignore this for now. More info in [Hide Template Info](#hide-template-info).
 
