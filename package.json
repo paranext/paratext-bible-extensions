@@ -36,7 +36,7 @@
     "react-dom": ">=18.3.1"
   },
   "dependencies": {
-    "@sillsdev/scripture": "^2.0.2",
+    "@sillsdev/scripture": "^2.0.3",
     "platform-bible-utils": "file:../paranext-core/lib/platform-bible-utils"
   },
   "devDependencies": {
@@ -73,7 +73,7 @@
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "glob": "^10.4.5",
+    "glob": "^10.5.0",
     "lucide-react": "^0.475.0",
     "papi-dts": "file:../paranext-core/lib/papi-dts",
     "platform-bible-react": "file:../paranext-core/lib/platform-bible-react",
@@ -96,7 +96,7 @@
     "tsconfig-paths-webpack-plugin": "^4.2.0",
     "tsx": "^4.19.3",
     "typescript": "^5.4.5",
-    "webpack": "^5.97.1",
+    "webpack": "^5.105.2",
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^6.0.1",
     "zip-folder-promise": "^1.2.0"

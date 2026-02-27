@@ -1,5 +1,5 @@
-import { Editorial, EditorOptions, EditorRef } from '@biblionexus-foundation/platform-editor';
-import { Usj, USJ_TYPE, USJ_VERSION } from '@biblionexus-foundation/scripture-utilities';
+import { Editorial, EditorOptions, EditorRef } from '@eten-tech-foundation/platform-editor';
+import { Usj, USJ_TYPE, USJ_VERSION } from '@eten-tech-foundation/scripture-utilities';
 import { Canon, SerializedVerseRef } from '@sillsdev/scripture';
 import { useEffect, useMemo, useRef } from 'react';
 import { logger } from '@papi/frontend';
@@ -55,7 +55,7 @@ export default function ChapterView({ projectId, projectInfo, verseRef }: Chapte
   );
 
   return (
-    <div className="full-chapter-view">
+    <div className="full-chapter-view scripture-font">
       <div className="position-title">
         <p>{projectInfo?.name ?? '...'}</p>
       </div>
