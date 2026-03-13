@@ -100,12 +100,15 @@ globalThis.webViewComponent = function WordListWebView({
   }, [wordList]);
 
   const shownWordList: WordListEntry[] = useMemo((): WordListEntry[] => {
-    setSelectedWord(undefined);
     if (!wordList || isPlatformError(wordList)) return [];
     if (wordFilter === '') {
       return wordList;
     }
     return wordList.filter((entry) => entry.word.toLowerCase().includes(wordFilter.toLowerCase()));
+  }, [wordList, wordFilter]);
+
+  useEffect(() => {
+    setSelectedWord(undefined);
   }, [wordList, wordFilter]);
 
   function findSelectedWordEntry(word: string) {

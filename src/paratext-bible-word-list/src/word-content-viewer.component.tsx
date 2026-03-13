@@ -33,8 +33,6 @@ export default function WordContentViewer({ selectedWord }: { selectedWord: Word
   const [wordData, setWordData] = useState<WordData[]>([]);
 
   useEffect(() => {
-    setWordData([]);
-
     setWordData(generateTableData(selectedWord));
   }, [selectedWord]);
 
