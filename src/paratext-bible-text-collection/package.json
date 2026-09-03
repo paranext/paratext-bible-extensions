@@ -40,8 +40,8 @@
   "devDependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@eten-tech-foundation/platform-editor": "~0.8.13",
-    "@eten-tech-foundation/scripture-utilities": "~0.1.6",
+    "@eten-tech-foundation/platform-editor": "file:../../../paranext-core/dev-packages/staging/platform-editor",
+    "@eten-tech-foundation/scripture-utilities": "file:../../../paranext-core/dev-packages/staging/scripture-utilities",
     "@stylistic/eslint-plugin-ts": "^2.13.0",
     "@swc/core": "1.13.3",
     "@tailwindcss/typography": "^0.5.16",
