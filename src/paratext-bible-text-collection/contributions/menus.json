@@ -4,6 +4,7 @@
     "groups": {},
     "items": [
       {
+        "hiddenInterfaceModes": ["power"],
         "label": "%mainMenu_openTextCollection%",
         "localizeNotes": "Application main menu > Project > Open Text Collection",
         "group": "platform.projectResources",
