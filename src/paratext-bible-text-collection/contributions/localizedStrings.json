@@ -32,6 +32,22 @@
       "%textCollection_verseDisplay_zoomOut%": "Alejar",
       "%textCollection_verseDisplay_zoomReset%": "Zoom Restablecer",
       "%webview_selectProjects%": "Seleccione proyectos"
+    },
+    "nl": {
+      "%mainMenu_openTextCollection%": "Tekstverzameling openen...",
+      "%textCollection_defaultTitle%": "Tekstverzameling",
+      "%textCollection_dialog_selectProjectsToOpen_prompt%": "Selecteer de projecten die je in de tekstverzameling wilt openen:",
+      "%textCollection_dialog_selectProjectsToShow_prompt%": " Selecteer de projecten die je in de tekstverzameling wilt tonen:",
+      "%textCollection_dialog_selectProjectsInTextCollection_title%": "Projecten selecteren in tekstverzameling",
+      "%textCollection_dialog_openTextCollection_title%": "Tekstverzameling openen",
+      "%textCollection_verseDisplay_projectNameMissing%": "...",
+      "%textCollection_verseDisplay_closeText%": "Tekst sluiten",
+      "%textCollection_verseDisplay_moveTextDown%": "Omlaag verplaatsen",
+      "%textCollection_verseDisplay_moveTextUp%": "Omhoog verplaatsen",
+      "%textCollection_verseDisplay_zoomIn%": "Inzoomen",
+      "%textCollection_verseDisplay_zoomOut%": "Uitzoomen",
+      "%textCollection_verseDisplay_zoomReset%": "Zoom herstellen",
+      "%webview_selectProjects%": "Projecten selecteren"
     }
   }
 }

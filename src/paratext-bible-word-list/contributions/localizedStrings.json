@@ -41,6 +41,23 @@
       "%wordList_titleWithProjectName_format%": "Lista de Palabras para el proyecto {projectName}",
       "%wordList_view_label%": "vista",
       "%wordList_wordCount_format%": "Conteo {sortingDirectionIcon}"
+    },
+    "nl": {
+      "%mainMenu_openWordlist%": "Woordenlijst openen...",
+      "%mainMenu_openWordList%": "Woordenlijst openen...",
+      "%wordList_cloudView_label%": "Woordenwolk",
+      "%wordList_filter_defaultText%": "Woordfilter",
+      "%wordList_fullWordCount_titleFormat%": "Woorden ({fullWordCount}) {sortingDirectionIcon}",
+      "%wordList_openListForProject_prompt%": "Selecteer het project dat je in de woordenlijst wilt openen:",
+      "%wordList_openListForProject_title%": "Woordenlijst openen",
+      "%wordList_partialWordCount_titleFormat%": "Woorden ({wordListLength} van {fullWordCount}) {sortingDirectionIcon}",
+      "%wordList_tableView_label%": "Tabel",
+      "%wordlist_title_format%": "Woordenlijst {projectName}",
+      "%wordList_title_format%": "Woordenlijst {projectName}",
+      "%wordlist_titleWithProjectName_format%": "Woordenlijst voor project {projectName}",
+      "%wordList_titleWithProjectName_format%": "Woordenlijst voor project {projectName}",
+      "%wordList_view_label%": "weergave",
+      "%wordList_wordCount_format%": "Aantal {sortingDirectionIcon}"
     }
   }
 }
