@@ -1,9 +1,13 @@
 // #region shared with https://github.com/paranext/paranext-multi-extension-template/blob/main/tailwind.config.ts and https://github.com/paranext/paranext-core/blob/main/lib/platform-bible-react/tailwind.config.ts
 
-import { Config } from 'tailwindcss';
 import typography from '@tailwindcss/typography';
 
-const config: Config = {
+// Local divergence from the shared file: no `Config` type import. tailwind v4 no longer ships
+// node10-resolvable type declarations (its package.json has only an `exports` types entry, which
+// this repo's `moduleResolution: "Node"` cannot see), so `import { Config } from 'tailwindcss'`
+// fails typecheck here — and a type that fails to resolve checked nothing anyway. The config's
+// shape is validated at build time by the tailwind postcss plugin loading it via `@config`.
+const config = {
   // Theme from shadcn/ui
   theme: {
     extend: {
