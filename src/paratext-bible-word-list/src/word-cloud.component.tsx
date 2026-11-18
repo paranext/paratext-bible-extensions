@@ -3,7 +3,7 @@ import type { WordListEntry } from 'paratext-bible-word-list';
 import { Wordcloud } from '@visx/wordcloud';
 import { Text } from '@visx/text';
 import { scaleLog } from '@visx/scale';
-import ParentSize from '@visx/responsive/lib/components/ParentSize';
+import { ParentSize } from '@visx/responsive';
 
 type WordCloudProps = {
   wordList: WordListEntry[];

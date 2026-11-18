@@ -37,10 +37,10 @@
   },
   "dependencies": {
     "@sillsdev/scripture": "^2.1.0",
-    "@visx/responsive": "^3.3.0",
-    "@visx/scale": "^3.5.0",
-    "@visx/text": "^3.3.0",
-    "@visx/wordcloud": "^3.3.0",
+    "@visx/responsive": "^4.0.0",
+    "@visx/scale": "^4.0.0",
+    "@visx/text": "^4.0.0",
+    "@visx/wordcloud": "^4.0.0",
     "platform-bible-utils": "file:../../../paranext-core/lib/platform-bible-utils"
   },
   "devDependencies": {
