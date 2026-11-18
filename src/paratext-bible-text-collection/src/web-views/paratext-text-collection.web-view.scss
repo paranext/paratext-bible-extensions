@@ -50,7 +50,7 @@ body {
   line-height: 1.75;
   letter-spacing: 0.02857em;
   text-transform: uppercase;
-  color: hsl(var(--primary));
+  color: var(--primary);
 }
 
 .verse-view {
@@ -64,8 +64,8 @@ body {
     cursor: pointer;
 
     &.selected {
-      background-color: hsl(var(--muted));
-      color: hsl(var(--muted-foreground));
+      background-color: var(--muted);
+      color: var(--muted-foreground);
     }
 
     .title {
