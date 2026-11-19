@@ -2,11 +2,11 @@
 
 import typography from '@tailwindcss/typography';
 
-// Local divergence from the shared file: no `Config` type import. tailwind v4 no longer ships
+// Local divergence from the shared file: no `Config` type import. Tailwind 4 no longer ships
 // node10-resolvable type declarations (its package.json has only an `exports` types entry, which
 // this repo's `moduleResolution: "Node"` cannot see), so `import { Config } from 'tailwindcss'`
-// fails typecheck here — and a type that fails to resolve checked nothing anyway. The config's
-// shape is validated at build time by the tailwind postcss plugin loading it via `@config`.
+// fails typecheck here — and a type that fails to resolve checked nothing anyway. The config is
+// consumed at build time via `@config`.
 const config = {
   // Theme from shadcn/ui
   theme: {
